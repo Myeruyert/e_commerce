@@ -4,7 +4,13 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useState } from "react";
 import Header from "@/components/header";
-import SignUp from "@/components/(auth)/signup";
+import SignUp from "@/app/(auth)/signUp/page";
+import { Footer } from "@/components/footer";
+import GetNewPass from "@/components/recover_pass/get_new_pass";
+import Loading from "@/components/recover_pass/loading";
+import { CardWithForm } from "@/components/card/card";
+import SavedProduct from "@/components/saved_product";
+// import Footer from "@/components/footer/index";
 
 export default function Home() {
   const [count, setCount] = useState<number>(0);
@@ -16,14 +22,12 @@ export default function Home() {
   };
   return (
     <div className="font-[family-name:var(--font-geist-sans)]">
-      <Header />
-      <SignUp />
-
       {/* <div>
         <Button onClick={minus}>-</Button>
         <Label className="4xl mx-5">{count}</Label>
         <Button onClick={add}>+</Button>
       </div> */}
+      <SavedProduct />
     </div>
   );
 }
