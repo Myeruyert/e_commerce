@@ -10,6 +10,8 @@ import GetNewPass from "@/components/recover_pass/get_new_pass";
 import Loading from "@/components/recover_pass/loading";
 import { CardWithForm } from "@/components/card/card";
 import SavedProduct from "@/components/saved_product";
+import RecoverPass from "@/components/recover_pass";
+import EnterNewPass from "@/components/recover_pass/new_pass";
 // import Footer from "@/components/footer/index";
 
 export default function Home() {
@@ -27,7 +29,7 @@ export default function Home() {
         <Label className="4xl mx-5">{count}</Label>
         <Button onClick={add}>+</Button>
       </div> */}
-      <SavedProduct />
+      <CardWithForm />
     </div>
   );
 }

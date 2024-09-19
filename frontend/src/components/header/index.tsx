@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
 import { Heart, ShoppingCart } from "lucide-react";
 import { Label } from "@radix-ui/react-label";
+import Link from "next/link";
 
 const Header = () => {
   return (
@@ -41,14 +42,18 @@ const Header = () => {
           <div className="flex items-center gap-6">
             <Heart className="" />
             <ShoppingCart />
-            {/* <ModeToggle /> */}
+            <ModeToggle />
           </div>
           <div className="flex items-center gap-2">
-            <Button variant={"outline"} size="custom" className="text-black">
-              Бүртгүүлэх
+            <Button
+              variant={"outline"}
+              size="custom"
+              className="text-black dark:text-white"
+            >
+              <Link href="/signUp">Бүртгүүлэх</Link>
             </Button>
             <Button className="bg-[#2563EB]" size="custom">
-              Нэвтрэх
+              <Link href="/signin">Нэвтрэх</Link>
             </Button>
           </div>
         </div>

@@ -7,7 +7,7 @@ import { InputOTP, InputOTPGroup, InputOTPSlot } from "../ui/input-otp";
 
 const GetNewPass = () => {
   return (
-    <div className="flex h-[calc(100vh-290px)] justify-center bg-gray-100">
+    <div className="flex h-[calc(100vh-290px)] justify-center bg-gray-100 dark:bg-[#121212]">
       <div className="w-2/5 mt-24">
         <img src="/images/email.png" alt="" className="m-auto" />
         <h1 className="font-semibold text-2xl text-center mb-2 mt-6">

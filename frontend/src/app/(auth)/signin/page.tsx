@@ -3,11 +3,12 @@ import { Button } from "@/components/ui/button";
 import { FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
+import Link from "next/link";
 import React from "react";
 
 const SignIn = () => {
   return (
-    <div className="flex h-[calc(100vh-290px)] justify-center items-center bg-gray-100">
+    <div className="flex h-[calc(100vh-290px)] justify-center items-center bg-gray-100 dark:bg-[#121212]">
       <div className="w-1/5">
         <h1 className="font-semibold text-2xl text-center mb-8">Нэвтрэх</h1>
         <Label className="h-9 rounded-full flex items-center gap-2 bg-white px-3 py-1">
@@ -22,7 +23,7 @@ const SignIn = () => {
           </svg>
           <Input
             type="text"
-            className="grow border-none h-9 focus-visible:ring-0 focus-visible:ring-offset-0"
+            className="grow border-none h-9 bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
             placeholder="Email"
           />
         </Label>
@@ -60,7 +61,7 @@ const SignIn = () => {
             className="border-[#2563EB]"
             size="custom"
           >
-            Бүртгүүлэх
+            <Link href="/signUp">Бүртгүүлэх</Link>
           </Button>
         </div>
       </div>
