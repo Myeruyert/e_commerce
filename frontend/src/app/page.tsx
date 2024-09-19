@@ -12,6 +12,8 @@ import { CardWithForm } from "@/components/card/card";
 import SavedProduct from "@/components/saved_product";
 import RecoverPass from "@/components/recover_pass";
 import EnterNewPass from "@/components/recover_pass/new_pass";
+import Carousel from "@/components/swiper";
+import ProductLists from "@/components/product_lists";
 // import Footer from "@/components/footer/index";
 
 export default function Home() {
@@ -29,7 +31,8 @@ export default function Home() {
         <Label className="4xl mx-5">{count}</Label>
         <Button onClick={add}>+</Button>
       </div> */}
-      <CardWithForm />
+      <Carousel />
+      <ProductLists />
     </div>
   );
 }

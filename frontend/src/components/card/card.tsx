@@ -5,7 +5,7 @@ import { CiHeart } from "react-icons/ci";
 
 export function CardWithForm() {
   return (
-    <>
+    <div>
       <Card className="w-[245px] h-[333px] border-none relative">
         <CiHeart className="absolute right-3 top-2 text-2xl" />
         <img
@@ -22,6 +22,6 @@ export function CardWithForm() {
           <span className="font-bold text-[#EF4444]">10%</span>
         </div>
       </div>
-    </>
+    </div>
   );
 }
