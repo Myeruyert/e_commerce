@@ -1,16 +1,85 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Label } from "@radix-ui/react-label";
+import { toast } from "react-toastify";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { apiUrl } from "@/utils/util";
 
 const SignUp = () => {
+  const [userData, setUserData] = useState({
+    firstname: "",
+    lastname: "",
+    email: "",
+    password: "",
+    rePassword: "",
+  });
+
+  const router = useRouter();
+
+  const handleSignUp = async () => {
+    const { firstname, lastname, email, password, rePassword } = userData;
+    if (password !== rePassword) {
+      toast.error("Password doesn't match");
+      return;
+    }
+
+    try {
+      // setIsLoading(true);
+      const res = await fetch(`${apiUrl}/api/v1/auth/signup`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstname,
+          lastname,
+          email,
+          password,
+        }),
+      });
+      if (res.status === 201) {
+        console.log("res", res);
+        toast.success("User signed up successfully");
+        // setIsLoading(false);
+        router.push("/signin");
+      }
+    } catch (error) {
+      // res.status(400).json({ message: "Failed to sign up. Please try again." });
+      console.error("There was an error signing up:", error);
+      // setIsLoading(false);
+      toast.error("Failed to sign up. Please try again.");
+    }
+  };
+
+  console.log("UD", userData);
+
   return (
     <div className="flex h-[calc(100vh-290px)] justify-center items-center bg-gray-100 dark:bg-[#121212]">
       <div className="w-1/5">
         <h1 className="font-semibold text-2xl text-center mb-8">Бүртгүүлэх</h1>
-        <Label className="h-9 rounded-full flex items-center gap-2 bg-white px-3 py-1">
+        <div className="h-9 rounded-full flex items-center gap-2 bg-white px-3 py-1 my-4">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 16 16"
+            fill="black"
+            className="h-4 w-4 opacity-70"
+          >
+            <path d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6ZM12.735 14c.618 0 1.093-.561.872-1.139a6.002 6.002 0 0 0-11.215 0c-.22.578.254 1.139.872 1.139h9.47Z" />
+          </svg>
+          <Input
+            type="text"
+            className="grow border-none bg-transparent h-9 focus-visible:ring-0 focus-visible:ring-offset-0"
+            placeholder="Овог"
+            value={userData.lastname}
+            onChange={(e) => {
+              setUserData({ ...userData, lastname: e.target.value });
+            }}
+          />
+        </div>
+        <div className="h-9 rounded-full flex items-center gap-2 bg-white px-3 py-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 16 16"
@@ -23,9 +92,13 @@ const SignUp = () => {
             type="text"
             className="grow border-none bg-transparent h-9 focus-visible:ring-0 focus-visible:ring-offset-0"
             placeholder="Нэр"
+            value={userData.firstname}
+            onChange={(e) => {
+              setUserData({ ...userData, firstname: e.target.value });
+            }}
           />
-        </Label>
-        <Label className="h-9 rounded-full flex items-center gap-2 bg-white px-3 py-1 my-4">
+        </div>
+        <div className="h-9 rounded-full flex items-center gap-2 bg-white px-3 py-1 my-4">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 16 16"
@@ -39,9 +112,13 @@ const SignUp = () => {
             type="text"
             className="grow border-none bg-transparent h-9 focus-visible:ring-0 focus-visible:ring-offset-0"
             placeholder="Email"
+            value={userData.email}
+            onChange={(e) => {
+              setUserData({ ...userData, email: e.target.value });
+            }}
           />
-        </Label>
-        <Label className="h-9 rounded-full flex items-center gap-2 bg-white px-3 py-1">
+        </div>
+        <div className="h-9 rounded-full flex items-center gap-2 bg-white px-3 py-1">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 16 16"
@@ -57,10 +134,13 @@ const SignUp = () => {
           <Input
             type="password"
             className="grow border-none bg-transparent h-9 focus-visible:ring-0 focus-visible:ring-offset-0"
-            value="password"
+            value={userData.password}
+            onChange={(e) => {
+              setUserData({ ...userData, password: e.target.value });
+            }}
           />
-        </Label>
-        <Label className=" h-9 rounded-full flex items-center gap-2 bg-white px-3 py-1 my-4">
+        </div>
+        <div className=" h-9 rounded-full flex items-center gap-2 bg-white px-3 py-1 my-4">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 16 16"
@@ -76,9 +156,12 @@ const SignUp = () => {
           <Input
             type="password"
             className="grow border-none bg-transparent h-9 focus-visible:ring-0 focus-visible:ring-offset-0"
-            value="password"
+            value={userData.rePassword}
+            onChange={(e) => {
+              setUserData({ ...userData, rePassword: e.target.value });
+            }}
           />
-        </Label>
+        </div>
         <ul className=" flex flex-col text-xs list-disc px-4 mb-4 gap-1">
           <li className="">Том үсэг орсон байх</li>
           <li>Жижиг үсэг орсон байх</li>
@@ -86,7 +169,7 @@ const SignUp = () => {
           <li>Тэмдэгт орсон байх</li>
         </ul>
         <div className="flex flex-col gap-12">
-          <Button className="bg-[#2563EB]" size="custom">
+          <Button className="bg-[#2563EB]" size="custom" onClick={handleSignUp}>
             Үүсгэх
           </Button>
           <Button
