@@ -6,12 +6,12 @@ import { CiHeart } from "react-icons/ci";
 export function CardWithForm() {
   return (
     <div>
-      <Card className="w-[245px] h-[333px] border-none relative">
+      <Card className="border-none relative">
         <CiHeart className="absolute right-3 top-2 text-2xl" />
         <img
           src="/images/image.png"
           alt=""
-          className="rounded-lg object-cover overflow-hidden "
+          className="rounded-lg w-full overflow-hidden "
         />
       </Card>
       <div>
