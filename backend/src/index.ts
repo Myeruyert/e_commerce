@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-const cors = require("cors");
+import cors from "cors";
 import authRoute from "./routes/auth_route";
 import dotenv from "dotenv";
 import { connectDB } from "./config/db";

@@ -1,26 +1,51 @@
 import { Request, Response } from "express";
 import User from "../models/user.model";
-const bcrypt = require("bcrypt");
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 //Mongoose => odm => object data mapping
 
-export const login = (req: Request, res: Response) => {
-  res.status(201).json({ message: "Login Success" });
+export const login = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+    const loggedUser = await User.findOne({ email });
+    console.log("loggedUser", loggedUser);
+    if (!loggedUser) {
+      res.status(404).json({ message: "User not found" });
+    } else {
+      const isChecked = bcrypt.compareSync(password, loggedUser.password);
+      if (!isChecked) {
+        res.status(404).json({
+          message: "Хэрэглэгчийн и-мэйл эсвэл нууц үг тохирохгүй байна.",
+        });
+      } else {
+        const token = jwt.sign({ _id: loggedUser._id }, "JST_TOKEN_PASS@123", {
+          expiresIn: "10h",
+        });
+        res.status(201).json({ message: "Success", token });
+      }
+    }
+    // res.status(201).json({ message: "Login Success" });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: "Couldn't signed in" });
+  }
 };
 
 export const signup = async (req: Request, res: Response) => {
   try {
     const { firstname, lastname, email, password } = req.body;
-    const hashedPassword = bcrypt.hashSync(password, 10);
 
-    if (!firstname || !lastname || !email || !hashedPassword) {
-      res.status(400).json({ message: "Хоосон утга байж болохгүй" });
+    if (!firstname || !lastname || !email || !password) {
+      return res.status(400).json({ message: "Хоосон утга байж болохгүй" });
     }
+    const hashedPassword = bcrypt.hashSync(password, 10);
+    // const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({
       firstname,
       lastname,
       email,
-      hashedPassword,
+      password: hashedPassword,
       phoneNumber: "",
       address: "",
     });

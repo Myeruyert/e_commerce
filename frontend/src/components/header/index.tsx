@@ -1,12 +1,30 @@
+"use client";
 import React from "react";
+import { useRouter } from "next/navigation";
 import { ModeToggle } from "./theme";
 import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
-import { Heart, ShoppingCart } from "lucide-react";
+import { Heart, ShoppingCart, LogOut, User } from "lucide-react";
 import { Label } from "@radix-ui/react-label";
 import Link from "next/link";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+  DropdownMenuShortcut,
+} from "@/components/ui/dropdown-menu";
 
 const Header = () => {
+  const user = localStorage.getItem("token");
+  console.log("token", user);
+  const router = useRouter();
+  const logOut = () => {
+    localStorage.removeItem("token");
+    router.push("/signin");
+  };
   return (
     <header className="bg-black text-white">
       <div className="h-[70px] flex justify-between items-center px-6">
@@ -44,18 +62,41 @@ const Header = () => {
             <ShoppingCart />
             <ModeToggle />
           </div>
-          <div className="flex items-center gap-2">
-            <Button
-              variant={"outline"}
-              size="custom"
-              className="text-black dark:text-white"
-            >
-              <Link href="/signUp">Бүртгүүлэх</Link>
-            </Button>
-            <Button className="bg-[#2563EB]" size="custom">
-              <Link href="/signin">Нэвтрэх</Link>
-            </Button>
-          </div>
+          {user ? (
+            <div className="flex items-center gap-2">
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <User />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>Profile</DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Button onClick={logOut} variant="ghost">
+                      <LogOut className="mr-2 h-4 w-4" />
+                      <span>Log out</span>
+                    </Button>
+
+                    {/* <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut> */}
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          ) : (
+            <div className="flex items-center gap-2">
+              <Button
+                variant={"outline"}
+                size="custom"
+                className="text-black dark:text-white"
+              >
+                <Link href="/signUp">Бүртгүүлэх</Link>
+              </Button>
+              <Button className="bg-[#2563EB]" size="custom">
+                <Link href="/signin">Нэвтрэх</Link>
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </header>

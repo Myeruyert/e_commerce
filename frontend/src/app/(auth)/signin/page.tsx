@@ -1,12 +1,41 @@
+"use client";
 import RecoverPass from "@/components/recover_pass";
 import { Button } from "@/components/ui/button";
 import { FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { apiUrl } from "@/utils/util";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const SignIn = () => {
+  const router = useRouter();
+  const [userData, setUserData] = useState({
+    email: "",
+    password: "",
+  });
+  const handleSignIn = async () => {
+    const { email, password } = userData;
+    try {
+      const res = await axios.post(`${apiUrl}/api/v1/auth/login`, {
+        email,
+        password,
+      });
+      if (res.status === 201) {
+        toast.success("User signed in successfully");
+        const { token } = res.data;
+        localStorage.setItem("token", token);
+        router.push("/");
+      }
+      console.log("res", res);
+    } catch (error) {
+      console.error("There was an error signing in:", error);
+      toast.error("Failed to sign in. Please try again.");
+    }
+  };
   return (
     <div className="flex h-[calc(100vh-290px)] justify-center items-center bg-gray-100 dark:bg-[#121212]">
       <div className="w-1/5">
@@ -25,6 +54,10 @@ const SignIn = () => {
             type="text"
             className="grow border-none h-9 bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
             placeholder="Email"
+            value={userData.email}
+            onChange={(e) => {
+              setUserData({ ...userData, email: e.target.value });
+            }}
           />
         </Label>
         <Label className="h-9 rounded-full flex items-center gap-2 bg-white px-3 py-1 my-4">
@@ -42,12 +75,16 @@ const SignIn = () => {
           </svg>
           <Input
             type="password"
+            placeholder="********"
             className="grow border-none bg-transparent h-9 focus-visible:ring-0 focus-visible:ring-offset-0"
-            value="password"
+            value={userData.password}
+            onChange={(e) => {
+              setUserData({ ...userData, password: e.target.value });
+            }}
           />
         </Label>
         <div className="flex flex-col">
-          <Button className="bg-[#2563EB]" size="custom">
+          <Button className="bg-[#2563EB]" size="custom" onClick={handleSignIn}>
             Нэвтрэх
           </Button>
           <a

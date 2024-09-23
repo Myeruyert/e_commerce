@@ -4,6 +4,8 @@ import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Footer } from "@/components/footer";
 import Header from "@/components/header";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -25,33 +27,6 @@ type RootLayoutProps = {
   children: React.ReactNode;
 };
 
-// export default function RootLayout({
-//   children,
-// }: Readonly<{
-//   children: React.ReactNode;
-// }>) {
-//   //  RootLayoutProps
-//   return (
-//     <>
-//       <html lang="en" suppressHydrationWarning>
-//         <head />
-//         <body className="h-screen relative">
-//           <Header />
-//           <ThemeProvider
-//             attribute="class"
-//             defaultTheme="light"
-//             enableSystem
-//             disableTransitionOnChange
-//           >
-//             {children}
-//           </ThemeProvider>
-//           <Footer />
-//         </body>
-//       </html>
-//     </>
-//   );
-// }
-
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <>
@@ -67,6 +42,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <Header />
             {children}
             <Footer />
+            <ToastContainer />
           </ThemeProvider>
         </body>
       </html>
