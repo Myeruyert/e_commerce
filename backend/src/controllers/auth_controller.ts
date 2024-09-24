@@ -39,18 +39,18 @@ export const signup = async (req: Request, res: Response) => {
     if (!firstname || !lastname || !email || !password) {
       return res.status(400).json({ message: "Хоосон утга байж болохгүй" });
     }
-    const hashedPassword = bcrypt.hashSync(password, 10);
+    // const hashedPassword = bcrypt.hashSync(password, 10);
     // const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({
       firstname,
       lastname,
       email,
-      password: hashedPassword,
+      password,
       phoneNumber: "",
       address: "",
     });
     res.status(201).json({ message: "success", user: newUser });
-    console.log("pass", hashedPassword);
+    // console.log("pass", hashedPassword);
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error });
   }

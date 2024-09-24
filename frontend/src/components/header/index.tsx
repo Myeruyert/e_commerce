@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { ModeToggle } from "./theme";
 import { Input } from "@/components/ui/input";
@@ -16,15 +16,24 @@ import {
   DropdownMenuTrigger,
   DropdownMenuShortcut,
 } from "@/components/ui/dropdown-menu";
+import { UserContext } from "../context/user_context";
+import { IUser, UserContextType } from "@/interface";
 
 const Header = () => {
-  const user = localStorage.getItem("token");
-  console.log("token", user);
+  const { token, setToken } = useContext(UserContext);
+  // const user = localStorage.getItem("token");
+  // console.log("token", user);
   const router = useRouter();
   const logOut = () => {
     localStorage.removeItem("token");
     router.push("/signin");
   };
+
+  useEffect(() => {
+    const ss = localStorage.getItem("token") || "";
+    setToken(ss);
+  }, []);
+  console.log("tToken", token);
   return (
     <header className="bg-black text-white">
       <div className="h-[70px] flex justify-between items-center px-6">
@@ -62,7 +71,7 @@ const Header = () => {
             <ShoppingCart />
             <ModeToggle />
           </div>
-          {user ? (
+          {token ? (
             <div className="flex items-center gap-2">
               <DropdownMenu>
                 <DropdownMenuTrigger>
