@@ -21,8 +21,6 @@ import { IUser, UserContextType } from "@/interface";
 
 const Header = () => {
   const { token, setToken } = useContext(UserContext);
-  // const user = localStorage.getItem("token");
-  // console.log("token", user);
   const router = useRouter();
   const logOut = () => {
     localStorage.removeItem("token");

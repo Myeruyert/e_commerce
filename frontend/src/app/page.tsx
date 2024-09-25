@@ -11,7 +11,6 @@ import GetNewPass from "@/components/recover_pass/get_new_pass";
 import Loading from "@/components/recover_pass/loading";
 import { CardWithForm } from "@/components/card/card";
 import SavedProduct from "@/components/saved_product";
-import RecoverPass from "@/components/recover_pass";
 import EnterNewPass from "@/components/recover_pass/new_pass";
 import Carousel from "@/components/swiper";
 import ProductLists from "@/components/product_lists";

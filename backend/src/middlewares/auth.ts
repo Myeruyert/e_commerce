@@ -1,5 +1,9 @@
 import jwt from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
+import dotenv from "dotenv";
+dotenv.config();
+
+const JWT_TOKEN_PASS = process.env.JWT_TOKEN_PASS;
 
 interface IMyRequest extends Request {
   user: any;
@@ -17,7 +21,7 @@ export const authentication = (
     }
 
     const token = req.headers.authorization?.split(" ")[1];
-    const user = jwt.verify(token, "JST_TOKEN_PASS@123"); //user dotor {id: uuid} orson bga
+    const user = jwt.verify(token, `${JWT_TOKEN_PASS}`); //user dotor {id: uuid} orson bga
     req.user = user; // {id : ""}
     next();
   } catch (error) {

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import User from "../models/user.model";
 import bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
+import { generateToken } from "../utils/jwt";
 
 //Mongoose => odm => object data mapping
 
@@ -19,9 +19,7 @@ export const login = async (req: Request, res: Response) => {
           message: "Хэрэглэгчийн и-мэйл эсвэл нууц үг тохирохгүй байна.",
         });
       } else {
-        const token = jwt.sign({ _id: loggedUser._id }, "JST_TOKEN_PASS@123", {
-          expiresIn: "10h",
-        });
+        const token = generateToken({ id: loggedUser._id });
         res.status(201).json({ message: "Success", token });
       }
     }

@@ -1,7 +1,5 @@
 "use client";
-import RecoverPass from "@/components/recover_pass";
 import { Button } from "@/components/ui/button";
-import { FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import Link from "next/link";
@@ -87,12 +85,12 @@ const SignIn = () => {
           <Button className="bg-[#2563EB]" size="custom" onClick={handleSignIn}>
             Нэвтрэх
           </Button>
-          <a
+          <Link
             href=""
             className="text-center underline text-sm text-[#71717A] mt-4 mb-12"
           >
             Нууц үг мартсан
-          </a>
+          </Link>
           <Button
             variant={"outline"}
             className="border-[#2563EB]"
