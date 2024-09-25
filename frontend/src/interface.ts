@@ -1,5 +1,5 @@
 export interface IUser {
-  id?: string;
+  _id?: string;
   firstname: string;
   lastname: string;
   email: string;
@@ -11,4 +11,6 @@ export interface UserContextType {
   setToken: (token: string) => void;
   setUser?: (user: IUser) => void;
   fetchUserData?: () => void;
+  refetch?: any;
+  setRefetch?: any;
 }

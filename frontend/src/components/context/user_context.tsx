@@ -10,7 +10,7 @@ type UserProviderProps = {
 
 export const UserContext = createContext<UserContextType>({
   user: {
-    id: "",
+    _id: "",
     firstname: "",
     lastname: "",
     email: "",
@@ -18,44 +18,59 @@ export const UserContext = createContext<UserContextType>({
   token: "",
   setUser: () => {},
   setToken: () => {},
+  fetchUserData: () => {},
+  refetch: false,
+  setRefetch: () => {},
 });
 
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [refetch, setRefetch] = useState(false);
   const [token, setToken] = useState<string>("");
   const [user, setUser] = useState<IUser>({
-    id: "",
+    _id: "",
     firstname: "",
     lastname: "",
     email: "",
   });
 
-  // const fetchUserData = async () => {
-  //   try {
-  //     const token = localStorage.getItem("token");
-  //     const response = await axios.get(`${apiUrl}/api/v1/auth/user`, {
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //       },
-  //     });
+  const fetchUserData = async () => {
+    try {
+      const token = localStorage.getItem("token") || "";
+      const response = await axios.get(`${apiUrl}/api/v1/auth/user`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
 
-  //     if (response.status === 201) {
-  //       const { user } = response.data;
-  //       console.log("USER", user);
-  //       setUser(user);
-  //       setRefetch(!refetch);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching user data:", error);
-  //   }
-  // };
+      if (response.status === 201) {
+        const { user } = response.data;
+        console.log("USERrr", response.data);
+        setUser(user);
+        setRefetch(!refetch);
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
 
   useEffect(() => {
-    // fetchUserData();
+    fetchUserData();
   }, []);
 
+  console.log("USER", user);
+
   return (
-    <UserContext.Provider value={{ user, setUser, token, setToken }}>
+    <UserContext.Provider
+      value={{
+        user,
+        setUser,
+        token,
+        setToken,
+        fetchUserData,
+        refetch,
+        setRefetch,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

@@ -17,10 +17,9 @@ import {
   DropdownMenuShortcut,
 } from "@/components/ui/dropdown-menu";
 import { UserContext } from "../context/user_context";
-import { IUser, UserContextType } from "@/interface";
 
 const Header = () => {
-  const { token, setToken } = useContext(UserContext);
+  const { token, setToken, refetch, setRefetch } = useContext(UserContext);
   const router = useRouter();
   const logOut = () => {
     localStorage.removeItem("token");

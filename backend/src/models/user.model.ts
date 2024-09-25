@@ -16,6 +16,7 @@ interface IUser {
 }
 
 const userSchema = new Schema<IUser>({
+  _id: Schema.Types.ObjectId,
   firstname: {
     type: String,
     required: [true, "Хэрэглэгчийн нэрийг заавал оруулна"],
