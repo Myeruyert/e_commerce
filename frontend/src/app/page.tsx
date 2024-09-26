@@ -41,6 +41,7 @@ export default function Home() {
         <Button onClick={add}>+</Button>
       </div> */}
       <Carousel />
+
       <ProductLists />
     </div>
   );

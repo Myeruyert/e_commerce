@@ -1,7 +1,3 @@
-import { Button } from "@/components/ui/button";
-import { FormLabel } from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Label } from "@radix-ui/react-label";
 import React from "react";
 import { InputOTP, InputOTPGroup, InputOTPSlot } from "../ui/input-otp";
 

@@ -86,7 +86,7 @@ const SignIn = () => {
             Нэвтрэх
           </Button>
           <Link
-            href=""
+            href="/recoverpass"
             className="text-center underline text-sm text-[#71717A] mt-4 mb-12"
           >
             Нууц үг мартсан

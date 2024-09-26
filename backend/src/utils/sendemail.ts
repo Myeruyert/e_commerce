@@ -17,7 +17,7 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS,
   },
 });
-export const sendEmail = async (email: string) => {
+export const sendEmail = async (email: string, randomOtp: string) => {
   const info = await transporter.sendMail({
     from: "myeruyertjanibyek@gmail.com", // sender address
     to: "j.myeruyert@gmail.com", // list of receivers

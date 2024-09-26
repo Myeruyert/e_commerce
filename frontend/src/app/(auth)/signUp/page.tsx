@@ -25,7 +25,6 @@ const SignUp = () => {
       toast.error("Password doesn't match");
       return;
     }
-
     try {
       // setIsLoading(true);
       const res = await fetch(`${apiUrl}/api/v1/auth/signup`, {

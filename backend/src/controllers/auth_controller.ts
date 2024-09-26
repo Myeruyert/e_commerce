@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import User from "../models/user.model";
 import bcrypt from "bcrypt";
 import { generateToken } from "../utils/jwt";
+import { sendEmail } from "../utils/sendemail";
 
 //Mongoose => odm => object data mapping
 
@@ -50,6 +51,25 @@ export const signup = async (req: Request, res: Response) => {
     res.status(201).json({ message: "success", user: newUser });
     // console.log("pass", hashedPassword);
   } catch (error) {
+    console.error("error", error);
     res.status(500).json({ message: "Server error", error: error });
+  }
+};
+
+export const sendemail = async (req: Request, res: Response) => {
+  try {
+    const { email } = req.body;
+    const registeredUser = await User.findOne({ email: email });
+    if (!registeredUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    const randomOtp = Math.floor(Math.random() * 10000)
+      .toString()
+      .padStart(4, "0");
+    await sendEmail(email, randomOtp);
+    res.status(201).json({ message: "success" });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: "Couldn't send email" });
   }
 };

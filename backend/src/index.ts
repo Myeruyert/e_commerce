@@ -24,10 +24,10 @@ app.use("/api/v1", categoryRoute);
 app.use("/api/v1", productRoute);
 
 //
-app.get("/", async (req: Request, res: Response) => {
-  sendEmail("j.myeruyert@gmail.com");
-  res.send("Welcome E-Commerce API Server");
-});
+// app.post("/send", async (req: Request, res: Response) => {
+//   sendEmail("j.myeruyert@gmail.com");
+//   res.send("Welcome E-Commerce API Server");
+// });
 
 connectDB(MONGO_URL);
 

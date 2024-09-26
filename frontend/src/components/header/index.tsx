@@ -1,11 +1,12 @@
 "use client";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ModeToggle } from "./theme";
 import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
 import { Heart, ShoppingCart, LogOut, User } from "lucide-react";
 import { Label } from "@radix-ui/react-label";
+import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import {
   DropdownMenu,
@@ -17,6 +18,8 @@ import {
   DropdownMenuShortcut,
 } from "@/components/ui/dropdown-menu";
 import { UserContext } from "../context/user_context";
+import SavedProduct from "../saved_product";
+import SearchModalList from "../search_modal";
 
 const Header = () => {
   const { token, setToken, refetch, setRefetch } = useContext(UserContext);
@@ -37,9 +40,13 @@ const Header = () => {
         <div className="flex gap-8 items-center">
           <div className="flex gap-2 items-center">
             <img src="/images/logo.png" alt="" className="w-8" />
-            <span className="text-sm">ECOMMERCE</span>
+            <span className="text-sm">
+              <Link href="/">ECOMMERCE</Link>{" "}
+            </span>
           </div>
-          <span className="text-sm">Ангилал</span>
+          <span className="text-sm">
+            <Link href="./category">Ангилал</Link>
+          </span>
         </div>
         <div className="">
           <Label className="flex items-center bg-zinc-800 gap-2 rounded-3xl px-4 h-8">
@@ -55,11 +62,25 @@ const Header = () => {
                 clipRule="evenodd"
               />
             </svg>
-            <Input
-              type="text"
-              placeholder="Бүтээгдэхүүн хайх"
-              className="input w-24 md:w-auto border-none bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
-            />
+            <div className="flex items-center gap-2">
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Input
+                    type="text"
+                    placeholder="Бүтээгдэхүүн хайх"
+                    className="input w-24 md:w-auto border-none bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
+                  />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem className="">
+                    <SearchModalList />
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <SearchModalList />
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
           </Label>
         </div>
         <div className="flex items-center gap-6">
