@@ -7,6 +7,24 @@ import crypto from "crypto";
 
 //Mongoose => odm => object data mapping
 
+interface IGetUserAuthInfoRequest extends Request {
+  user: any;
+}
+
+export const getCurrentUser = async (
+  req: IGetUserAuthInfoRequest,
+  res: Response
+) => {
+  try {
+    const { id } = req.user;
+    const data = await User.findById(id);
+    res.status(201).json({ message: "success", user: data });
+    console.log("ID", data);
+  } catch (error) {
+    res.status(400).json({ message: "Error" });
+  }
+};
+
 export const login = async (req: Request, res: Response) => {
   try {
     const { email, password } = req.body;
@@ -70,9 +88,9 @@ export const sendRecoverEmail = async (req: Request, res: Response) => {
     registeredUser.otp = otp;
     await registeredUser.save();
     await sendEmail(email, otp);
-    res.status(201).json({ message: "Sent successfully" });
+    res.status(200).json({ message: "Sent successfully" });
   } catch (error) {
-    console.log("error", error);
+    console.error("error", error);
     res.status(400).json({ message: "Couldn't send emailssss", error: error });
   }
 };
@@ -96,11 +114,11 @@ export const verifyOtp = async (req: Request, res: Response) => {
     await registeredUser.save();
     await sendEmail(
       email,
-      `<a href="http:localhost:3000/recoverpass?resettoken="${resetToken}"">Password recover link</a>`
+      `<a href="http:localhost:3000/recoverpass?resettoken="${resetToken}"">Password recovery link</a>`
     );
-    res.status(201).json({ message: "Sent email successfully" });
+    res.status(200).json({ message: "Sent email successfully" });
   } catch (error) {
-    console.log(error);
+    console.log("OTP ERR", error);
     res.status(400).json({ message: "Couldn't send link" });
   }
 };

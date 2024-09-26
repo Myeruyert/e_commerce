@@ -19,7 +19,7 @@ const RecoverPass = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [step, setStep] = useState(1);
-  const [countDown, setCountDown] = useState(30);
+  const [countDown, setCountDown] = useState(90);
   const [optValue, setOptValue] = useState("");
 
   const hadnleEmail = (e: ChangeEvent<HTMLInputElement>) => {
@@ -32,8 +32,9 @@ const RecoverPass = () => {
       const response = await axios.post(`${apiUrl}/api/v1/auth/resend-pass`, {
         email,
       });
-      if (response.status === 201) {
+      if (response.status === 200) {
         toast.success("Mail sent successfully");
+
         setStep(step + 1);
       }
       setIsLoading(false);
@@ -47,19 +48,20 @@ const RecoverPass = () => {
     setOptValue(value);
     if (value.length === 4) {
       try {
-        setIsLoading(true);
+        // setIsLoading(true);
         const response = await axios.post(`${apiUrl}/api/v1/auth/verify-otp`, {
           email,
           optValue,
         });
-        if (response.status === 201) {
+        if (response.status === 200) {
           toast.success("Mail sent successfully");
           router.push("/signin");
         }
-        setIsLoading(false);
+        // setIsLoading(false);
       } catch (error) {
-        setIsLoading(false);
-        toast.error("Couldn't sent the email");
+        // setIsLoading(false);
+        console.log("otp err", error);
+        toast.error("Couldn't sent the otp");
       }
     }
   };
@@ -97,8 +99,7 @@ const RecoverPass = () => {
             <Button
               className="bg-[#2563EB] w-full"
               size="custom"
-              onClick={handleSend}
-            >
+              onClick={handleSend}>
               Илгээх
             </Button>
           </>
@@ -116,8 +117,7 @@ const RecoverPass = () => {
               <InputOTP
                 maxLength={4}
                 value={optValue}
-                onChange={handleConfirmOtp}
-              >
+                onChange={handleConfirmOtp}>
                 <InputOTPGroup>
                   <InputOTPSlot index={0} />
                   <InputOTPSlot index={1} />
@@ -131,8 +131,7 @@ const RecoverPass = () => {
               <Button
                 variant="ghost"
                 className="text-center underline text-sm text-[#71717A] mt-4 mb-12"
-                onClick={handleResendOpt}
-              >
+                onClick={handleResendOpt}>
                 Дахин илгээх ({countDown})
               </Button>
             </div>

@@ -3,7 +3,7 @@ import { generateHtmlTemplate } from "./generateHtmlTemplate";
 import dotenv from "dotenv";
 dotenv.config();
 
-const randomOtp = Math.floor(Math.random() * 10000)
+const otp = Math.floor(Math.random() * 10000)
   .toString()
   .padStart(4, "0");
 
@@ -17,12 +17,12 @@ const transporter = nodemailer.createTransport({
     pass: process.env.EMAIL_PASS,
   },
 });
-export const sendEmail = async (email: string, randomOtp: string) => {
+export const sendEmail = async (email: string, otp: string): Promise<void> => {
   const info = await transporter.sendMail({
-    from: "myeruyertjanibyek@gmail.com", // sender address
-    to: "j.myeruyert@gmail.com", // list of receivers
+    from: process.env.EMAIL_USER, // sender address
+    to: email, // list of receivers
     subject: "Hello ✔", // Subject line
     text: "Hello world?", // plain text body
-    html: generateHtmlTemplate(randomOtp), // html body
+    html: generateHtmlTemplate(otp), // html body
   });
 };

@@ -1,7 +1,7 @@
 import express, { Request, Response } from "express";
 import cors from "cors";
 import authRoute from "./routes/auth_route";
-import userRoute from "./routes/user_route";
+// import userRoute from "./routes/user_route";
 import categoryRoute from "./routes/category_route";
 import productRoute from "./routes/product_route";
 import dotenv from "dotenv";
@@ -19,7 +19,7 @@ const MONGO_URL = process.env.MONGO_URL || "";
 app.use(express.json());
 app.use(cors());
 app.use("/api/v1/auth", authRoute);
-app.use("/api/v1/auth", userRoute);
+// app.use("/api/v1/auth", userRoute);
 app.use("/api/v1", categoryRoute);
 app.use("/api/v1", productRoute);
 

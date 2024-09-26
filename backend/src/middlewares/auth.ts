@@ -1,25 +1,25 @@
 import jwt from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
 import { decodeToken } from "../utils/jwt";
-dotenv.config();
+// dotenv.config();
 
-const JWT_TOKEN_PASS = process.env.JWT_TOKEN_PASS;
+// const JWT_TOKEN_PASS = process.env.JWT_TOKEN_PASS;
 
-interface IMyRequest extends Request {
-  user: string | object;
-}
-
-// declare global {
-//   namespace Express {
-//     interface Request {
-//       user: string | object;
-//     }
-//   }
+// interface IMyRequest extends Request {
+//   user: string | object;
 // }
 
+declare global {
+  namespace Express {
+    interface Request {
+      user: string | object;
+    }
+  }
+}
+
 export const authentication = (
-  req: IMyRequest,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
