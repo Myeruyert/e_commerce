@@ -3,6 +3,7 @@ import User from "../models/user.model";
 import bcrypt from "bcrypt";
 import { generateToken } from "../utils/jwt";
 import { sendEmail } from "../utils/sendemail";
+import crypto from "crypto";
 
 //Mongoose => odm => object data mapping
 
@@ -56,20 +57,78 @@ export const signup = async (req: Request, res: Response) => {
   }
 };
 
-export const sendemail = async (req: Request, res: Response) => {
+export const sendRecoverEmail = async (req: Request, res: Response) => {
   try {
     const { email } = req.body;
     const registeredUser = await User.findOne({ email: email });
     if (!registeredUser) {
       return res.status(404).json({ message: "User not found" });
     }
-    const randomOtp = Math.floor(Math.random() * 10000)
+    const otp = Math.floor(Math.random() * 10000)
       .toString()
       .padStart(4, "0");
-    await sendEmail(email, randomOtp);
-    res.status(201).json({ message: "success" });
+    registeredUser.otp = otp;
+    await registeredUser.save();
+    await sendEmail(email, otp);
+    res.status(201).json({ message: "Sent successfully" });
+  } catch (error) {
+    console.log("error", error);
+    res.status(400).json({ message: "Couldn't send emailssss", error: error });
+  }
+};
+
+export const verifyOtp = async (req: Request, res: Response) => {
+  try {
+    const { email, otpValue } = req.body;
+    const registeredUser = await User.findOne({ email: email, otp: otpValue });
+    if (!registeredUser) {
+      return res.status(404).json({ message: "User or OTP code not found" });
+    }
+    const resetToken = crypto.randomBytes(25).toString("hex");
+    const hashedResetToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+    registeredUser.passwordResetToken = hashedResetToken;
+    registeredUser.passwordResetTokenExpire = new Date(
+      Date.now() + 10 * 60 * 1000
+    );
+    await registeredUser.save();
+    await sendEmail(
+      email,
+      `<a href="http:localhost:3000/recoverpass?resettoken="${resetToken}"">Password recover link</a>`
+    );
+    res.status(201).json({ message: "Sent email successfully" });
   } catch (error) {
     console.log(error);
-    res.status(400).json({ message: "Couldn't send email" });
+    res.status(400).json({ message: "Couldn't send link" });
+  }
+};
+
+export const verifyPassword = async (req: Request, res: Response) => {
+  try {
+    const { password, resetToken } = req.body;
+
+    const hashedResetToken = crypto
+      .createHash("sha256")
+      .update(resetToken)
+      .digest("hex");
+
+    const registeredUser = await User.findOne({
+      passwordResetToken: hashedResetToken,
+      passwordResetTokenExpire: { $gt: Date.now },
+    });
+    if (!registeredUser) {
+      return res.status(404).json({ message: "Time expired" });
+    }
+
+    registeredUser.password = password;
+    await registeredUser.save();
+    res
+      .status(201)
+      .json({ message: "Your password has been recovered successfully" });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ message: "Couldn't recovered password" });
   }
 };
