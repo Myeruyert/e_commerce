@@ -1,5 +1,4 @@
 "use client";
-import GetNewPass from "@/components/recover_pass/get_new_pass";
 import Loading from "@/components/recover_pass/loading";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,6 +12,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp";
+import EnterNewPass from "@/components/recover_pass/new_pass";
 
 const RecoverPass = () => {
   const router = useRouter();
@@ -46,25 +46,30 @@ const RecoverPass = () => {
 
   const handleConfirmOtp = async (value: string) => {
     setOptValue(value);
+    console.log("VL", value.length);
     if (value.length === 4) {
       try {
-        // setIsLoading(true);
+        setIsLoading(true);
         const response = await axios.post(`${apiUrl}/api/v1/auth/verify-otp`, {
           email,
-          optValue,
+          otpValue: value,
         });
         if (response.status === 200) {
           toast.success("Mail sent successfully");
           router.push("/signin");
+          // setStep(step + 1);
         }
-        // setIsLoading(false);
+
+        setIsLoading(false);
       } catch (error) {
-        // setIsLoading(false);
+        setIsLoading(false);
         console.log("otp err", error);
         toast.error("Couldn't sent the otp");
       }
     }
   };
+
+  console.log("OTPVALUE", optValue);
 
   const handleResendOpt = () => {
     setCountDown(30);
@@ -99,7 +104,8 @@ const RecoverPass = () => {
             <Button
               className="bg-[#2563EB] w-full"
               size="custom"
-              onClick={handleSend}>
+              onClick={handleSend}
+            >
               Илгээх
             </Button>
           </>
@@ -117,7 +123,8 @@ const RecoverPass = () => {
               <InputOTP
                 maxLength={4}
                 value={optValue}
-                onChange={handleConfirmOtp}>
+                onChange={handleConfirmOtp}
+              >
                 <InputOTPGroup>
                   <InputOTPSlot index={0} />
                   <InputOTPSlot index={1} />
@@ -131,12 +138,53 @@ const RecoverPass = () => {
               <Button
                 variant="ghost"
                 className="text-center underline text-sm text-[#71717A] mt-4 mb-12"
-                onClick={handleResendOpt}>
+                onClick={handleResendOpt}
+              >
                 Дахин илгээх ({countDown})
               </Button>
             </div>
           </>
         )}
+        {/* {step === 3 && (
+          <div className="">
+            <h1 className="font-semibold text-2xl text-center mb-8">
+              Нууц үг сэргээх
+            </h1>
+            <Input
+              type="password"
+              className="rounded-full flex items-center px-4 py-1 grow border-none h-9 focus-visible:ring-0 focus-visible:ring-offset-0"
+              placeholder="Шинэ нууц үг"
+              value={userData.password}
+              onChange={(e) => {
+                setUserData({ ...userData, password: e.target.value });
+              }}
+            />
+            <Input
+              type="password"
+              className="rounded-full flex items-center px-4 py-1 grow border-none h-9 focus-visible:ring-0 focus-visible:ring-offset-0 my-4"
+              placeholder="Шинэ нууц үг дахин оруулах"
+              value={userData.rePassword}
+              onChange={(e) => {
+                setUserData({ ...userData, rePassword: e.target.value });
+              }}
+            />
+            <ul className=" flex flex-col text-xs list-disc px-4 mb-4 gap-1">
+              <li className="">Том үсэг орсон байх</li>
+              <li>Жижиг үсэг орсон байх</li>
+              <li>Тоо орсон байх</li>
+              <li>Тэмдэгт орсон байх</li>
+            </ul>
+            <div className="flex flex-col gap-12">
+              <Button
+                className="bg-[#2563EB]"
+                size="custom"
+                onClick={createNewPass}
+              >
+                Үүсгэх
+              </Button>
+            </div>
+          </div>
+        )} */}
       </div>
     </div>
   );

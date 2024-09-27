@@ -98,6 +98,7 @@ export const sendRecoverEmail = async (req: Request, res: Response) => {
 export const verifyOtp = async (req: Request, res: Response) => {
   try {
     const { email, otpValue } = req.body;
+    console.log("emai, otpValue", email, otpValue);
     const registeredUser = await User.findOne({ email: email, otp: otpValue });
     if (!registeredUser) {
       return res.status(404).json({ message: "User or OTP code not found" });
@@ -112,9 +113,10 @@ export const verifyOtp = async (req: Request, res: Response) => {
       Date.now() + 10 * 60 * 1000
     );
     await registeredUser.save();
+    console.log("resetToken", hashedResetToken, resetToken);
     await sendEmail(
       email,
-      `<a href="http:localhost:3000/recoverpass?resettoken="${resetToken}"">Password recovery link</a>`
+      `<a href="http:localhost:3000/newpass?resettoken=${resetToken}">Password recovery link</a>`
     );
     res.status(200).json({ message: "Sent email successfully" });
   } catch (error) {
@@ -134,16 +136,15 @@ export const verifyPassword = async (req: Request, res: Response) => {
 
     const registeredUser = await User.findOne({
       passwordResetToken: hashedResetToken,
-      passwordResetTokenExpire: { $gt: Date.now },
+      passwordResetTokenExpire: { $gt: Date.now() },
     });
     if (!registeredUser) {
       return res.status(404).json({ message: "Time expired" });
     }
-
     registeredUser.password = password;
     await registeredUser.save();
     res
-      .status(201)
+      .status(200)
       .json({ message: "Your password has been recovered successfully" });
   } catch (error) {
     console.log(error);

@@ -12,8 +12,8 @@ interface IUser {
   profile_img: string;
   address?: string;
   otp: string;
-  passwordResetToken: string;
-  passwordResetTokenExpire: Date;
+  passwordResetToken?: string;
+  passwordResetTokenExpire?: Date;
   created_at: Date;
   updated_at: Date;
 }
