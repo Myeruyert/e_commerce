@@ -12,7 +12,9 @@ export const CategoryLabel = () => {
         {categoryList?.map((cat) => (
           <div className="flex items-center space-x-2">
             <Checkbox id="terms" />
-            <Label htmlFor="terms" className="text-[#09090B] font-medium">
+            <Label
+              htmlFor="terms"
+              className="text-[#09090B] dark:text-white font-medium">
               {cat}
             </Label>
           </div>

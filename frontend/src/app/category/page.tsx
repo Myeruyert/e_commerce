@@ -2,6 +2,7 @@ import { CardWithForm } from "@/components/card/card";
 import { CategoryLabel } from "@/components/category";
 import { SizeLabel } from "@/components/category/size_label";
 import ProductDetail from "@/components/product_lists/product_detail";
+import RatingSection from "@/components/category/rating";
 import React from "react";
 
 const CategoryPage = () => {
@@ -21,9 +22,6 @@ const CategoryPage = () => {
           <CardWithForm />
         </main>
       </div>
-      <section>
-        <ProductDetail />
-      </section>
     </div>
   );
 };
