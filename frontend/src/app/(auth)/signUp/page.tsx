@@ -1,59 +1,12 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { FormLabel } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { toast } from "react-toastify";
 import Link from "next/link";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import { apiUrl } from "@/utils/util";
+import React, { useContext, useState } from "react";
+import { UserContext } from "@/components/context/user_context";
 
 const SignUp = () => {
-  const [userData, setUserData] = useState({
-    firstname: "",
-    lastname: "",
-    email: "",
-    password: "",
-    rePassword: "",
-  });
-
-  const router = useRouter();
-
-  const handleSignUp = async () => {
-    const { firstname, lastname, email, password, rePassword } = userData;
-    if (password !== rePassword) {
-      toast.error("Password doesn't match");
-      return;
-    }
-    try {
-      // setIsLoading(true);
-      const res = await fetch(`${apiUrl}/api/v1/auth/signup`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          firstname,
-          lastname,
-          email,
-          password,
-        }),
-      });
-      if (res.status === 201) {
-        console.log("res", res);
-        toast.success("User signed up successfully");
-        // setIsLoading(false);
-        router.push("/signin");
-      }
-    } catch (error) {
-      // res.status(400).json({ message: "Failed to sign up. Please try again." });
-      console.error("There was an error signing up:", error);
-      // setIsLoading(false);
-      toast.error("Failed to sign up. Please try again.");
-    }
-  };
-
-  console.log("UD", userData);
+  const { user, setUser, handleSignUp } = useContext(UserContext);
 
   return (
     <div className="flex h-[calc(100vh-290px)] justify-center items-center bg-gray-100 dark:bg-[#121212]">
@@ -72,9 +25,9 @@ const SignUp = () => {
             type="text"
             className="grow border-none bg-transparent h-9 focus-visible:ring-0 focus-visible:ring-offset-0"
             placeholder="Овог"
-            value={userData.lastname}
+            value={user.lastname}
             onChange={(e) => {
-              setUserData({ ...userData, lastname: e.target.value });
+              setUser({ ...user, lastname: e.target.value });
             }}
           />
         </div>
@@ -91,9 +44,9 @@ const SignUp = () => {
             type="text"
             className="grow border-none bg-transparent h-9 focus-visible:ring-0 focus-visible:ring-offset-0"
             placeholder="Нэр"
-            value={userData.firstname}
+            value={user.firstname}
             onChange={(e) => {
-              setUserData({ ...userData, firstname: e.target.value });
+              setUser({ ...user, firstname: e.target.value });
             }}
           />
         </div>
@@ -111,9 +64,9 @@ const SignUp = () => {
             type="text"
             className="grow border-none bg-transparent h-9 focus-visible:ring-0 focus-visible:ring-offset-0"
             placeholder="Email"
-            value={userData.email}
+            value={user.email}
             onChange={(e) => {
-              setUserData({ ...userData, email: e.target.value });
+              setUser({ ...user, email: e.target.value });
             }}
           />
         </div>
@@ -133,9 +86,9 @@ const SignUp = () => {
           <Input
             type="password"
             className="grow border-none bg-transparent h-9 focus-visible:ring-0 focus-visible:ring-offset-0"
-            value={userData.password}
+            value={user.password}
             onChange={(e) => {
-              setUserData({ ...userData, password: e.target.value });
+              setUser({ ...user, password: e.target.value });
             }}
           />
         </div>
@@ -155,9 +108,9 @@ const SignUp = () => {
           <Input
             type="password"
             className="grow border-none bg-transparent h-9 focus-visible:ring-0 focus-visible:ring-offset-0"
-            value={userData.rePassword}
+            value={user.rePassword}
             onChange={(e) => {
-              setUserData({ ...userData, rePassword: e.target.value });
+              setUser({ ...user, rePassword: e.target.value });
             }}
           />
         </div>

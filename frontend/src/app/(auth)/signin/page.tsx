@@ -3,37 +3,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 import { apiUrl } from "@/utils/util";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { UserContext } from "@/components/context/user_context";
 
 const SignIn = () => {
-  const router = useRouter();
-  const [userData, setUserData] = useState({
-    email: "",
-    password: "",
-  });
-  const handleSignIn = async () => {
-    const { email, password } = userData;
-    try {
-      const res = await axios.post(`${apiUrl}/api/v1/auth/login`, {
-        email,
-        password,
-      });
-      if (res.status === 201) {
-        toast.success("User signed in successfully");
-        const { token } = res.data;
-        localStorage.setItem("token", token);
-        router.push("/");
-      }
-      console.log("res", res);
-    } catch (error) {
-      console.error("There was an error signing in:", error);
-      toast.error("Failed to sign in. Please try again.");
-    }
-  };
+  const { user, setUser, handleSignIn } = useContext(UserContext);
   return (
     <div className="flex h-[calc(100vh-290px)] justify-center items-center bg-gray-100 dark:bg-[#121212]">
       <div className="w-1/5">
@@ -52,9 +30,9 @@ const SignIn = () => {
             type="text"
             className="grow border-none h-9 bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0"
             placeholder="Email"
-            value={userData.email}
+            value={user.email}
             onChange={(e) => {
-              setUserData({ ...userData, email: e.target.value });
+              setUser({ ...user, email: e.target.value });
             }}
           />
         </Label>
@@ -75,9 +53,9 @@ const SignIn = () => {
             type="password"
             placeholder="********"
             className="grow border-none bg-transparent h-9 focus-visible:ring-0 focus-visible:ring-offset-0"
-            value={userData.password}
+            value={user.password}
             onChange={(e) => {
-              setUserData({ ...userData, password: e.target.value });
+              setUser({ ...user, password: e.target.value });
             }}
           />
         </Label>

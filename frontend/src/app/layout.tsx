@@ -7,6 +7,8 @@ import Header from "@/components/header";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { UserProvider } from "@/components/context/user_context";
+import { ProfileProvider } from "@/components/context/profile_context";
+import { ProductProvider } from "@/components/context/product_context";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -41,9 +43,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
             disableTransitionOnChange
           >
             <UserProvider>
-              <Header />
-              {children}
-              <Footer />
+              <ProfileProvider>
+                <ProductProvider>
+                  <Header />
+                  {children}
+                  <Footer />
+                </ProductProvider>
+              </ProfileProvider>
             </UserProvider>
 
             <ToastContainer />
