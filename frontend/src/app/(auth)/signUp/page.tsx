@@ -4,9 +4,55 @@ import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import React, { useContext, useState } from "react";
 import { UserContext } from "@/components/context/user_context";
+import { useRouter } from "next/navigation";
+import { apiUrl } from "@/utils/util";
+import { toast } from "react-toastify";
+import axios from "axios";
+import { ProfileContext } from "@/components/context/profile_context";
+import Loading from "@/components/recover_pass/loading";
 
 const SignUp = () => {
-  const { user, setUser, handleSignUp } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
+  const { isLoading, setIsLoading } = useContext(ProfileContext);
+  const router = useRouter();
+
+  const [userForm, setUserForm] = useState({
+    email: "",
+    firstname: "",
+    lastname: "",
+    password: "",
+    rePassword: "",
+  });
+
+  const handleSignUp = async () => {
+    const { firstname, lastname, email, password, rePassword } = userForm;
+    if (password !== rePassword) {
+      toast.error("Password doesn't match");
+      return;
+    }
+    try {
+      setIsLoading(true);
+      const res = await axios.post(`${apiUrl}/api/v1/auth/signup`, {
+        firstname,
+        lastname,
+        email,
+        password,
+      });
+      if (res.status === 201) {
+        console.log("res", res);
+        toast.success("User signed up successfully");
+        setIsLoading(false);
+        router.push("/signin");
+      }
+    } catch (error) {
+      // res.status(400).json({ message: "Failed to sign up. Please try again." });
+      console.error("There was an error signing up:", error);
+      setIsLoading(false);
+      toast.error("Failed to sign up. Please try again.");
+    }
+  };
+
+  if (isLoading) return <Loading />;
 
   return (
     <div className="flex h-[calc(100vh-290px)] justify-center items-center bg-gray-100 dark:bg-[#121212]">
@@ -25,9 +71,9 @@ const SignUp = () => {
             type="text"
             className="grow border-none bg-transparent h-9 focus-visible:ring-0 focus-visible:ring-offset-0"
             placeholder="Овог"
-            value={user.lastname}
+            value={userForm.lastname}
             onChange={(e) => {
-              setUser({ ...user, lastname: e.target.value });
+              setUserForm({ ...userForm, lastname: e.target.value });
             }}
           />
         </div>
@@ -44,9 +90,9 @@ const SignUp = () => {
             type="text"
             className="grow border-none bg-transparent h-9 focus-visible:ring-0 focus-visible:ring-offset-0"
             placeholder="Нэр"
-            value={user.firstname}
+            value={userForm.firstname}
             onChange={(e) => {
-              setUser({ ...user, firstname: e.target.value });
+              setUserForm({ ...userForm, firstname: e.target.value });
             }}
           />
         </div>
@@ -64,9 +110,9 @@ const SignUp = () => {
             type="text"
             className="grow border-none bg-transparent h-9 focus-visible:ring-0 focus-visible:ring-offset-0"
             placeholder="Email"
-            value={user.email}
+            value={userForm.email}
             onChange={(e) => {
-              setUser({ ...user, email: e.target.value });
+              setUserForm({ ...userForm, email: e.target.value });
             }}
           />
         </div>
@@ -86,9 +132,9 @@ const SignUp = () => {
           <Input
             type="password"
             className="grow border-none bg-transparent h-9 focus-visible:ring-0 focus-visible:ring-offset-0"
-            value={user.password}
+            value={userForm.password}
             onChange={(e) => {
-              setUser({ ...user, password: e.target.value });
+              setUserForm({ ...userForm, password: e.target.value });
             }}
           />
         </div>
@@ -108,9 +154,9 @@ const SignUp = () => {
           <Input
             type="password"
             className="grow border-none bg-transparent h-9 focus-visible:ring-0 focus-visible:ring-offset-0"
-            value={user.rePassword}
+            value={userForm.rePassword}
             onChange={(e) => {
-              setUser({ ...user, rePassword: e.target.value });
+              setUserForm({ ...userForm, rePassword: e.target.value });
             }}
           />
         </div>

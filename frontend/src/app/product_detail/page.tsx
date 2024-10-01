@@ -2,14 +2,16 @@
 import { CardWithForm } from "@/components/card/card";
 import DetailInfo from "@/components/category/detail_info";
 import RatingSection from "@/components/category/rating";
+import { ProductContext } from "@/components/context/product_context";
 import ProductDetail from "@/components/product_lists/product_detail";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { FaStar } from "react-icons/fa";
 
 const ProductDetailPage = () => {
+  const { product } = useContext(ProductContext);
   const [count, setCount] = useState<number>(0);
   const [seeComments, setSeeComments] = useState<boolean>(false);
 
@@ -96,10 +98,9 @@ const ProductDetailPage = () => {
       <div className="mb-24">
         <h1 className="text-3xl font-bold mb-6">Холбоотой бараа</h1>
         <div className="grid grid-cols-4 gap-8">
-          <CardWithForm />
-          <CardWithForm />
-          <CardWithForm />
-          <CardWithForm />
+          {product?.map((c) => (
+            <CardWithForm name={c.name} price={c.price} />
+          ))}
         </div>
       </div>
     </main>

@@ -7,15 +7,13 @@ export interface IUser {
 }
 
 export interface UserContextType {
-  user: IUser;
+  user: IUser | null;
   token: string;
   setToken: (token: string) => void;
-  setUser: React.Dispatch<React.SetStateAction<IUser>>;
+  setUser: React.Dispatch<React.SetStateAction<IUser | null>>;
   fetchUserData?: () => void;
   refetch?: any;
   setRefetch?: any;
-  handleSignUp: () => Promise<void>;
-  handleSignIn: () => Promise<void>;
 }
 
 export interface ProfileContextType {
@@ -55,6 +53,16 @@ export interface IProduct {
 }
 
 export interface ProductContextType {
-  product: IProduct;
+  product: IProduct[];
   fetchProductData: () => void;
+}
+
+export interface ICategory {
+  name: string;
+  description: string;
+}
+
+export interface CategoryContextType {
+  category: ICategory[];
+  fetchCategoryData: () => void;
 }

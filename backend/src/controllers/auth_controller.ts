@@ -40,7 +40,7 @@ export const login = async (req: Request, res: Response) => {
         });
       } else {
         const token = generateToken({ id: loggedUser._id });
-        res.status(201).json({ message: "Success", token });
+        res.status(201).json({ message: "Success", token, user: loggedUser });
       }
     }
     // res.status(201).json({ message: "Login Success" });

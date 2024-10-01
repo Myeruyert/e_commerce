@@ -1,12 +1,11 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { useRouter } from "next/navigation";
 import { ModeToggle } from "./theme";
 import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
 import { Heart, ShoppingCart, LogOut, User } from "lucide-react";
 import { Label } from "@radix-ui/react-label";
-import { Checkbox } from "@/components/ui/checkbox";
 import Link from "next/link";
 import {
   DropdownMenu,
@@ -15,24 +14,20 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-  DropdownMenuShortcut,
 } from "@/components/ui/dropdown-menu";
 import { UserContext } from "../context/user_context";
 import SearchModalList from "../search_modal";
 
 const Header = () => {
-  const { token, setToken, user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const router = useRouter();
+
   const logOut = () => {
     localStorage.removeItem("token");
+    setUser(null);
     router.push("/signin");
   };
 
-  useEffect(() => {
-    const ss = localStorage.getItem("token") || "";
-    setToken(ss);
-  }, []);
-  console.log("tToken", token);
   return (
     <header className="bg-black text-white">
       <div className="h-[70px] flex justify-between items-center px-6">
@@ -91,7 +86,7 @@ const Header = () => {
             <ShoppingCart />
             <ModeToggle />
           </div>
-          {token ? (
+          {user ? (
             <div className="flex items-center gap-2">
               <DropdownMenu>
                 <DropdownMenuTrigger>

@@ -3,7 +3,7 @@ import Category from "../models/category.model";
 export const getAllCategory = async (req: Request, res: Response) => {
   try {
     const allCategories = await Category.find({});
-    res.status(201).json({ message: "Succeed", category: allCategories });
+    res.status(200).json({ message: "Succeed", category: allCategories });
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }

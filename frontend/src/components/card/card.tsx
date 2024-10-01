@@ -9,8 +9,10 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { ProductContext } from "../context/product_context";
 
-export function CardWithForm() {
-  const { product } = useContext(ProductContext);
+type CardProps = { name: string; price: number };
+
+export function CardWithForm({ name, price }: CardProps) {
+  // const { product } = useContext(ProductContext);
   return (
     <div>
       <Link href="/product_detail">
@@ -23,9 +25,9 @@ export function CardWithForm() {
           />
         </Card>
         <div>
-          <p className="text-base mt-2 mb-1">{product.name}</p>
+          <p className="text-base mt-2 mb-1">{name}</p>
           <div className="flex gap-2 items-center">
-            <span className="font-bold">{product.price}</span>
+            <span className="font-bold">{price}</span>
             <span className="line-through text-[#71717A] text-xs">
               120’000₮
             </span>
