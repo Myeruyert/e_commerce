@@ -7,7 +7,7 @@ import React from "react";
 
 const UserInfo = () => {
   return (
-    <div className="flex gap-5 h-[calc(100vh-290px)] justify-center bg-gray-100 dark:bg-[#121212] pt-28">
+    <div className="flex gap-5 justify-center bg-gray-100 dark:bg-[#121212] pt-28 pb-60">
       <div className="flex flex-col self-start">
         <Badge className="px-8 py-2 bg-transparent hover:bg-white dark:hover:bg-black text-black dark:text-white mb-2 text-sm font-normal">
           Хэрэглэгчийн хэсэг
