@@ -6,8 +6,8 @@ import { IoMdHeart } from "react-icons/io";
 
 const SavedProduct = () => {
   return (
-    <div className="m-5">
-      <Card className="w-[532px] h-[132px] bg-white dark:bg-black p-4 flex justify-between">
+    <div className="my-5 ">
+      <Card className="w- h-[132px] m-auto bg-white dark:bg-black p-4 flex justify-between">
         <div className="flex gap-6">
           <img src="\images\girl.png" alt="" className="rounded-xl" />
           <div className="flex flex-col justify-between">
@@ -16,7 +16,8 @@ const SavedProduct = () => {
             <Button
               variant={"outline"}
               className="bg-[#2563EB] text-white text-sm w-20"
-              size="custom">
+              size="custom"
+            >
               Сагслах
             </Button>
           </div>
