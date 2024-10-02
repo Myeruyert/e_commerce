@@ -1,50 +1,41 @@
-import { Badge } from "@/components/ui/badge";
+"use client";
+import OrderHistory from "@/components/order_section/order_history";
+import UserInfo from "@/components/order_section/user_info";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Separator } from "@/components/ui/separator";
-import { Textarea } from "@/components/ui/textarea";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
-const UserInfo = () => {
+const OrderSection = () => {
+  const [step, setStep] = useState(1);
+
+  const handleShow = () => {
+    setStep(1);
+  };
+
+  const handleClick = () => {
+    setStep(2);
+  };
+
+  console.log("STEP", step);
   return (
     <div className="flex gap-5 justify-center bg-gray-100 dark:bg-[#121212] pt-28 pb-60">
       <div className="flex flex-col self-start">
-        <Badge className="px-8 py-2 bg-transparent hover:bg-white dark:hover:bg-black text-black dark:text-white mb-2 text-sm font-normal">
+        <Button
+          className="rounded-full px-8 py-2 bg-transparent hover:bg-white dark:hover:bg-black text-black dark:text-white mb-2 text-sm font-normal"
+          onClick={handleShow}
+        >
           Хэрэглэгчийн хэсэг
-        </Badge>
-        <Badge className="px-8 py-2 bg-transparent hover:bg-white dark:hover:bg-black text-black dark:text-white mb-2 text-sm font-normal">
+        </Button>
+        <Button
+          className="rounded-full px-8 py-2 bg-transparent hover:bg-white dark:hover:bg-black text-black dark:text-white mb-2 text-sm font-normal"
+          onClick={handleClick}
+        >
           Захиалгын түүх
-        </Badge>
-      </div>
-      <div className="flex flex-col">
-        <h1 className="text-lg font-bold">Хэрэглэгчийн хэсэг</h1>
-        <Separator className="my-6" />
-        <div className="mb-4">
-          <h6 className="text-sm mb-2">Овог:</h6>
-          <Input className="rounded-full h-7 w-[620px]" />
-        </div>
-        <div className="mb-4">
-          <h6 className="text-sm mb-2">Нэр:</h6>
-          <Input className="rounded-full h-7 w-[620px]" />
-        </div>
-        <div className="mb-4">
-          <h6 className="text-sm mb-2">Утасны дугаар:</h6>
-          <Input className="rounded-full h-7 w-[620px]" />
-        </div>
-        <div className="mb-4">
-          <h6 className="text-sm mb-2">Имэйл хаяг:</h6>
-          <Input className="rounded-full h-7 w-[620px]" />
-        </div>
-        <div className="mb-4">
-          <h6 className="text-sm mb-2">Хаяг:</h6>
-          <Textarea className="rounded-2xl" />
-        </div>
-        <Button className="self-end bg-[#2563EB]" size="custom">
-          Мэдээлэл шинэчлэх
         </Button>
       </div>
+      {step === 1 && <UserInfo />}
+      {step === 2 && <OrderHistory />}
     </div>
   );
 };
 
-export default UserInfo;
+export default OrderSection;
