@@ -1,9 +1,8 @@
 "use client";
-import { CardWithForm } from "@/components/card/card";
-import DetailInfo from "@/components/category/detail_info";
+import { ProductCard } from "@/components/card/card";
 import RatingSection from "@/components/category/rating";
 import { ProductContext } from "@/components/context/product_context";
-import ProductDetail from "@/components/product_lists/product_detail";
+import ProductDetail from "@/components/product_detail/product_detail";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -30,7 +29,6 @@ const ProductDetailPage = () => {
     <main className="w-1/2 m-auto">
       <div className="mt-16 mb-20 grid grid-cols-2 gap-5">
         <ProductDetail />
-        {/* <DetailInfo /> */}
         <div className="flex flex-col gap-3 justify-end ">
           <Badge className="bg-transparent text-black border border-black w-14 text-xs font-semibold">
             Шинэ
@@ -50,15 +48,13 @@ const ProductDetailPage = () => {
             <div className="mt-4">
               <Button
                 className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
-                onClick={minus}
-              >
+                onClick={minus}>
                 -
               </Button>
               <Label className="4xl mx-4">{count}</Label>
               <Button
                 onClick={add}
-                className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
-              >
+                className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8">
                 +
               </Button>
             </div>
@@ -75,8 +71,7 @@ const ProductDetailPage = () => {
               <Button
                 className="text-sm text-[#2563EB] underline"
                 variant="ghost"
-                onClick={seeAllComments}
-              >
+                onClick={seeAllComments}>
                 бүгдийг харах
               </Button>
             </div>
@@ -99,7 +94,7 @@ const ProductDetailPage = () => {
         <h1 className="text-3xl font-bold mb-6">Холбоотой бараа</h1>
         <div className="grid grid-cols-4 gap-8">
           {product?.map((c) => (
-            <CardWithForm name={c.name} price={c.price} />
+            <ProductCard name={c.name} price={c.price} />
           ))}
         </div>
       </div>

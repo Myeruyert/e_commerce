@@ -1,0 +1,24 @@
+import React, { useContext } from "react";
+import { ProductCard } from "../card/card";
+import { ProductContext } from "../context/product_context";
+
+const ProductLists = () => {
+  const { product } = useContext(ProductContext);
+  return (
+    <div className="grid grid-cols-4 max-w-[1200px] mx-auto my-5 gap-4">
+      {product?.map((c, i) =>
+        i === 6 || i === 7 ? (
+          <div className="col-span-2 row-span-2">
+            <ProductCard name={c.name} price={c.price} />
+          </div>
+        ) : (
+          <div className="col-span-1 row-span-1">
+            <ProductCard name={c.name} price={c.price} />
+          </div>
+        )
+      )}
+    </div>
+  );
+};
+
+export default ProductLists;

@@ -1,6 +1,6 @@
 "use client";
-import OrderHistory from "@/components/order_section/order_history";
-import UserInfo from "@/components/order_section/user_info";
+import OrderHistory from "@/components/user_section/order_history";
+import UserInfo from "@/components/user_section/user_info";
 import { Button } from "@/components/ui/button";
 import React, { useEffect, useState } from "react";
 
@@ -21,14 +21,12 @@ const OrderSection = () => {
       <div className="flex flex-col self-start">
         <Button
           className="rounded-full px-8 py-2 bg-transparent hover:bg-white dark:hover:bg-black text-black dark:text-white mb-2 text-sm font-normal"
-          onClick={handleShow}
-        >
+          onClick={handleShow}>
           Хэрэглэгчийн хэсэг
         </Button>
         <Button
           className="rounded-full px-8 py-2 bg-transparent hover:bg-white dark:hover:bg-black text-black dark:text-white mb-2 text-sm font-normal"
-          onClick={handleClick}
-        >
+          onClick={handleClick}>
           Захиалгын түүх
         </Button>
       </div>

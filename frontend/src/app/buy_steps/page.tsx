@@ -7,6 +7,7 @@ import StepLabel from "@mui/material/StepLabel";
 import Sags from "@/components/order_section/sags";
 import DeliveryInfo from "@/components/order_section/delivery_info";
 import { Payment } from "@/components/order_section/payment";
+import SuccessToast from "@/components/order_section/success_toast";
 
 const steps = ["Сагслах", "Хүргэлтийн мэдээлэл оруулах", "Төлбөр төлөх"];
 
@@ -27,7 +28,8 @@ const BuySteps = () => {
       <div className="h-[calc(100vh-420px)] ">
         {/* <Sags /> */}
         {/* <DeliveryInfo /> */}
-        <Payment />
+        {/* <Payment /> */}
+        <SuccessToast />
       </div>
     </div>
   );

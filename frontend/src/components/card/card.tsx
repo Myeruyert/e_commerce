@@ -1,18 +1,12 @@
 "use client";
 import * as React from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 import { CiHeart } from "react-icons/ci";
 import Link from "next/link";
-import { useState, useContext } from "react";
-import { apiUrl } from "@/utils/util";
-import axios from "axios";
-import { toast } from "react-toastify";
-import { ProductContext } from "../context/product_context";
 
 type CardProps = { name: string; price: number };
 
-export function CardWithForm({ name, price }: CardProps) {
-  // const { product } = useContext(ProductContext);
+export function ProductCard({ name, price }: CardProps) {
   return (
     <div>
       <Link href="/product_detail">
