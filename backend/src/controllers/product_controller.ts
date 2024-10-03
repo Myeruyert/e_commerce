@@ -22,15 +22,27 @@ export const getProduct = async (req: Request, res: Response) => {
 
 export const createProduct = async (req: Request, res: Response) => {
   try {
-    const { name, price, description, isNewProduct, quantity, category, size } =
-      req.body;
+    const {
+      name,
+      price,
+      description,
+      isNewProduct,
+      quantity,
+      category,
+      size,
+      discount,
+      images,
+    } = req.body;
     if (
       !name ||
       !price ||
-      !description ||
-      !isNewProduct ||
-      !quantity ||
-      !category
+      !description
+      // !isNewProduct ||
+      // !quantity
+      // !category ||
+      // !discount ||
+      // !images ||
+      // !size
     ) {
       return res.status(400).json({ message: "Хоосон утга байж болохгүй" });
     }
@@ -42,6 +54,8 @@ export const createProduct = async (req: Request, res: Response) => {
       quantity,
       category,
       size,
+      discount,
+      images,
     });
     res.status(201).json({ message: "Succeed", product: newProduct });
   } catch (error) {

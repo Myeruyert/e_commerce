@@ -12,11 +12,21 @@ const ProductLists = () => {
           // <Link href={`/${product.id}`}>
           // </Link>
           <div className="col-span-2 row-span-2">
-            <ProductCard name={c.name} price={c.price} _id={c._id} />
+            <ProductCard
+              name={c.name}
+              price={c.price}
+              _id={c._id}
+              discount={c.discount}
+            />
           </div>
         ) : (
           <div className="col-span-1 row-span-1">
-            <ProductCard name={c.name} price={c.price} _id={c._id} />
+            <ProductCard
+              name={c.name}
+              price={c.price}
+              _id={c._id}
+              discount={c.discount}
+            />
           </div>
         )
       )}

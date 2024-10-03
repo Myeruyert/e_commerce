@@ -96,15 +96,13 @@ const ProductDetailPage = () => {
             <div className="mt-4">
               <Button
                 className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
-                onClick={minus}
-              >
+                onClick={minus}>
                 -
               </Button>
               <Label className="4xl mx-4">{count}</Label>
               <Button
                 onClick={add}
-                className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
-              >
+                className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8">
                 +
               </Button>
             </div>
@@ -121,8 +119,7 @@ const ProductDetailPage = () => {
               <Button
                 className="text-sm text-[#2563EB] underline"
                 variant="ghost"
-                onClick={seeAllComments}
-              >
+                onClick={seeAllComments}>
                 бүгдийг харах
               </Button>
             </div>
@@ -152,7 +149,12 @@ const ProductDetailPage = () => {
         <h1 className="text-3xl font-bold mb-6">Холбоотой бараа</h1>
         <div className="grid grid-cols-4 gap-8">
           {product?.map((c) => (
-            <ProductCard name={c.name} price={c.price} _id={c._id} />
+            <ProductCard
+              name={c.name}
+              price={c.price}
+              _id={c._id}
+              discount={c.discount}
+            />
           ))}
         </div>
       </div>
