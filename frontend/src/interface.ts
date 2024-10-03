@@ -34,6 +34,7 @@ export interface ProfileContextType {
 }
 
 export interface IProduct {
+  _id: string;
   name: string;
   description: string;
   price: number;
@@ -54,7 +55,7 @@ export interface IProduct {
 
 export interface ProductContextType {
   product: IProduct[];
-  fetchProductData: () => void;
+  fetchAllProducts: () => void;
 }
 
 export interface ICategory {

@@ -4,6 +4,7 @@ import authRoute from "./routes/auth_route";
 // import userRoute from "./routes/user_route";
 import categoryRoute from "./routes/category_route";
 import productRoute from "./routes/product_route";
+import cartRoute from "./routes/cart_route";
 import dotenv from "dotenv";
 import { connectDB } from "./config/db";
 import { sendEmail } from "./utils/sendemail";
@@ -22,6 +23,7 @@ app.use("/api/v1/auth", authRoute);
 // app.use("/api/v1/auth", userRoute);
 app.use("/api/v1", categoryRoute);
 app.use("/api/v1", productRoute);
+app.use("/api/v1", cartRoute);
 
 //
 // app.post("/send", async (req: Request, res: Response) => {

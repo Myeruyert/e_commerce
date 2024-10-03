@@ -16,7 +16,7 @@ const CategoryPage = () => {
         </aside>
         <main className="grid grid-cols-3 gap-8 w-2/3 mx-auto">
           {product?.map((c) => (
-            <ProductCard name={c.name} price={c.price} />
+            <ProductCard name={c.name} price={c.price} _id={c._id} />
           ))}
         </main>
       </div>

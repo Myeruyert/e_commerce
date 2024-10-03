@@ -4,12 +4,12 @@ import { Card } from "@/components/ui/card";
 import { CiHeart } from "react-icons/ci";
 import Link from "next/link";
 
-type CardProps = { name: string; price: number };
+type CardProps = { name: string; price: number; _id: string };
 
-export function ProductCard({ name, price }: CardProps) {
+export function ProductCard({ name, price, _id }: CardProps) {
   return (
     <div>
-      <Link href="/product_detail">
+      <Link href={"/" + _id}>
         <Card className="border-none relative">
           <CiHeart className="absolute right-3 top-2 text-2xl" />
           <img

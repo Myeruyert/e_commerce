@@ -1,4 +1,7 @@
 "use client";
+import React, { useEffect, useState, useContext } from "react";
+import { useRouter } from "next/router";
+import { Source_Serif_4 } from "next/font/google";
 import { ProductCard } from "@/components/card/card";
 import RatingSection from "@/components/category/rating";
 import { ProductContext } from "@/components/context/product_context";
@@ -6,15 +9,39 @@ import ProductDetail from "@/components/product_detail/product_detail";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import React, { useState, useContext } from "react";
 import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 import StarIcon from "@mui/icons-material/Star";
+import { useParams } from "next/navigation";
+import axios from "axios";
+import { apiUrl } from "@/utils/util";
+import { toast } from "react-toastify";
 
 const ProductDetailPage = () => {
   const { product } = useContext(ProductContext);
   const [count, setCount] = useState<number>(0);
   const [seeComments, setSeeComments] = useState<boolean>(false);
+
+  const { id } = useParams();
+  console.log("++++++", id);
+  const [oneProduct, setOneProduct] = useState({
+    name: "",
+    description: "",
+    price: "",
+  });
+
+  const fetchProductData = async (id: string | string[]) => {
+    console.log("id", id);
+    try {
+      const res = await axios.get(`${apiUrl}/api/v1/${id}`);
+      if (res.status === 200) {
+        const { product } = res.data;
+        setOneProduct(product);
+      }
+    } catch (error) {
+      console.log("cant fetch product lists", error);
+    }
+  };
 
   const minus = () => {
     setCount(count - 1);
@@ -42,6 +69,10 @@ const ProductDetailPage = () => {
 
   const value = 3.5;
 
+  console.log("ID data++++++++", oneProduct);
+  useEffect(() => {
+    fetchProductData(id);
+  }, [id]);
   return (
     <main className="w-1/2 m-auto">
       <div className="mt-16 mb-20 grid grid-cols-2 gap-5">
@@ -50,8 +81,8 @@ const ProductDetailPage = () => {
           <Badge className="bg-transparent text-black border border-black w-14 text-xs font-semibold">
             Шинэ
           </Badge>
-          <h2 className="font-bold text-2xl">Wildflower Hoodie</h2>
-          <p>Зэрлэг цэцгийн зурагтай даавуун цамц</p>
+          <h2 className="font-bold text-2xl">{oneProduct.name}</h2>
+          <p>{oneProduct.description}</p>
           <div className="flex flex-col gap-2 my-4">
             <p className="text-base underline">Хэмжээний загвар</p>
             <div className="flex gap-2">
@@ -79,7 +110,7 @@ const ProductDetailPage = () => {
             </div>
           </div>
           <div className="mt-6 mb-14">
-            <p className="text-xl font-bold mb-2">120,000₮</p>
+            <p className="text-xl font-bold mb-2">{oneProduct.price}₮</p>
             <Button className="bg-[#2563EB]" size="custom">
               Сагсанд нэмэх
             </Button>
@@ -121,7 +152,7 @@ const ProductDetailPage = () => {
         <h1 className="text-3xl font-bold mb-6">Холбоотой бараа</h1>
         <div className="grid grid-cols-4 gap-8">
           {product?.map((c) => (
-            <ProductCard name={c.name} price={c.price} />
+            <ProductCard name={c.name} price={c.price} _id={c._id} />
           ))}
         </div>
       </div>
