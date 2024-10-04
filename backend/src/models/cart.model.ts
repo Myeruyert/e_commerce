@@ -5,6 +5,7 @@ interface ICart {
   price: number;
   image: string;
   quantity: number;
+  discount: number;
   user: Schema.Types.ObjectId;
 }
 
@@ -26,12 +27,16 @@ const cartSchema = new Schema<ICart>({
     default: 1,
     required: true,
   },
+  discount: {
+    type: Number,
+    default: 0,
+  },
   user: {
     type: Schema.Types.ObjectId,
-    required: true,
+    // required: true,
     ref: "User",
   },
 });
 
-const Cart = model<ICart>("Cart", cartSchema);
+const Cart = model("Cart", cartSchema);
 export default Cart;

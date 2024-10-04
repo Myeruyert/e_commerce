@@ -9,8 +9,6 @@ const ProductLists = () => {
     <div className="grid grid-cols-4 max-w-[1200px] mx-auto my-5 gap-4">
       {product?.map((c, i) =>
         i === 6 || i === 7 ? (
-          // <Link href={`/${product.id}`}>
-          // </Link>
           <div className="col-span-2 row-span-2">
             <ProductCard
               name={c.name}

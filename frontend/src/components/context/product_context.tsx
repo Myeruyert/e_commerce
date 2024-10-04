@@ -18,13 +18,10 @@ export const ProductContext = createContext<ProductContextType>({
 export const ProductProvider = ({ children }: ProductProviderProps) => {
   const [product, setProduct] = useState<IProduct[]>([]);
 
-  //   const [product, setProduct] = useState<IProduct[]>([]);
-
   const fetchAllProducts = async () => {
     try {
       const res = await axios.get(`${apiUrl}/api/v1/products`);
       if (res.status === 200) {
-        // toast.success("Get products successfully");
         const { product } = res.data;
         setProduct(product);
         // console.log("RESDATA", res.data.product);
@@ -34,22 +31,6 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
       // toast.error("Failed to fetch product data");
     }
   };
-
-  const { id } = useParams();
-  const [articleDetail, setArticleDetail] = useState(null);
-
-  const getArticleById = async (id: string | string[]) => {
-    const res = await fetch(`https://dev.to/api/articles/${id}`);
-    const data = await res.json();
-    setArticleDetail(data);
-  };
-
-  useEffect(() => {
-    if (id) {
-      getArticleById(id);
-    }
-  }, [id]);
-  console.log("ad", articleDetail);
 
   useEffect(() => {
     fetchAllProducts();

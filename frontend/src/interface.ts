@@ -67,3 +67,26 @@ export interface CategoryContextType {
   category: ICategory[];
   fetchCategoryData: () => void;
 }
+
+export type CardProps = {
+  name: string;
+  price: number;
+  _id: string;
+  discount: number;
+};
+
+export interface ICart {
+  _id: string;
+  name: string;
+  price: number;
+  image: string;
+  quantity: number;
+  discount: number;
+  user: string;
+}
+
+export interface CartContextType {
+  cartData: ICart[];
+  setCartData: (cartData: ICart[]) => void;
+  postCartData: () => Promise<void>;
+}
