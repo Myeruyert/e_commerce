@@ -3,8 +3,6 @@ import React, { createContext, useEffect, useState } from "react";
 import { IProduct, ProductContextType } from "@/interface";
 import { apiUrl } from "@/utils/util";
 import axios from "axios";
-import { toast } from "react-toastify";
-import { useParams } from "next/navigation";
 
 type ProductProviderProps = {
   children: React.ReactNode;

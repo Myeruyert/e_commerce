@@ -76,7 +76,7 @@ export type CardProps = {
 };
 
 export interface ICart {
-  _id: string;
+  _id?: string;
   name: string;
   price: number;
   image: string;
@@ -86,7 +86,7 @@ export interface ICart {
 }
 
 export interface CartContextType {
-  cartData: ICart[];
-  setCartData: (cartData: ICart[]) => void;
-  postCartData: () => Promise<void>;
+  cartData: ICart;
+  setCartData: (cartData: ICart) => void;
+  postCartData: () => void;
 }

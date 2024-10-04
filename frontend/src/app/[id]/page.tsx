@@ -13,8 +13,11 @@ import StarIcon from "@mui/icons-material/Star";
 import { useParams } from "next/navigation";
 import axios from "axios";
 import { apiUrl } from "@/utils/util";
+import { Input } from "@/components/ui/input";
+import { CartContext } from "@/components/context/cart_context";
 
 const ProductDetailPage = () => {
+  const { postCartData, cartData, setCartData } = useContext(CartContext);
   const { product } = useContext(ProductContext);
   const [count, setCount] = useState<number>(0);
   const [seeComments, setSeeComments] = useState<boolean>(false);
@@ -98,15 +101,13 @@ const ProductDetailPage = () => {
             <div className="mt-4">
               <Button
                 className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
-                onClick={minus}
-              >
+                onClick={minus}>
                 -
               </Button>
               <Label className="4xl mx-4">{count}</Label>
               <Button
                 onClick={add}
-                className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
-              >
+                className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8">
                 +
               </Button>
             </div>
@@ -128,7 +129,10 @@ const ProductDetailPage = () => {
               )}
             </div>
             {/* <p className="text-xl font-bold mb-2">{oneProduct.price}₮</p> */}
-            <Button className="bg-[#2563EB]" size="custom">
+            <Button
+              className="bg-[#2563EB]"
+              size="custom"
+              onClick={postCartData}>
               Сагсанд нэмэх
             </Button>
           </div>
@@ -138,8 +142,7 @@ const ProductDetailPage = () => {
               <Button
                 className="text-sm text-[#2563EB] underline"
                 variant="ghost"
-                onClick={seeAllComments}
-              >
+                onClick={seeAllComments}>
                 бүгдийг харах
               </Button>
             </div>
