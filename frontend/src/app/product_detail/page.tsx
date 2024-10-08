@@ -10,18 +10,12 @@ import React, { useState, useContext } from "react";
 import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 import StarIcon from "@mui/icons-material/Star";
+import { UserContext } from "@/components/context/user_context";
 
 const ProductDetailPage = () => {
   const { product } = useContext(ProductContext);
-  const [count, setCount] = useState<number>(0);
   const [seeComments, setSeeComments] = useState<boolean>(false);
-
-  const minus = () => {
-    setCount(count - 1);
-  };
-  const add = () => {
-    setCount(count + 1);
-  };
+  const { count, minus, add } = useContext(UserContext);
 
   const seeAllComments = () => {
     setSeeComments(!seeComments);

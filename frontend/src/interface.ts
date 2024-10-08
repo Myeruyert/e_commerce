@@ -14,6 +14,10 @@ export interface UserContextType {
   fetchUserData?: () => void;
   refetch?: any;
   setRefetch?: any;
+  count: number;
+  setCount: (count: number) => void;
+  minus: () => void;
+  add: () => void;
 }
 
 export interface ProfileContextType {

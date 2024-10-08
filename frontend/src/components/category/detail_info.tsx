@@ -1,17 +1,12 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Button } from "../ui/button";
 import { FaStar } from "react-icons/fa";
 import { Badge } from "../ui/badge";
 import { Label } from "../ui/label";
+import { UserContext } from "../context/user_context";
 
 const DetailInfo = () => {
-  const [count, setCount] = useState<number>(0);
-  const minus = () => {
-    setCount(count - 1);
-  };
-  const add = () => {
-    setCount(count + 1);
-  };
+  const { count, minus, add } = useContext(UserContext);
   return (
     <div className="flex flex-col gap-3 justify-end">
       <Badge className="bg-transparent text-black border border-black w-14 text-xs font-semibold">
