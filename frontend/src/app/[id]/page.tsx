@@ -29,11 +29,17 @@ const ProductDetailPage = () => {
     description: "",
     price: 0,
     discount: 0,
+    isNewProduct: true,
   });
 
   const currentPrice =
     oneProduct.price -
     Math.floor((oneProduct.price * oneProduct.discount) / 100);
+
+  const options = { maximumFractionDigits: 2 };
+  const formattedPrice = Intl.NumberFormat("en-US", options).format(
+    currentPrice
+  );
 
   const fetchProductData = async (id: string | string[]) => {
     console.log("id", id);
@@ -83,8 +89,8 @@ const ProductDetailPage = () => {
       <div className="mt-16 mb-20 grid grid-cols-2 gap-5">
         <ProductDetail />
         <div className="flex flex-col gap-3 justify-end ">
-          <Badge className="bg-transparent text-black border border-black w-14 text-xs font-semibold">
-            Шинэ
+          <Badge className="bg-transparent text-black border border-black w-16 text-xs text-center font-semibold">
+            {oneProduct.isNewProduct ? "Шинэ" : "Хуучин"}
           </Badge>
           <h2 className="font-bold text-2xl">{oneProduct.name}</h2>
           <p>{oneProduct.description}</p>
@@ -101,13 +107,15 @@ const ProductDetailPage = () => {
             <div className="mt-4">
               <Button
                 className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
-                onClick={minus}>
+                onClick={minus}
+              >
                 -
               </Button>
               <Label className="4xl mx-4">{count}</Label>
               <Button
                 onClick={add}
-                className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8">
+                className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
+              >
                 +
               </Button>
             </div>
@@ -116,7 +124,7 @@ const ProductDetailPage = () => {
             <div className="flex gap-2 items-center mb-2">
               {currentPrice !== oneProduct.price ? (
                 <>
-                  <span className="font-bold text-xl">{currentPrice}₮</span>
+                  <span className="font-bold text-xl">{formattedPrice}₮</span>
                   <span className="line-through text-[#71717A] text-xs">
                     {oneProduct.price}₮
                   </span>
@@ -125,14 +133,14 @@ const ProductDetailPage = () => {
                   </span>
                 </>
               ) : (
-                <span className="font-bold">{currentPrice}</span>
+                <span className="font-bold">{formattedPrice}₮</span>
               )}
             </div>
-            {/* <p className="text-xl font-bold mb-2">{oneProduct.price}₮</p> */}
             <Button
               className="bg-[#2563EB]"
               size="custom"
-              onClick={postCartData}>
+              onClick={postCartData}
+            >
               Сагсанд нэмэх
             </Button>
           </div>
@@ -142,7 +150,8 @@ const ProductDetailPage = () => {
               <Button
                 className="text-sm text-[#2563EB] underline"
                 variant="ghost"
-                onClick={seeAllComments}>
+                onClick={seeAllComments}
+              >
                 бүгдийг харах
               </Button>
             </div>

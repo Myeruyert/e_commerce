@@ -13,6 +13,11 @@ export function ProductCard({ name, price, _id, discount }: CardProps) {
 
   const currentPrice = price - Math.floor((price * discount) / 100);
 
+  const options = { maximumFractionDigits: 2 };
+  const formattedPrice = Intl.NumberFormat("en-US", options).format(
+    currentPrice
+  );
+
   const [loved, setLoved] = useState(false);
 
   const wishList = () => {
@@ -43,14 +48,14 @@ export function ProductCard({ name, price, _id, discount }: CardProps) {
           <div className="flex gap-2 items-center">
             {currentPrice !== price ? (
               <>
-                <span className="font-bold">{currentPrice}</span>
+                <span className="font-bold">{formattedPrice}₮</span>
                 <span className="line-through text-[#71717A] text-xs">
                   {price}₮
                 </span>
                 <span className="font-bold text-[#EF4444]">{discount}%</span>
               </>
             ) : (
-              <span className="font-bold">{currentPrice}</span>
+              <span className="font-bold">{formattedPrice}₮</span>
             )}
           </div>
         </div>

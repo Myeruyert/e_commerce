@@ -23,7 +23,7 @@ app.use("/api/v1/auth", authRoute);
 // app.use("/api/v1/auth", userRoute);
 app.use("/api/v1", categoryRoute);
 app.use("/api/v1", productRoute);
-app.use("/api/v1", cartRoute);
+app.use("/api/v1/cart", cartRoute);
 
 //
 // app.post("/send", async (req: Request, res: Response) => {

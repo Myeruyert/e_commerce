@@ -13,7 +13,9 @@ import { decodeToken } from "../utils/jwt";
 declare global {
   namespace Express {
     interface Request {
-      user: string | object;
+      user: {
+        id: string | object;
+      };
     }
   }
 }
@@ -30,7 +32,8 @@ export const authentication = (
     }
     const token = req.headers.authorization?.split(" ")[1];
     const user = decodeToken(token); //user dotor {id: uuid} orson bga
-    req.user = user; // {id : ""}
+    // console.log("USERR", user);
+    req.user = user as any; // {id : ""}
     next();
   } catch (error) {
     console.log("cattt", error);
