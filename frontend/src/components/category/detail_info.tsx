@@ -4,9 +4,10 @@ import { FaStar } from "react-icons/fa";
 import { Badge } from "../ui/badge";
 import { Label } from "../ui/label";
 import { UserContext } from "../context/user_context";
+import { CartContext } from "../context/cart_context";
 
 const DetailInfo = () => {
-  const { count, minus, add } = useContext(UserContext);
+  const { count, minus, add } = useContext(CartContext);
   return (
     <div className="flex flex-col gap-3 justify-end">
       <Badge className="bg-transparent text-black border border-black w-14 text-xs font-semibold">
@@ -27,13 +28,15 @@ const DetailInfo = () => {
         <div className="mt-4">
           <Button
             className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
-            onClick={minus}>
+            onClick={minus}
+          >
             -
           </Button>
           <Label className="4xl mx-4">{count}</Label>
           <Button
             onClick={add}
-            className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8">
+            className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
+          >
             +
           </Button>
         </div>

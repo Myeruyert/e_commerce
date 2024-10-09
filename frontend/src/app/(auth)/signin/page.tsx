@@ -32,7 +32,7 @@ const SignIn = () => {
         localStorage.setItem("token", token);
         router.push("/");
       }
-      console.log("res", res);
+      // console.log("res", res);
     } catch (error) {
       console.error("There was an error signing in:", error);
       toast.error("Failed to sign in. Please try again.");

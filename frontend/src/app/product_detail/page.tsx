@@ -11,11 +11,12 @@ import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 import StarIcon from "@mui/icons-material/Star";
 import { UserContext } from "@/components/context/user_context";
+import { CartContext } from "@/components/context/cart_context";
 
 const ProductDetailPage = () => {
   const { product } = useContext(ProductContext);
   const [seeComments, setSeeComments] = useState<boolean>(false);
-  const { count, minus, add } = useContext(UserContext);
+  const { count, minus, add } = useContext(CartContext);
 
   const seeAllComments = () => {
     setSeeComments(!seeComments);
@@ -59,13 +60,15 @@ const ProductDetailPage = () => {
             <div className="mt-4">
               <Button
                 className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
-                onClick={minus}>
+                onClick={minus}
+              >
                 -
               </Button>
               <Label className="4xl mx-4">{count}</Label>
               <Button
                 onClick={add}
-                className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8">
+                className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
+              >
                 +
               </Button>
             </div>
@@ -82,7 +85,8 @@ const ProductDetailPage = () => {
               <Button
                 className="text-sm text-[#2563EB] underline"
                 variant="ghost"
-                onClick={seeAllComments}>
+                onClick={seeAllComments}
+              >
                 бүгдийг харах
               </Button>
             </div>

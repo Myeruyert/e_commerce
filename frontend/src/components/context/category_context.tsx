@@ -39,7 +39,7 @@ export const CategoryProvider = ({ children }: CategoryProviderProps) => {
     fetchCategoryData();
   }, []);
 
-  console.log("CAT", category);
+  // console.log("CAT", category);
   return (
     <CategoryContext.Provider value={{ category, fetchCategoryData }}>
       {children}

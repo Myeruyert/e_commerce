@@ -39,7 +39,7 @@ const SignUp = () => {
         password,
       });
       if (res.status === 201) {
-        console.log("res", res);
+        // console.log("res", res);
         toast.success("User signed up successfully");
         setIsLoading(false);
         router.push("/signin");

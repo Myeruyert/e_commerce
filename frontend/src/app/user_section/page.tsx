@@ -15,18 +15,20 @@ const OrderSection = () => {
     setStep(2);
   };
 
-  console.log("STEP", step);
+  // console.log("STEP", step);
   return (
     <div className="flex gap-5 justify-center bg-gray-100 dark:bg-[#121212] pt-28 pb-60">
       <div className="flex flex-col self-start">
         <Button
           className="rounded-full px-8 py-2 bg-transparent hover:bg-white dark:hover:bg-black text-black dark:text-white mb-2 text-sm font-normal"
-          onClick={handleShow}>
+          onClick={handleShow}
+        >
           Хэрэглэгчийн хэсэг
         </Button>
         <Button
           className="rounded-full px-8 py-2 bg-transparent hover:bg-white dark:hover:bg-black text-black dark:text-white mb-2 text-sm font-normal"
-          onClick={handleClick}>
+          onClick={handleClick}
+        >
           Захиалгын түүх
         </Button>
       </div>

@@ -16,15 +16,22 @@ import { apiUrl } from "@/utils/util";
 import { Input } from "@/components/ui/input";
 import { CartContext } from "@/components/context/cart_context";
 import { UserContext } from "@/components/context/user_context";
+import { toast } from "react-toastify";
 
 const ProductDetailPage = () => {
-  const { postCartData, cartData, setCartData } = useContext(CartContext);
+  // const { postCartData, cartData, setCartData } = useContext(CartContext);
   const { product } = useContext(ProductContext);
   const [seeComments, setSeeComments] = useState<boolean>(false);
-  const { count, minus, add } = useContext(UserContext);
+  const { count, minus, add } = useContext(CartContext);
+  // const [count, setCount] = useState<number>(0);
+  const [insertCartData, setInsertCartData] = useState({
+    productId: "",
+    quantity: 0,
+    totalAmount: 0,
+  });
 
   const { id } = useParams();
-  console.log("++++++", id);
+  // console.log("++++++", id);
   const [oneProduct, setOneProduct] = useState({
     name: "",
     description: "",
@@ -43,15 +50,42 @@ const ProductDetailPage = () => {
   );
 
   const fetchProductData = async (id: string | string[]) => {
-    console.log("id", id);
+    // console.log("id", id);
     try {
       const res = await axios.get(`${apiUrl}/api/v1/product/${id}`);
+
       if (res.status === 200) {
         const { product } = res.data;
         setOneProduct(product);
       }
     } catch (error) {
       console.log("cant fetch product lists", error);
+    }
+  };
+
+  const postCartData = async () => {
+    // const { productId } = insertCartData;
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.post(
+        `${apiUrl}/api/v1/cart/insert`,
+        {
+          productId: id,
+          quantity: count,
+          totalAmount: 0,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (res.status === 200) {
+        toast.success("Added to shopping cart successfully");
+      }
+    } catch (error) {
+      console.log("cant fetch cart lists", error);
+      toast.error("Failed to post cart data");
     }
   };
 
@@ -74,7 +108,7 @@ const ProductDetailPage = () => {
 
   const value = 3.5;
 
-  console.log("ID data++++++++", oneProduct);
+  console.log("postedData", insertCartData);
   useEffect(() => {
     fetchProductData(id);
   }, [id]);
@@ -101,13 +135,15 @@ const ProductDetailPage = () => {
             <div className="mt-4">
               <Button
                 className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
-                onClick={minus}>
+                onClick={minus}
+              >
                 -
               </Button>
               <Label className="4xl mx-4">{count}</Label>
               <Button
                 onClick={add}
-                className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8">
+                className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
+              >
                 +
               </Button>
             </div>
@@ -131,7 +167,8 @@ const ProductDetailPage = () => {
             <Button
               className="bg-[#2563EB]"
               size="custom"
-              onClick={postCartData}>
+              onClick={postCartData}
+            >
               Сагсанд нэмэх
             </Button>
           </div>
@@ -141,7 +178,8 @@ const ProductDetailPage = () => {
               <Button
                 className="text-sm text-[#2563EB] underline"
                 variant="ghost"
-                onClick={seeAllComments}>
+                onClick={seeAllComments}
+              >
                 бүгдийг харах
               </Button>
             </div>

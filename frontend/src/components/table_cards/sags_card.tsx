@@ -8,9 +8,10 @@ import { Label } from "../ui/label";
 import { UserContext } from "../context/user_context";
 import axios from "axios";
 import { apiUrl } from "@/utils/util";
+import { CartContext } from "../context/cart_context";
 
 const SagsCardTable = () => {
-  const { count, minus, add } = useContext(UserContext);
+  const { count, minus, add, postCartData } = useContext(CartContext);
   const [tableData, setTableData] = useState([
     {
       product: {
@@ -40,7 +41,7 @@ const SagsCardTable = () => {
         },
       });
       if (res.status === 200) {
-        console.log("000000000", res.data.cartData.products);
+        // console.log("000000000", res.data.cartData.products);
         setTableData(res.data.cartData.products);
       }
     } catch (error) {
@@ -48,11 +49,28 @@ const SagsCardTable = () => {
     }
   };
 
+  const deleteProduct = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.delete(`${apiUrl}/api/v1/cart/delete`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (res.status === 200) {
+        console.log("Delete", res.data.updatedCart);
+        // setTableData(res.data.updatedCart);
+      }
+    } catch (error) {
+      console.log("Failed to delete cart data", error);
+    }
+  };
+
   useEffect(() => {
     cardData();
-  }, []);
+  }, [tableData]);
 
-  console.log("CartDaataa", tableData);
+  // console.log("CartDaataa", tableData);
 
   return (
     <>
@@ -66,20 +84,28 @@ const SagsCardTable = () => {
                 <div className="">
                   <Button
                     className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
-                    onClick={minus}>
+                    onClick={minus}
+                  >
                     -
                   </Button>
-                  <Label className="4xl mx-4">{count}</Label>
+                  <Label className="4xl mx-4">{i.quantity}</Label>
                   <Button
                     onClick={add}
-                    className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8">
+                    className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
+                  >
                     +
                   </Button>
                 </div>
                 <p className="text-base font-bold">{i.product.price}₮</p>
               </div>
             </div>
-            <RiDeleteBin6Line className="font-thin text-2xl" />
+            <Button
+              variant="ghost"
+              className="p-0 hover:bg-transparent hover:scale-110"
+              onClick={deleteProduct}
+            >
+              <RiDeleteBin6Line className="font-thin text-2xl" />
+            </Button>
           </Card>
         </div>
       ))}

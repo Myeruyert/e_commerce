@@ -14,10 +14,10 @@ export interface UserContextType {
   fetchUserData?: () => void;
   refetch?: any;
   setRefetch?: any;
-  count: number;
-  setCount: (count: number) => void;
-  minus: () => void;
-  add: () => void;
+  // count: number;
+  // setCount: (count: number) => void;
+  // minus: () => void;
+  // add: () => void;
 }
 
 export interface ProfileContextType {
@@ -89,8 +89,19 @@ export interface ICart {
   user: string;
 }
 
+export interface IInsertData {
+  productId: string | string[];
+  quantity: number;
+  totalAmount: number;
+}
+
 export interface CartContextType {
   cartData: ICart;
   setCartData: (cartData: ICart) => void;
   postCartData: () => void;
+  count: number;
+  setCount: (count: number) => void;
+  minus: () => void;
+  add: () => void;
+  insertCartData: IInsertData;
 }

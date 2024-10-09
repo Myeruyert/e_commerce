@@ -61,7 +61,7 @@ export const ProfileProvider = ({ children }: ProfileProviderProps) => {
 
   const handleConfirmOtp = async (value: string) => {
     setOtpValue(value);
-    console.log("VL", value.length);
+    // console.log("VL", value.length);
     if (value.length === 4) {
       try {
         setIsLoading(true);

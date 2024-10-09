@@ -24,25 +24,25 @@ export const UserContext = createContext<UserContextType>({
   fetchUserData: () => {},
   refetch: false,
   setRefetch: () => {},
-  count: 0,
-  setCount: () => {},
-  minus: () => {},
-  add: () => {},
+  // count: 0,
+  // setCount: () => {},
+  // minus: () => {},
+  // add: () => {},
 });
 
 export const UserProvider = ({ children }: UserProviderProps) => {
   const [refetch, setRefetch] = useState(false);
   const [token, setToken] = useState<string>("");
   const [user, setUser] = useState<IUser | null>(null);
-  const [count, setCount] = useState<number>(0);
+  // const [count, setCount] = useState<number>(0);
 
-  const minus = () => {
-    setCount(count - 1);
-  };
+  // const minus = () => {
+  //   setCount(count - 1);
+  // };
 
-  const add = () => {
-    setCount(count + 1);
-  };
+  // const add = () => {
+  //   setCount(count + 1);
+  // };
 
   const router = useRouter();
 
@@ -57,7 +57,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
 
       if (response.status === 201) {
         const { user } = response.data;
-        console.log("USERrr", response.data);
+        // console.log("USERrr", response.data);
         setUser(user);
         setRefetch(!refetch);
       }
@@ -70,7 +70,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
     fetchUserData();
   }, []);
 
-  console.log("USER", user);
+  // console.log("USER", user);
 
   return (
     <UserContext.Provider
@@ -82,11 +82,12 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         fetchUserData,
         refetch,
         setRefetch,
-        count,
-        setCount,
-        add,
-        minus,
-      }}>
+        // count,
+        // setCount,
+        // add,
+        // minus,
+      }}
+    >
       {children}
     </UserContext.Provider>
   );

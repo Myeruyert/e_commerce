@@ -9,7 +9,7 @@ import { authentication } from "../middlewares/auth";
 const router = Router();
 
 router.route("/get").get(authentication, getCartData);
-router.route("/insert").post(insertCartData);
+router.route("/insert").post(authentication, insertCartData);
 router.route("/delete").delete(authentication, deleteCartData);
 
 export default router;
