@@ -1,10 +1,11 @@
 "use client";
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { ICart, IInsertData, CartContextType } from "@/interface";
 import { apiUrl } from "@/utils/util";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useParams } from "next/navigation";
+import { ProductContext } from "./product_context";
 
 type CartProviderProps = {
   children: React.ReactNode;
@@ -12,12 +13,28 @@ type CartProviderProps = {
 
 export const CartContext = createContext<CartContextType>({
   cartData: {
-    name: "",
-    price: 0,
-    quantity: 0,
-    discount: 0,
-    image: "",
-    user: "",
+    products: [
+      {
+        product: {
+          name: "",
+          category: "",
+          comment: [],
+          description: "",
+          discount: 0,
+          images: [],
+          isNewProduct: true,
+          price: 0,
+          quantity: 0,
+          size: "",
+          _id: "",
+        },
+        quantity: 0,
+        totalAmount: 0,
+      },
+    ],
+
+    totalAmount: 0,
+    productId: "",
   },
   setCartData: () => {},
   postCartData: () => {},
@@ -25,32 +42,42 @@ export const CartContext = createContext<CartContextType>({
   setCount: () => {},
   minus: () => {},
   add: () => {},
-  insertCartData: {
-    productId: "",
-    quantity: 0,
-    totalAmount: 0,
-  },
+  cardData: () => {},
+  // insertCartData: {
+  //   productId: "",
+  //   quantity: 0,
+  //   totalAmount: 0,
+  // },
 });
 
 export const CartProvider = ({ children }: CartProviderProps) => {
   const { id } = useParams();
   const [count, setCount] = useState<number>(0);
+
+  const { product } = useContext(ProductContext);
   const [cartData, setCartData] = useState<ICart>({
-    name: "",
-    price: 0,
-    quantity: 0,
-    discount: 0,
-    image: "",
-    user: "",
-  });
-
-  const [insertCartData, setInsertCartData] = useState<IInsertData>({
-    productId: id,
-    quantity: count,
+    products: [
+      {
+        product: {
+          name: "",
+          category: "",
+          comment: [],
+          description: "",
+          discount: 0,
+          images: [],
+          isNewProduct: true,
+          price: 0,
+          quantity: 0,
+          size: "",
+          _id: "",
+        },
+        quantity: 0,
+        totalAmount: 0,
+      },
+    ],
     totalAmount: 0,
+    productId: id,
   });
-
-  //   const [product, setProduct] = useState<IProduct[]>([]);
 
   const minus = () => {
     setCount(count - 1);
@@ -60,16 +87,41 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     setCount(count + 1);
   };
 
+  const cardData = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.get(`${apiUrl}/api/v1/cart/get`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (res.status === 200) {
+        // console.log("000000000", res.data.cartData.products);
+        // setTableData(res.data.cartData.products);
+        let cart = res.data.cartData;
+        cart.products = cart.products.map((product: any) => ({
+          ...product,
+          totalAmount: product.quantity * product.product.price,
+        }));
+        setCartData(cart);
+      }
+    } catch (error) {
+      console.log("Failed to get cart data", error);
+    }
+  };
+
   const postCartData = async () => {
     // const { productId } = insertCartData;
     try {
+      const postingProduct = product.find((cur) => cur._id === id);
+
       const token = localStorage.getItem("token");
       const res = await axios.post(
         `${apiUrl}/api/v1/cart/insert`,
         {
-          productId: insertCartData.productId,
-          quantity: insertCartData.quantity,
-          totalAmount: insertCartData.totalAmount,
+          productId: id,
+          quantity: count,
+          totalAmount: (postingProduct?.price || 0) * count,
         },
         {
           headers: {
@@ -85,8 +137,8 @@ export const CartProvider = ({ children }: CartProviderProps) => {
       toast.error("Failed to post cart data");
     }
   };
+  // const updateCart = (cart) => {};
 
-  // console.log("CD=======", cartData);
   // console.log("postedData", insertCartData);
   console.log("Count", count);
   return (
@@ -99,10 +151,17 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         setCount,
         minus,
         add,
-        insertCartData,
+        cardData,
+        // insertCartData,
       }}
     >
       {children}
     </CartContext.Provider>
   );
 };
+
+// cart
+// get cart data
+// add new product to cart
+// remove product from cart
+// minus, plus

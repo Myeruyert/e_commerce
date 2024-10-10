@@ -80,19 +80,34 @@ export type CardProps = {
 };
 
 export interface ICart {
-  _id?: string;
-  name: string;
-  price: number;
-  image: string;
-  quantity: number;
-  discount: number;
-  user: string;
+  products: [
+    {
+      product: {
+        name: string;
+        category: string;
+        comment: [];
+        description: string;
+        discount: 0;
+        images: [];
+        isNewProduct: true;
+        price: 0;
+        quantity: 0;
+        size: string;
+        _id: string;
+      };
+      quantity: number;
+      totalAmount: number;
+    }
+  ];
+
+  totalAmount: number;
+  productId: string | string[];
 }
 
 export interface IInsertData {
   productId: string | string[];
   quantity: number;
-  totalAmount: number;
+  totalAmount: number | number[];
 }
 
 export interface CartContextType {
@@ -103,5 +118,6 @@ export interface CartContextType {
   setCount: (count: number) => void;
   minus: () => void;
   add: () => void;
-  insertCartData: IInsertData;
+  cardData: () => void;
+  // insertCartData: IInsertData;
 }

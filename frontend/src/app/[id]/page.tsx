@@ -19,10 +19,9 @@ import { UserContext } from "@/components/context/user_context";
 import { toast } from "react-toastify";
 
 const ProductDetailPage = () => {
-  // const { postCartData, cartData, setCartData } = useContext(CartContext);
   const { product } = useContext(ProductContext);
   const [seeComments, setSeeComments] = useState<boolean>(false);
-  const { count, minus, add } = useContext(CartContext);
+  const { count, minus, add, cartData, postCartData } = useContext(CartContext);
   // const [count, setCount] = useState<number>(0);
   const [insertCartData, setInsertCartData] = useState({
     productId: "",
@@ -60,32 +59,6 @@ const ProductDetailPage = () => {
       }
     } catch (error) {
       console.log("cant fetch product lists", error);
-    }
-  };
-
-  const postCartData = async () => {
-    // const { productId } = insertCartData;
-    try {
-      const token = localStorage.getItem("token");
-      const res = await axios.post(
-        `${apiUrl}/api/v1/cart/insert`,
-        {
-          productId: id,
-          quantity: count,
-          totalAmount: 0,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      if (res.status === 200) {
-        toast.success("Added to shopping cart successfully");
-      }
-    } catch (error) {
-      console.log("cant fetch cart lists", error);
-      toast.error("Failed to post cart data");
     }
   };
 
