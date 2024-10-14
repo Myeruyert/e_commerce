@@ -111,6 +111,10 @@ export interface IInsertData {
   totalAmount: number | number[];
 }
 
+// export interface ISize {
+//   size: string;
+// }
+
 export interface CartContextType {
   // cartData: ICart[];
   cartData: ICart;
@@ -126,7 +130,7 @@ export interface CartContextType {
   setRefetch: (refetch: boolean) => void;
   addCount: (_id: string) => void;
   reduceCount: (_id: string) => void;
-  productSize: {};
-  setProductSize: (productSize: {}) => void;
+  productSize: string;
+  setProductSize: (productSize: string) => void;
   // insertCartData: IInsertData;
 }

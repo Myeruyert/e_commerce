@@ -41,7 +41,7 @@ export const insertCartData = async (req: Request, res: Response) => {
     if (findDuplicated > -1) {
       findUserCart.products[findDuplicated].quantity += quantity;
     } else {
-      findUserCart.products.push({ product: productId, quantity });
+      findUserCart.products.push({ product: productId, quantity, size });
     }
 
     const updatedCart = await findUserCart.save();

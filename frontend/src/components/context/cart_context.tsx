@@ -1,6 +1,6 @@
 "use client";
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { ICart, IInsertData, CartContextType } from "@/interface";
+import { ICart, CartContextType } from "@/interface";
 import { apiUrl } from "@/utils/util";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -51,8 +51,8 @@ export const CartContext = createContext<CartContextType>({
   setRefetch: (refetch: boolean) => {},
   addCount: (id: string) => {},
   reduceCount: (id: string) => {},
-  productSize: {},
-  setProductSize: (productSize: {}) => {},
+  productSize: " ",
+  setProductSize: (productSize: string) => {},
   // insertCartData: {
   //   productId: "",
   //   quantity: 0,
@@ -65,7 +65,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   const [count, setCount] = useState<number>(0);
   const [refetch, setRefetch] = useState(false);
   const { product } = useContext(ProductContext);
-  const [productSize, setProductSize] = useState("");
+  const [productSize, setProductSize] = useState(" ");
   const [cartData, setCartData] = useState<ICart>(
     // [
     {
@@ -86,10 +86,9 @@ export const CartProvider = ({ children }: CartProviderProps) => {
           },
           quantity: 0,
           totalAmount: 0,
-          size: "",
+          size: productSize,
         },
       ],
-
       totalAmount: 0,
       productId: id,
     }
@@ -141,7 +140,6 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         // setTableData(res.data.cartData.products);
         let cart = res.data.cartData;
         console.log("cart", cart);
-
         cart.products = cart.products.map((product: any) => ({
           ...product,
           price:
@@ -223,8 +221,8 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
   // const updateCart = (cart) => {};
 
-  // console.log("postedData", insertCartData);
-  // console.log("Count", count);
+  console.log("cartData", cartData);
+  console.log("SIZES", productSize);
   return (
     <CartContext.Provider
       value={{
@@ -244,8 +242,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         productSize,
         setProductSize,
         // insertCartData,
-      }}
-    >
+      }}>
       {children}
     </CartContext.Provider>
   );

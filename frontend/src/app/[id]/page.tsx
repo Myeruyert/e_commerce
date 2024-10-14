@@ -3,7 +3,6 @@ import React, { useEffect, useState, useContext } from "react";
 import { ProductCard } from "@/components/card/card";
 import RatingSection from "@/components/category/rating";
 import { ProductContext } from "@/components/context/product_context";
-import ProductDetail from "@/components/product_detail/product_detail";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
@@ -13,10 +12,7 @@ import StarIcon from "@mui/icons-material/Star";
 import { useParams } from "next/navigation";
 import axios from "axios";
 import { apiUrl } from "@/utils/util";
-import { Input } from "@/components/ui/input";
 import { CartContext } from "@/components/context/cart_context";
-import { UserContext } from "@/components/context/user_context";
-import { toast } from "react-toastify";
 
 const ProductDetailPage = () => {
   const { product } = useContext(ProductContext);
@@ -137,8 +133,7 @@ const ProductDetailPage = () => {
                   onClick={() => {
                     setProductSize(s.size);
                   }}
-                  value={s.id}
-                >
+                  value={s.id}>
                   {s.size}
                 </Button>
               ))}
@@ -146,15 +141,13 @@ const ProductDetailPage = () => {
             <div className="mt-4">
               <Button
                 className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
-                onClick={minus}
-              >
+                onClick={minus}>
                 -
               </Button>
               <Label className="4xl mx-4">{count}</Label>
               <Button
                 onClick={add}
-                className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
-              >
+                className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8">
                 +
               </Button>
             </div>
@@ -182,8 +175,7 @@ const ProductDetailPage = () => {
             <Button
               className="bg-[#2563EB]"
               size="custom"
-              onClick={postCartData}
-            >
+              onClick={postCartData}>
               Сагсанд нэмэх
             </Button>
           </div>
@@ -193,8 +185,7 @@ const ProductDetailPage = () => {
               <Button
                 className="text-sm text-[#2563EB] underline"
                 variant="ghost"
-                onClick={seeAllComments}
-              >
+                onClick={seeAllComments}>
                 бүгдийг харах
               </Button>
             </div>
