@@ -98,6 +98,7 @@ export interface ICart {
       };
       quantity: number;
       totalAmount: number;
+      size: string;
     }
   ];
   totalAmount: number;
@@ -125,5 +126,7 @@ export interface CartContextType {
   setRefetch: (refetch: boolean) => void;
   addCount: (_id: string) => void;
   reduceCount: (_id: string) => void;
+  productSize: {};
+  setProductSize: (productSize: {}) => void;
   // insertCartData: IInsertData;
 }

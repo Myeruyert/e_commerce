@@ -32,6 +32,7 @@ export const CartContext = createContext<CartContextType>({
           },
           quantity: 0,
           totalAmount: 0,
+          size: "",
         },
       ],
       totalAmount: 0,
@@ -50,6 +51,8 @@ export const CartContext = createContext<CartContextType>({
   setRefetch: (refetch: boolean) => {},
   addCount: (id: string) => {},
   reduceCount: (id: string) => {},
+  productSize: {},
+  setProductSize: (productSize: {}) => {},
   // insertCartData: {
   //   productId: "",
   //   quantity: 0,
@@ -62,6 +65,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   const [count, setCount] = useState<number>(0);
   const [refetch, setRefetch] = useState(false);
   const { product } = useContext(ProductContext);
+  const [productSize, setProductSize] = useState("");
   const [cartData, setCartData] = useState<ICart>(
     // [
     {
@@ -82,6 +86,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
           },
           quantity: 0,
           totalAmount: 0,
+          size: "",
         },
       ],
 
@@ -177,6 +182,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
           productId: id,
           quantity: count,
           totalAmount: (postingProduct?.price || 0) * count,
+          size: productSize,
         },
         {
           headers: {
@@ -235,6 +241,8 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         setRefetch,
         addCount,
         reduceCount,
+        productSize,
+        setProductSize,
         // insertCartData,
       }}
     >

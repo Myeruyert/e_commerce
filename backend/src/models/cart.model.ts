@@ -24,6 +24,10 @@ const cartSchema = new Schema<ICart>(
           type: Number,
           required: true,
         },
+        size: {
+          type: Object,
+          // required: true,
+        },
       },
     ],
     totalAmount: {

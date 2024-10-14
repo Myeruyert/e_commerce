@@ -23,7 +23,11 @@ const SagsCardTable = ({ i }: any) => {
             className="rounded-2xl w-24 h-24 object-fill"
           />
           <div className="flex flex-col justify-between">
-            <p className="text-base">{i.product.name}</p>
+            <div className="flex gap-2">
+              <p className="text-base">{i.product.name}</p>
+              <p>{i.size}</p>
+            </div>
+
             <div className="">
               <Button
                 className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"

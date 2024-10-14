@@ -21,10 +21,25 @@ import { toast } from "react-toastify";
 const ProductDetailPage = () => {
   const { product } = useContext(ProductContext);
   const [seeComments, setSeeComments] = useState<boolean>(false);
-  const { count, minus, add, addCount, reduceCount, postCartData } =
-    useContext(CartContext);
-  const sizeList = ["XS", "S", "M", "XL", "2XL", "3XL"];
-  const [productSize, setProductSize] = useState(null);
+  const {
+    count,
+    minus,
+    add,
+    addCount,
+    reduceCount,
+    postCartData,
+    productSize,
+    setProductSize,
+  } = useContext(CartContext);
+  const sizeList = [
+    { size: "XS", id: 1 },
+    { size: "S", id: 2 },
+    { size: "M", id: 3 },
+    { size: "L", id: 4 },
+    { size: "XL", id: 5 },
+    { size: "XXL", id: 6 },
+    { size: "XXXL", id: 7 },
+  ];
 
   const { id } = useParams();
   // console.log("++++++", id);
@@ -35,6 +50,7 @@ const ProductDetailPage = () => {
     discount: 0,
     isNew: true,
     images: [],
+    size: [],
   });
 
   const currentPrice =
@@ -55,13 +71,11 @@ const ProductDetailPage = () => {
     }
   };
 
-  const chosenSize = (e: any) => {
-    setProductSize(e.target.value);
-  };
-
   const seeAllComments = () => {
     setSeeComments(!seeComments);
   };
+
+  console.log("SIZE", productSize);
 
   const labels: { [index: string]: string } = {
     0.5: "Useless",
@@ -115,12 +129,17 @@ const ProductDetailPage = () => {
           <div className="flex flex-col gap-2 my-4">
             <p className="text-base underline">Хэмжээний загвар</p>
             <div className="flex gap-2">
-              {sizeList?.map((size) => (
+              {sizeList?.map((s) => (
                 <Button
-                  className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
-                  onChange={chosenSize}
+                  className={`rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-12 h-8 ${
+                    productSize === s.size && "bg-black text-white"
+                  }`}
+                  onClick={() => {
+                    setProductSize(s.size);
+                  }}
+                  value={s.id}
                 >
-                  {size}
+                  {s.size}
                 </Button>
               ))}
             </div>
