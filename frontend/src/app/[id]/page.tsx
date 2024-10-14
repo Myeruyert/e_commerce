@@ -21,13 +21,8 @@ import { toast } from "react-toastify";
 const ProductDetailPage = () => {
   const { product } = useContext(ProductContext);
   const [seeComments, setSeeComments] = useState<boolean>(false);
-  const { count, minus, add, cartData, postCartData } = useContext(CartContext);
-  // const [count, setCount] = useState<number>(0);
-  const [insertCartData, setInsertCartData] = useState({
-    productId: "",
-    quantity: 0,
-    totalAmount: 0,
-  });
+  const { count, minus, add, addCount, reduceCount, postCartData } =
+    useContext(CartContext);
 
   const { id } = useParams();
   // console.log("++++++", id);
@@ -37,16 +32,12 @@ const ProductDetailPage = () => {
     price: 0,
     discount: 0,
     isNewProduct: true,
+    images: [],
   });
 
   const currentPrice =
     oneProduct.price -
     Math.floor((oneProduct.price * oneProduct.discount) / 100);
-
-  const options = { maximumFractionDigits: 2 };
-  const formattedPrice = Intl.NumberFormat("en-US", options).format(
-    currentPrice
-  );
 
   const fetchProductData = async (id: string | string[]) => {
     // console.log("id", id);
@@ -81,14 +72,34 @@ const ProductDetailPage = () => {
 
   const value = 3.5;
 
-  console.log("postedData", insertCartData);
   useEffect(() => {
     fetchProductData(id);
   }, [id]);
+
   return (
     <main className="w-1/2 m-auto">
       <div className="mt-16 mb-20 grid grid-cols-2 gap-5">
-        <ProductDetail />
+        <div className="flex gap-5">
+          <aside className="flex flex-col gap-2 justify-center">
+            <img
+              src={oneProduct.images[0]}
+              alt=""
+              className="rounded w-14 hover:border border-black"
+            />
+            <img
+              src={oneProduct.images[0]}
+              alt=""
+              className="rounded w-14 hover:border border-black"
+            />
+          </aside>
+          <div>
+            <img
+              src={oneProduct.images[0]}
+              alt=""
+              className="rounded-2xl w-[420px] overflow-hidden "
+            />
+          </div>
+        </div>
         <div className="flex flex-col gap-3 justify-end ">
           <Badge className="bg-transparent text-black border border-black w-16 text-xs text-center font-semibold">
             {oneProduct.isNewProduct ? "Шинэ" : "Хуучин"}
@@ -125,16 +136,20 @@ const ProductDetailPage = () => {
             <div className="flex gap-2 items-center mb-2">
               {currentPrice !== oneProduct.price ? (
                 <>
-                  <span className="font-bold text-xl">{formattedPrice}₮</span>
+                  <span className="font-bold text-xl">
+                    {Intl.NumberFormat().format(currentPrice)}₮
+                  </span>
                   <span className="line-through text-[#71717A] text-xs">
-                    {oneProduct.price}₮
+                    {Intl.NumberFormat().format(oneProduct.price)}₮
                   </span>
                   <span className="font-bold text-[#EF4444]">
                     {oneProduct.discount}%
                   </span>
                 </>
               ) : (
-                <span className="font-bold">{formattedPrice}₮</span>
+                <span className="font-bold">
+                  {Intl.NumberFormat().format(currentPrice)}₮
+                </span>
               )}
             </div>
             <Button
@@ -187,6 +202,7 @@ const ProductDetailPage = () => {
               price={c.price}
               _id={c._id}
               discount={c.discount}
+              images={c.images}
             />
           ))}
         </div>

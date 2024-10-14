@@ -34,7 +34,7 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
     fetchAllProducts();
   }, []);
 
-  // console.log("PROD", product);
+  console.log("PROD", product);
   return (
     <ProductContext.Provider value={{ product, fetchAllProducts }}>
       {children}

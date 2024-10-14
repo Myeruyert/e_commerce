@@ -15,6 +15,7 @@ const ProductLists = () => {
               price={c.price}
               _id={c._id}
               discount={c.discount}
+              images={c.images}
             />
           </div>
         ) : (
@@ -24,6 +25,7 @@ const ProductLists = () => {
               price={c.price}
               _id={c._id}
               discount={c.discount}
+              images={c.images}
             />
           </div>
         )

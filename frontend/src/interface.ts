@@ -77,6 +77,7 @@ export type CardProps = {
   price: number;
   _id: string;
   discount: number;
+  images: string[];
 };
 
 export interface ICart {
@@ -99,7 +100,6 @@ export interface ICart {
       totalAmount: number;
     }
   ];
-
   totalAmount: number;
   productId: string | string[];
 }
@@ -111,6 +111,7 @@ export interface IInsertData {
 }
 
 export interface CartContextType {
+  // cartData: ICart[];
   cartData: ICart;
   setCartData: (cartData: ICart) => void;
   postCartData: () => void;
@@ -118,6 +119,11 @@ export interface CartContextType {
   setCount: (count: number) => void;
   minus: () => void;
   add: () => void;
-  cardData: () => void;
+  getcartData: () => void;
+  deleteProduct: (productId: string) => Promise<void>;
+  refetch: boolean;
+  setRefetch: (refetch: boolean) => void;
+  addCount: (_id: string) => void;
+  reduceCount: (_id: string) => void;
   // insertCartData: IInsertData;
 }

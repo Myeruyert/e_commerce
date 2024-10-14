@@ -12,37 +12,44 @@ type CartProviderProps = {
 };
 
 export const CartContext = createContext<CartContextType>({
-  cartData: {
-    products: [
-      {
-        product: {
-          name: "",
-          category: "",
-          comment: [],
-          description: "",
-          discount: 0,
-          images: [],
-          isNewProduct: true,
-          price: 0,
+  cartData:
+    // [
+    {
+      products: [
+        {
+          product: {
+            name: "",
+            category: "",
+            comment: [],
+            description: "",
+            discount: 0,
+            images: [],
+            isNewProduct: true,
+            price: 0,
+            quantity: 0,
+            size: "",
+            _id: "",
+          },
           quantity: 0,
-          size: "",
-          _id: "",
+          totalAmount: 0,
         },
-        quantity: 0,
-        totalAmount: 0,
-      },
-    ],
-
-    totalAmount: 0,
-    productId: "",
-  },
-  setCartData: () => {},
+      ],
+      totalAmount: 0,
+      productId: "",
+    },
+  // ],
+  setCartData: (cartData: ICart) => {},
   postCartData: () => {},
   count: 0,
   setCount: () => {},
   minus: () => {},
   add: () => {},
-  cardData: () => {},
+  getcartData: () => {},
+  deleteProduct: async (productId: string) => {},
+  refetch: false,
+  setRefetch: (refetch: boolean) => {},
+  addCount: (id: string) => {},
+  reduceCount: (id: string) => {},
   // insertCartData: {
   //   productId: "",
   //   quantity: 0,
@@ -53,31 +60,36 @@ export const CartContext = createContext<CartContextType>({
 export const CartProvider = ({ children }: CartProviderProps) => {
   const { id } = useParams();
   const [count, setCount] = useState<number>(0);
-
+  const [refetch, setRefetch] = useState(false);
   const { product } = useContext(ProductContext);
-  const [cartData, setCartData] = useState<ICart>({
-    products: [
-      {
-        product: {
-          name: "",
-          category: "",
-          comment: [],
-          description: "",
-          discount: 0,
-          images: [],
-          isNewProduct: true,
-          price: 0,
+  const [cartData, setCartData] = useState<ICart>(
+    // [
+    {
+      products: [
+        {
+          product: {
+            name: "",
+            category: "",
+            comment: [],
+            description: "",
+            discount: 0,
+            images: [],
+            isNewProduct: true,
+            price: 0,
+            quantity: 0,
+            size: "",
+            _id: "",
+          },
           quantity: 0,
-          size: "",
-          _id: "",
+          totalAmount: 0,
         },
-        quantity: 0,
-        totalAmount: 0,
-      },
-    ],
-    totalAmount: 0,
-    productId: id,
-  });
+      ],
+
+      totalAmount: 0,
+      productId: id,
+    }
+    // ]
+  );
 
   const minus = () => {
     setCount(count - 1);
@@ -87,7 +99,31 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     setCount(count + 1);
   };
 
-  const cardData = async () => {
+  const addCount = (id: string) => {
+    setCartData((prev) => ({
+      ...prev,
+      products: prev.products.map((product) => {
+        if (product.product._id === id) {
+          return { ...product, quantity: product.quantity + 1 };
+        }
+        return product;
+      }) as any,
+    }));
+  };
+
+  const reduceCount = (id: string) => {
+    setCartData((prev) => ({
+      ...prev,
+      products: prev.products.map((product) => {
+        if (product.product._id === id) {
+          return { ...product, quantity: product.quantity - 1 };
+        }
+        return product;
+      }) as any,
+    }));
+  };
+
+  const getcartData = async () => {
     try {
       const token = localStorage.getItem("token");
       const res = await axios.get(`${apiUrl}/api/v1/cart/get`, {
@@ -99,10 +135,16 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         // console.log("000000000", res.data.cartData.products);
         // setTableData(res.data.cartData.products);
         let cart = res.data.cartData;
+        console.log("cart", cart);
         cart.products = cart.products.map((product: any) => ({
           ...product,
           totalAmount: product.quantity * product.product.price,
         }));
+
+        cart.products.forEach((number: any) => {
+          cart.totalAmount += number.totalAmount;
+        });
+
         setCartData(cart);
       }
     } catch (error) {
@@ -111,10 +153,8 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   };
 
   const postCartData = async () => {
-    // const { productId } = insertCartData;
     try {
       const postingProduct = product.find((cur) => cur._id === id);
-
       const token = localStorage.getItem("token");
       const res = await axios.post(
         `${apiUrl}/api/v1/cart/insert`,
@@ -137,10 +177,33 @@ export const CartProvider = ({ children }: CartProviderProps) => {
       toast.error("Failed to post cart data");
     }
   };
+
+  const deleteProduct = async (productId: string) => {
+    console.log("productId", productId);
+    try {
+      // const id = i.product._id;
+      const token = localStorage.getItem("token");
+      const res = await axios.delete(`${apiUrl}/api/v1/cart/delete`, {
+        data: {
+          productId,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (res.status === 200) {
+        console.log("Delete", res.data.updatedCart);
+        setRefetch(!refetch);
+      }
+    } catch (error) {
+      console.log("Failed to delete cart data", error);
+    }
+  };
+
   // const updateCart = (cart) => {};
 
   // console.log("postedData", insertCartData);
-  console.log("Count", count);
+  // console.log("Count", count);
   return (
     <CartContext.Provider
       value={{
@@ -151,7 +214,12 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         setCount,
         minus,
         add,
-        cardData,
+        getcartData,
+        deleteProduct,
+        refetch,
+        setRefetch,
+        addCount,
+        reduceCount,
         // insertCartData,
       }}
     >

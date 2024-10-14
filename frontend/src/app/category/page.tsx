@@ -21,6 +21,7 @@ const CategoryPage = () => {
               price={c.price}
               _id={c._id}
               discount={c.discount}
+              images={c.images}
             />
           ))}
         </main>

@@ -4,6 +4,7 @@ import Cart from "../models/cart.model";
 export const getCartData = async (req: Request, res: Response) => {
   try {
     const { id: userId } = req.user;
+    // const cartData = await Cart.find({
     const cartData = await Cart.findOne({
       user: userId,
     }).populate("products.product");
@@ -86,7 +87,10 @@ export const updateCartData = async (req: Request, res: Response) => {
     const { productId, quantity } = req.body;
     const findUserCart = await Cart.findOne({ user: userId });
     console.log("findUserCart", findUserCart);
+
     const updateCart = await Cart.updateOne({});
+    // const updatedCart = await updateCart.save();
+    res.status(200).json({ message: "Updated successfully", updateCart });
   } catch (error) {
     res.status(400).json({ message: "Couldn't deleted cart", error });
     console.log("Error: Failed to delete cart", error);
