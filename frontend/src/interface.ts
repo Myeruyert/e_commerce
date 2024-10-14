@@ -44,7 +44,7 @@ export interface IProduct {
   price: number;
   size: string;
   images: [string];
-  isNewProduct: boolean;
+  isNew: boolean;
   quantity: number;
   discount: number;
   category: string;
@@ -90,7 +90,7 @@ export interface ICart {
         description: string;
         discount: 0;
         images: [];
-        isNewProduct: true;
+        isNew: true;
         price: 0;
         quantity: 0;
         size: string;

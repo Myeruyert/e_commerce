@@ -26,7 +26,7 @@ export const createProduct = async (req: Request, res: Response) => {
       name,
       price,
       description,
-      isNewProduct,
+      isNew,
       quantity,
       category,
       size,
@@ -37,7 +37,7 @@ export const createProduct = async (req: Request, res: Response) => {
       !name ||
       !price ||
       !description
-      // !isNewProduct ||
+      // !isNew ||
       // !quantity
       // !category ||
       // !discount ||
@@ -50,7 +50,7 @@ export const createProduct = async (req: Request, res: Response) => {
       name,
       price,
       description,
-      isNewProduct,
+      isNew,
       quantity,
       category,
       size,

@@ -6,7 +6,7 @@ interface IProduct {
   price: number;
   size: string;
   images: [string];
-  isNewProduct: boolean;
+  isNew: boolean;
   quantity: number;
   discount: number;
   category: Schema.Types.ObjectId;
@@ -42,7 +42,7 @@ const productSchema = new Schema<IProduct>(
       type: [String],
       default: ["img"],
     },
-    isNewProduct: {
+    isNew: {
       type: Boolean,
       default: true,
     },

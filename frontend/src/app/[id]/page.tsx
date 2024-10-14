@@ -23,6 +23,8 @@ const ProductDetailPage = () => {
   const [seeComments, setSeeComments] = useState<boolean>(false);
   const { count, minus, add, addCount, reduceCount, postCartData } =
     useContext(CartContext);
+  const sizeList = ["XS", "S", "M", "XL", "2XL", "3XL"];
+  const [productSize, setProductSize] = useState(null);
 
   const { id } = useParams();
   // console.log("++++++", id);
@@ -31,7 +33,7 @@ const ProductDetailPage = () => {
     description: "",
     price: 0,
     discount: 0,
-    isNewProduct: true,
+    isNew: true,
     images: [],
   });
 
@@ -51,6 +53,10 @@ const ProductDetailPage = () => {
     } catch (error) {
       console.log("cant fetch product lists", error);
     }
+  };
+
+  const chosenSize = (e: any) => {
+    setProductSize(e.target.value);
   };
 
   const seeAllComments = () => {
@@ -102,19 +108,21 @@ const ProductDetailPage = () => {
         </div>
         <div className="flex flex-col gap-3 justify-end ">
           <Badge className="bg-transparent text-black border border-black w-16 text-xs text-center font-semibold">
-            {oneProduct.isNewProduct ? "Шинэ" : "Хуучин"}
+            {oneProduct.isNew ? "Шинэ" : "Хуучин"}
           </Badge>
           <h2 className="font-bold text-2xl">{oneProduct.name}</h2>
           <p>{oneProduct.description}</p>
           <div className="flex flex-col gap-2 my-4">
             <p className="text-base underline">Хэмжээний загвар</p>
             <div className="flex gap-2">
-              <Button className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8">
-                S
-              </Button>
-              <Button className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8">
-                M
-              </Button>
+              {sizeList?.map((size) => (
+                <Button
+                  className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
+                  onChange={chosenSize}
+                >
+                  {size}
+                </Button>
+              ))}
             </div>
             <div className="mt-4">
               <Button

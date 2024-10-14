@@ -24,7 +24,7 @@ export const CartContext = createContext<CartContextType>({
             description: "",
             discount: 0,
             images: [],
-            isNewProduct: true,
+            isNew: true,
             price: 0,
             quantity: 0,
             size: "",
@@ -74,7 +74,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
             description: "",
             discount: 0,
             images: [],
-            isNewProduct: true,
+            isNew: true,
             price: 0,
             quantity: 0,
             size: "",
@@ -136,9 +136,24 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         // setTableData(res.data.cartData.products);
         let cart = res.data.cartData;
         console.log("cart", cart);
+
         cart.products = cart.products.map((product: any) => ({
           ...product,
-          totalAmount: product.quantity * product.product.price,
+          price:
+            product.product.price -
+            Math.floor(
+              (product.product.price * product.product.discount) / 100
+            ),
+        }));
+
+        cart.products = cart.products.map((product: any) => ({
+          ...product,
+          totalAmount:
+            product.quantity *
+            (product.product.price -
+              Math.floor(
+                (product.product.price * product.product.discount) / 100
+              )),
         }));
 
         cart.products.forEach((number: any) => {
