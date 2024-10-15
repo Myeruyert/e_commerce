@@ -26,16 +26,8 @@ const ProductDetailPage = () => {
     postCartData,
     productSize,
     setProductSize,
+    sizeList,
   } = useContext(CartContext);
-  const sizeList = [
-    { size: "XS", id: 1 },
-    { size: "S", id: 2 },
-    { size: "M", id: 3 },
-    { size: "L", id: 4 },
-    { size: "XL", id: 5 },
-    { size: "XXL", id: 6 },
-    { size: "XXXL", id: 7 },
-  ];
 
   const { id } = useParams();
   // console.log("++++++", id);
@@ -128,12 +120,13 @@ const ProductDetailPage = () => {
               {sizeList?.map((s) => (
                 <Button
                   className={`rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-12 h-8 ${
-                    productSize === s.size && "bg-black text-white"
+                    productSize.size === s.size && "bg-black text-white"
                   }`}
                   onClick={() => {
-                    setProductSize(s.size);
+                    setProductSize({ ...productSize, size: s.size, id: s.id });
                   }}
-                  value={s.id}>
+                  value={s.id}
+                >
                   {s.size}
                 </Button>
               ))}
@@ -141,13 +134,15 @@ const ProductDetailPage = () => {
             <div className="mt-4">
               <Button
                 className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
-                onClick={minus}>
+                onClick={minus}
+              >
                 -
               </Button>
               <Label className="4xl mx-4">{count}</Label>
               <Button
                 onClick={add}
-                className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8">
+                className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
+              >
                 +
               </Button>
             </div>
@@ -175,7 +170,8 @@ const ProductDetailPage = () => {
             <Button
               className="bg-[#2563EB]"
               size="custom"
-              onClick={postCartData}>
+              onClick={postCartData}
+            >
               Сагсанд нэмэх
             </Button>
           </div>
@@ -185,7 +181,8 @@ const ProductDetailPage = () => {
               <Button
                 className="text-sm text-[#2563EB] underline"
                 variant="ghost"
-                onClick={seeAllComments}>
+                onClick={seeAllComments}
+              >
                 бүгдийг харах
               </Button>
             </div>

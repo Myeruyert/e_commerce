@@ -84,13 +84,22 @@ export const deleteCartData = async (req: Request, res: Response) => {
 export const updateCartData = async (req: Request, res: Response) => {
   try {
     const { id: userId } = req.user;
-    const { productId, quantity } = req.body;
+    const { productId, newQuantity } = req.body;
     const findUserCart = await Cart.findOne({ user: userId });
+    if (!findUserCart) {
+      return res.status(400).json({ message: "User not found" });
+    }
+
+    const findProduct = findUserCart.products.findIndex(
+      (item) => item.product.toString() === productId
+    );
+
+    findUserCart.products[findProduct].quantity = newQuantity;
+
     console.log("findUserCart", findUserCart);
 
-    const updateCart = await Cart.updateOne({});
-    // const updatedCart = await updateCart.save();
-    res.status(200).json({ message: "Updated successfully", updateCart });
+    const updatedCart = await findUserCart.save();
+    res.status(200).json({ message: "Updated successfully", updatedCart });
   } catch (error) {
     res.status(400).json({ message: "Couldn't deleted cart", error });
     console.log("Error: Failed to delete cart", error);

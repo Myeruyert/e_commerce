@@ -1,11 +1,9 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Card } from "../ui/card";
 import { Button } from "../ui/button";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { Label } from "../ui/label";
-import axios from "axios";
-import { apiUrl } from "@/utils/util";
 import {
   Select,
   SelectContent,
@@ -18,9 +16,22 @@ import {
 import { CartContext } from "../context/cart_context";
 
 const SagsCardTable = ({ i }: any) => {
-  const { deleteProduct, addCount, reduceCount } = useContext(CartContext);
+  const {
+    deleteProduct,
+    sizeList,
+    setProductSize,
+    productSize,
+    updateCartData,
+  } = useContext(CartContext);
 
-  console.log("ISize", i.size);
+  const changeSize = (e: any) => {
+    setProductSize({ ...productSize, id: e.target.value });
+  };
+
+  const currentPrice =
+    i.product.price - Math.floor((i.product.price * i.product.discount) / 100);
+
+  console.log("CURRENTT", currentPrice);
 
   return (
     <div className="mt-5">
@@ -32,43 +43,53 @@ const SagsCardTable = ({ i }: any) => {
             className="rounded-2xl w-24 h-24 object-fill"
           />
           <div className="flex flex-col justify-between">
-            <div className="flex gap-2">
-              <p className="text-base">{i.product.name}</p>
-            </div>
-
+            <p className="text-base">{i.product.name}</p>
             <div className="flex gap-4 items-center">
               <div>
                 <Button
                   className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
                   onClick={() => {
-                    reduceCount(i.product._id);
-                  }}>
+                    // reduceCount(i.product._id);
+                    updateCartData(i.product._id, Math.max(0, i.quantity - 1));
+                  }}
+                >
                   -
                 </Button>
                 <Label className="4xl mx-4">{i.quantity}</Label>
                 <Button
                   onClick={() => {
-                    addCount(i.product._id);
+                    // addCount(i.product._id);
+                    updateCartData(i.product._id, Math.max(0, i.quantity + 1));
                   }}
-                  className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8">
+                  className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
+                >
                   +
                 </Button>
               </div>
               <div>
                 <Select>
                   <SelectTrigger className="">
-                    <SelectValue placeholder={`${i.size}`} />
+                    <SelectValue placeholder={`${i.size.size}`} />
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>Available Sizes</SelectLabel>
-                      <SelectItem value="XS">XS</SelectItem>
-                      <SelectItem value="S">S</SelectItem>
-                      <SelectItem value="M">M</SelectItem>
-                      <SelectItem value="L">L</SelectItem>
-                      <SelectItem value="XL">XL</SelectItem>
-                      <SelectItem value="XXL">XXL</SelectItem>
-                      <SelectItem value="XXXL">XXXL</SelectItem>
+                      {sizeList?.map((s) => (
+                        <SelectItem value={s.id} onChange={changeSize}>
+                          {s.size}
+                        </SelectItem>
+                      ))}
+                      {/* <SelectItem
+                        value={productSize.id}
+                        onChange={(e: any) => {
+                          setProductSize({
+                            ...productSize,
+                            id: e.target.value,
+                          });
+                        }}
+                      >
+                        {productSize.size}
+                      </SelectItem> */}
                     </SelectGroup>
                   </SelectContent>
                 </Select>
@@ -77,7 +98,7 @@ const SagsCardTable = ({ i }: any) => {
             <div className="flex gap-2">
               {/* <p>Size: {i.size}</p> */}
               <p className="text-base font-bold">
-                {Intl.NumberFormat().format(i.totalAmount)}₮
+                {Intl.NumberFormat().format(currentPrice * i.quantity)}₮
               </p>
             </div>
           </div>
@@ -85,7 +106,8 @@ const SagsCardTable = ({ i }: any) => {
         <Button
           variant="ghost"
           className="p-0 hover:bg-transparent hover:scale-110"
-          onClick={() => deleteProduct(i.product._id)}>
+          onClick={() => deleteProduct(i.product._id)}
+        >
           <RiDeleteBin6Line className="font-thin text-2xl" />
         </Button>
       </Card>

@@ -1,6 +1,6 @@
 "use client";
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { ICart, CartContextType } from "@/interface";
+import { ICart, ISizeLists, CartContextType } from "@/interface";
 import { apiUrl } from "@/utils/util";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -32,7 +32,10 @@ export const CartContext = createContext<CartContextType>({
           },
           quantity: 0,
           totalAmount: 0,
-          size: "",
+          size: {
+            size: "",
+            id: "",
+          },
         },
       ],
       totalAmount: 0,
@@ -51,13 +54,13 @@ export const CartContext = createContext<CartContextType>({
   setRefetch: (refetch: boolean) => {},
   addCount: (id: string) => {},
   reduceCount: (id: string) => {},
-  productSize: " ",
-  setProductSize: (productSize: string) => {},
-  // insertCartData: {
-  //   productId: "",
-  //   quantity: 0,
-  //   totalAmount: 0,
-  // },
+  productSize: {
+    size: "",
+    id: "",
+  },
+  setProductSize: (productSize: object) => {},
+  sizeList: [{ size: "", id: "" }],
+  updateCartData: async (productId: string, newQuantity: number) => {},
 });
 
 export const CartProvider = ({ children }: CartProviderProps) => {
@@ -65,7 +68,6 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   const [count, setCount] = useState<number>(0);
   const [refetch, setRefetch] = useState(false);
   const { product } = useContext(ProductContext);
-  const [productSize, setProductSize] = useState(" ");
   const [cartData, setCartData] = useState<ICart>(
     // [
     {
@@ -86,7 +88,10 @@ export const CartProvider = ({ children }: CartProviderProps) => {
           },
           quantity: 0,
           totalAmount: 0,
-          size: productSize,
+          size: {
+            size: "",
+            id: "",
+          },
         },
       ],
       totalAmount: 0,
@@ -94,6 +99,20 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     }
     // ]
   );
+  const sizeList: ISizeLists[] = [
+    { size: "XS", id: "1" },
+    { size: "S", id: "2" },
+    { size: "M", id: "3" },
+    { size: "L", id: "4" },
+    { size: "XL", id: "5" },
+    { size: "XXL", id: "6" },
+    { size: "XXXL", id: "7" },
+  ];
+
+  const [productSize, setProductSize] = useState<ISizeLists>({
+    size: "",
+    id: "",
+  });
 
   const minus = () => {
     setCount(count - 1);
@@ -173,6 +192,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
   const postCartData = async () => {
     try {
       const postingProduct = product.find((cur) => cur._id === id);
+      // console.log("PCID", postingProduct);
       const token = localStorage.getItem("token");
       const res = await axios.post(
         `${apiUrl}/api/v1/cart/insert`,
@@ -219,6 +239,35 @@ export const CartProvider = ({ children }: CartProviderProps) => {
     }
   };
 
+  const updateCartData = async (productId: string, newQuantity: number) => {
+    setCartData((prev) => ({
+      ...prev,
+      products: prev.products.map((product) =>
+        product.product._id === productId
+          ? { ...product, quantity: newQuantity }
+          : product
+      ) as any,
+    }));
+    try {
+      const token = localStorage.getItem("token");
+      const res = await axios.put(
+        `${apiUrl}/api/v1/cart/update`,
+        {
+          productId,
+          newQuantity,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      if (res.status === 200) {
+        toast.success("Updated data successfully");
+        setRefetch(!refetch);
+      }
+    } catch (error) {
+      console.log("Failed to delete cart data", error);
+      toast.error("Couldn't updated");
+    }
+  };
+
   // const updateCart = (cart) => {};
 
   console.log("cartData", cartData);
@@ -241,15 +290,11 @@ export const CartProvider = ({ children }: CartProviderProps) => {
         reduceCount,
         productSize,
         setProductSize,
-        // insertCartData,
-      }}>
+        sizeList,
+        updateCartData,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );
 };
-
-// cart
-// get cart data
-// add new product to cart
-// remove product from cart
-// minus, plus

@@ -12,6 +12,7 @@ import { ProfileProvider } from "@/components/context/profile_context";
 import { ProductProvider } from "@/components/context/product_context";
 import { CategoryProvider } from "@/components/context/category_context";
 import { CartProvider } from "@/components/context/cart_context";
+import { WishListProvider } from "@/components/context/wishlist_context";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -50,9 +51,11 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 <CategoryProvider>
                   <ProductProvider>
                     <CartProvider>
-                      <Header />
-                      {children}
-                      <Footer />
+                      <WishListProvider>
+                        <Header />
+                        {children}
+                        <Footer />
+                      </WishListProvider>
                     </CartProvider>
                   </ProductProvider>
                 </CategoryProvider>

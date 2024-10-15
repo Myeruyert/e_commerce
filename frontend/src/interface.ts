@@ -80,6 +80,18 @@ export type CardProps = {
   images: string[];
 };
 
+export type WishListProps = {
+  name: string;
+  price: number;
+  _id: string;
+  images: string[];
+};
+
+export interface ISizeLists {
+  size: string;
+  id: string;
+}
+
 export interface ICart {
   products: [
     {
@@ -98,7 +110,7 @@ export interface ICart {
       };
       quantity: number;
       totalAmount: number;
-      size: string;
+      size: ISizeLists;
     }
   ];
   totalAmount: number;
@@ -110,10 +122,6 @@ export interface IInsertData {
   quantity: number;
   totalAmount: number | number[];
 }
-
-// export interface ISize {
-//   size: string;
-// }
 
 export interface CartContextType {
   // cartData: ICart[];
@@ -130,7 +138,38 @@ export interface CartContextType {
   setRefetch: (refetch: boolean) => void;
   addCount: (_id: string) => void;
   reduceCount: (_id: string) => void;
-  productSize: string;
-  setProductSize: (productSize: string) => void;
+  productSize: ISizeLists;
+  setProductSize: (productSize: ISizeLists) => void;
+  sizeList: ISizeLists[];
+  updateCartData: (productId: string, newQuantity: number) => Promise<void>;
   // insertCartData: IInsertData;
+}
+
+export interface IWishList {
+  products: [
+    {
+      product: {
+        name: string;
+        category: string;
+        comment: [];
+        description: string;
+        discount: 0;
+        images: [];
+        isNew: true;
+        price: 0;
+        quantity: 0;
+        size: string;
+        _id: string;
+      };
+    }
+  ];
+  productId: string | string[];
+}
+
+export interface WishListContextType {
+  wishListData: IWishList;
+  setWishListData: (wishListData: IWishList) => void;
+  getWishListData: () => void;
+  addToWishList: (id: string) => void;
+  deleteList: (productId: string) => void;
 }

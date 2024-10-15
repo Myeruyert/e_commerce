@@ -3,7 +3,7 @@ import { model, Schema } from "mongoose";
 interface ICart {
   user: Schema.Types.ObjectId;
   products: [
-    { product: Schema.Types.ObjectId; quantity: number; size: string }
+    { product: Schema.Types.ObjectId; quantity: number; size: object }
   ];
   totalAmount: number;
 }
@@ -27,8 +27,8 @@ const cartSchema = new Schema<ICart>(
           required: true,
         },
         size: {
-          type: String,
-          required: true,
+          size: String,
+          id: String,
         },
       },
     ],
