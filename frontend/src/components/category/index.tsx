@@ -8,17 +8,17 @@ import { CategoryContext } from "../context/category_context";
 
 export const CategoryLabel = () => {
   const { category } = useContext(CategoryContext);
+  console.log("CATS", category);
   return (
     <aside className=" font-bold">
       <h6 className="mb-4 text-base">Ангилал</h6>
       <div className="flex flex-col gap-3">
         {category?.map((cat) => (
           <div className="flex items-center space-x-2">
-            <Checkbox id="terms" />
+            <Checkbox id="terms" value={cat._id} onChange={() => {}} />
             <Label
               htmlFor="terms"
-              className="text-[#09090B] dark:text-white font-medium"
-            >
+              className="text-[#09090B] dark:text-white font-medium">
               {cat.name}
             </Label>
           </div>

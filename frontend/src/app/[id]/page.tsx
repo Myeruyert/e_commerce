@@ -105,8 +105,7 @@ const ProductDetailPage = () => {
                   onClick={() => {
                     setProductSize({ ...productSize, size: s.size, id: s.id });
                   }}
-                  value={s.id}
-                >
+                  value={s.id}>
                   {s.size}
                 </Button>
               ))}
@@ -114,15 +113,13 @@ const ProductDetailPage = () => {
             <div className="mt-4">
               <Button
                 className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
-                onClick={minus}
-              >
+                onClick={minus}>
                 -
               </Button>
               <Label className="4xl mx-4">{count}</Label>
               <Button
                 onClick={add}
-                className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
-              >
+                className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8">
                 +
               </Button>
             </div>
@@ -150,8 +147,7 @@ const ProductDetailPage = () => {
             <Button
               className="bg-[#2563EB]"
               size="custom"
-              onClick={postCartData}
-            >
+              onClick={postCartData}>
               Сагсанд нэмэх
             </Button>
           </div>
@@ -161,18 +157,19 @@ const ProductDetailPage = () => {
               <Button
                 className="text-sm text-[#2563EB] underline"
                 variant="ghost"
-                onClick={seeAllComments}
-              >
+                onClick={seeAllComments}>
                 бүгдийг харах
               </Button>
             </div>
             <div className="flex items-center gap-2">
               <Rating
                 style={{ color: "#e0e0e0", width: "120px", border: "none" }}
-                value={avg}
+                value={avg ? avg : 0}
                 readOnly
               />
-              <span className="text-sm text-[#09090B]">{avg}</span>
+              <span className="text-sm text-[#09090B]">
+                {avg ? avg : "No rating"}
+              </span>
               <span className="text-sm">({oneProduct.comment?.length})</span>
             </div>
           </div>

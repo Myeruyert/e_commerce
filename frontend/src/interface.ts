@@ -89,6 +89,7 @@ export interface ProductContextType {
 }
 
 export interface ICategory {
+  _id: string;
   name: string;
   description: string;
 }
