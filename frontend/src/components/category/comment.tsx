@@ -1,9 +1,8 @@
 import React from "react";
-import { FaStar } from "react-icons/fa";
 import { Separator } from "../ui/separator";
-import Box from "@mui/material/Box";
-import Rating from "@mui/material/Rating";
-import StarIcon from "@mui/icons-material/Star";
+// import Rating from "@mui/material/Rating";
+import { Rating } from "@smastrom/react-rating";
+import "@smastrom/react-rating/style.css";
 
 const labels: { [index: string]: string } = {
   0.5: "Useless",
@@ -18,58 +17,19 @@ const labels: { [index: string]: string } = {
   5: "Excellent+",
 };
 
-const Comments = () => {
-  const value = 3.5;
+const Comments = ({ com }: any) => {
   return (
     <div className="">
       <div className="w-[510px] mt-5">
         <div className="flex gap-2 mb-1">
-          <span className="text-sm font-semibold">Saraa</span>
+          <span className="text-sm font-semibold">{com.user.firstname}</span>
           <span className="flex">
-            {/* <FaStar className="text-[#FDE047] " />
-            <FaStar className="text-[#FDE047] " /> */}
-            <Box sx={{ width: 200, display: "flex", alignItems: "center" }}>
-              <Rating
-                name="text-feedback"
-                className="text-[#FDE047]"
-                value={value}
-                readOnly
-                precision={0.5}
-                emptyIcon={
-                  <StarIcon style={{ opacity: 0 }} fontSize="inherit" />
-                }
-              />
-              {/* <Box sx={{ ml: 2 }}>{labels[value]}</Box> */}
-            </Box>
+            <Rating style={{ width: "120px" }} value={com.rating} readOnly />
           </span>
         </div>
         <p className="text-sm text-[#71717A] mb-5">
-          Ваав материал ёстой гоё байна 😍
-        </p>
-        <Separator className=" border-dashed" />
-      </div>
-      <div className="w-[510px] mt-5">
-        <div className="flex gap-2 mb-1">
-          <span className="text-sm font-semibold">Saraa</span>
-          <span className="flex">
-            {/* <FaStar className="text-[#FDE047] " />
-            <FaStar className="text-[#FDE047] " /> */}
-            <Box sx={{ width: 200, display: "flex", alignItems: "center" }}>
-              <Rating
-                name="text-feedback"
-                className="text-[#FDE047]"
-                value={value}
-                readOnly
-                precision={0.5}
-                emptyIcon={
-                  <StarIcon style={{ opacity: 0 }} fontSize="inherit" />
-                }
-              />
-            </Box>
-          </span>
-        </div>
-        <p className="text-sm text-[#71717A] mb-5">
-          Ваав материал ёстой гоё байна 😍
+          {/* Ваав материал ёстой гоё байна 😍 */}
+          {com.comment}
         </p>
         <Separator className=" border-dashed" />
       </div>

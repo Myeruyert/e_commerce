@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
 // import dotenv from "dotenv";
 import { decodeToken } from "../utils/jwt";
+import { ObjectId } from "mongodb";
 // dotenv.config();
 
 // const JWT_TOKEN_PASS = process.env.JWT_TOKEN_PASS;
@@ -15,6 +16,7 @@ declare global {
     interface Request {
       user: {
         id: string | object;
+        // id: any;
       };
     }
   }

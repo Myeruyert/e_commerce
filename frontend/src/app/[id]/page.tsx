@@ -6,16 +6,13 @@ import { ProductContext } from "@/components/context/product_context";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import Box from "@mui/material/Box";
-import Rating from "@mui/material/Rating";
-import StarIcon from "@mui/icons-material/Star";
+import { Rating } from "@smastrom/react-rating";
+import "@smastrom/react-rating/style.css";
 import { useParams } from "next/navigation";
-import axios from "axios";
-import { apiUrl } from "@/utils/util";
 import { CartContext } from "@/components/context/cart_context";
 
 const ProductDetailPage = () => {
-  const { product } = useContext(ProductContext);
+  const { product, oneProduct, fetchProductData } = useContext(ProductContext);
   const [seeComments, setSeeComments] = useState<boolean>(false);
   const {
     count,
@@ -31,33 +28,10 @@ const ProductDetailPage = () => {
 
   const { id } = useParams();
   // console.log("++++++", id);
-  const [oneProduct, setOneProduct] = useState({
-    name: "",
-    description: "",
-    price: 0,
-    discount: 0,
-    isNew: true,
-    images: [],
-    size: [],
-  });
 
   const currentPrice =
     oneProduct.price -
     Math.floor((oneProduct.price * oneProduct.discount) / 100);
-
-  const fetchProductData = async (id: string | string[]) => {
-    // console.log("id", id);
-    try {
-      const res = await axios.get(`${apiUrl}/api/v1/product/${id}`);
-
-      if (res.status === 200) {
-        const { product } = res.data;
-        setOneProduct(product);
-      }
-    } catch (error) {
-      console.log("cant fetch product lists", error);
-    }
-  };
 
   const seeAllComments = () => {
     setSeeComments(!seeComments);
@@ -80,9 +54,15 @@ const ProductDetailPage = () => {
 
   const value = 3.5;
 
+  const avg =
+    oneProduct.comment?.reduce((r, c) => r + c.rating, 0) /
+    oneProduct.comment?.length;
+
   useEffect(() => {
     fetchProductData(id);
   }, [id]);
+
+  console.log("AVG", avg);
 
   return (
     <main className="w-1/2 m-auto">
@@ -187,21 +167,13 @@ const ProductDetailPage = () => {
               </Button>
             </div>
             <div className="flex items-center gap-2">
-              <Box sx={{ width: 200, display: "flex", alignItems: "center" }}>
-                <Rating
-                  name="text-feedback"
-                  value={value}
-                  className="text-[#FDE047]"
-                  readOnly
-                  precision={0.5}
-                  emptyIcon={
-                    <StarIcon style={{ color: "#e0e0e0" }} fontSize="inherit" />
-                  }
-                />
-                {/* <Box sx={{ ml: 2 }}>{labels[value]}</Box> */}
-              </Box>
-              <span className="text-sm text-[#09090B]">4.6</span>
-              <span className="text-sm">(24)</span>
+              <Rating
+                style={{ color: "#e0e0e0", width: "120px", border: "none" }}
+                value={avg}
+                readOnly
+              />
+              <span className="text-sm text-[#09090B]">{avg}</span>
+              <span className="text-sm">({oneProduct.comment?.length})</span>
             </div>
           </div>
         </div>

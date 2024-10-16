@@ -30,7 +30,7 @@ export function ProductCard({ name, price, _id, discount, images }: CardProps) {
     }
   };
 
-  console.log("LOVED", loved);
+  // console.log("LOVED", loved);
 
   return (
     <div>

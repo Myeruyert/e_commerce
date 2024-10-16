@@ -31,7 +31,7 @@ const SagsCardTable = ({ i }: any) => {
   const currentPrice =
     i.product.price - Math.floor((i.product.price * i.product.discount) / 100);
 
-  console.log("CURRENTT", currentPrice);
+  // console.log("CURRENTT", currentPrice);
 
   return (
     <div className="mt-5">

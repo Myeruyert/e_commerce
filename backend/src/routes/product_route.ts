@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  addComment,
   createProduct,
   getAllProducts,
   getProduct,
@@ -7,8 +8,9 @@ import {
 
 const router = Router();
 
-router.route("/products").get(getAllProducts);
-router.route("/product/:id").get(getProduct);
+router.route("/").get(getAllProducts);
+router.route("/:id").get(getProduct);
 router.route("/new").post(createProduct);
+router.route("/comment/:productId").post(addComment);
 
 export default router;

@@ -12,7 +12,7 @@ interface IProduct {
   category: Schema.Types.ObjectId;
   comment?: [
     {
-      name: string;
+      user: Schema.Types.ObjectId;
       rating: number;
       comment: string;
     }
@@ -31,7 +31,7 @@ const productSchema = new Schema<IProduct>(
     },
     size: {
       type: String,
-      enum: ["XS", "S", "L", "XL", "XXL", "XXXL"],
+      enum: ["XS", "S", "L", "M", "XL", "XXL", "XXXL"],
       default: "M",
     },
     description: {
@@ -61,9 +61,19 @@ const productSchema = new Schema<IProduct>(
     },
     comment: [
       {
-        name: String,
-        rating: Number,
-        comment: String,
+        user: {
+          type: Schema.Types.ObjectId,
+          required: true,
+          ref: "User",
+        },
+        rating: {
+          type: Number,
+          required: true,
+        },
+        comment: {
+          type: String,
+          required: true,
+        },
       },
     ],
   },

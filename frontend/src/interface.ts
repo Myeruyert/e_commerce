@@ -57,9 +57,35 @@ export interface IProduct {
   ];
 }
 
+export interface IOneProduct {
+  _id: string;
+  name: string;
+  description: string;
+  price: number;
+  size: string;
+  images: string[];
+  isNew: boolean;
+  quantity: number;
+  discount: number;
+  category: string;
+  comment: {
+    name: string;
+    rating: number;
+    comment: string;
+  }[];
+}
+
 export interface ProductContextType {
   product: IProduct[];
   fetchAllProducts: () => void;
+  rating: number;
+  setRating: (rating: number) => void;
+  comment: string;
+  setComment: (comment: string) => void;
+  newComment: (id: string | string[]) => void;
+  oneProduct: IOneProduct;
+  // setOneProduct: (oneProduct: IOneProduct) => {};
+  fetchProductData: (id: string | string[]) => void;
 }
 
 export interface ICategory {

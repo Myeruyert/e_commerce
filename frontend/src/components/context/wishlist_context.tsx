@@ -122,7 +122,7 @@ export const WishListProvider = ({ children }: WishListProviderProps) => {
       });
       if (res.status === 200) {
         console.log("Delete", res.data.updatedCart);
-        toast.success("Deleted product from wishlist");
+        toast.warning("Deleted product from wishlist");
         setRefetch(!refetch);
       }
     } catch (error) {

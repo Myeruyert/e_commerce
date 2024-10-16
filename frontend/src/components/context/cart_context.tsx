@@ -270,8 +270,8 @@ export const CartProvider = ({ children }: CartProviderProps) => {
 
   // const updateCart = (cart) => {};
 
-  console.log("cartData", cartData);
-  console.log("SIZES", productSize);
+  // console.log("cartData", cartData);
+  // console.log("SIZES", productSize);
   return (
     <CartContext.Provider
       value={{

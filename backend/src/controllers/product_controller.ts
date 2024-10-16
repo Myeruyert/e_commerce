@@ -13,7 +13,10 @@ export const getAllProducts = async (req: Request, res: Response) => {
 export const getProduct = async (req: Request, res: Response) => {
   const { id } = req.params;
   try {
-    const product = await Product.findById(id).populate("category");
+    const product = await Product.findById(id).populate([
+      "category",
+      "comment.user",
+    ]);
     res.status(200).json({ message: "Succeed", product });
   } catch (error) {
     res.status(400).json({ message: "Failed to get the product", error });
@@ -61,4 +64,29 @@ export const createProduct = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(500).json({ message: "Server error", error });
   }
+};
+
+//productId aar find hiigeed, shine commentoo comment iin array luu push hiih
+
+export const addComment = async (req: Request, res: Response) => {
+  try {
+    const { productId } = req.params;
+    const { comment, rating, user } = req.body;
+    const comments = await Product.findById(productId).populate("comment.user");
+    // .select("firstname");
+    comments?.comment?.push({ comment, rating, user });
+    const addedComment = await comments?.save();
+    res
+      .status(200)
+      .json({ message: "Added comment successfully", addedComment });
+  } catch (error) {
+    console.log("Couldn't added the comment", error);
+    res.status(400).json({ message: "Comment error", error });
+  }
+};
+
+export const getComments = async (req: Request, res: Response) => {
+  try {
+    const productComments = Product.find({}).populate("comment.user");
+  } catch (error) {}
 };
