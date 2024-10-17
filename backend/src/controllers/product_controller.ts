@@ -2,6 +2,15 @@ import { Request, Response } from "express";
 import Product from "../models/product.model";
 
 export const getAllProducts = async (req: Request, res: Response) => {
+  try {
+    const allProducts = await Product.find({}).populate("category");
+    res.status(200).json({ message: "Succeed", product: allProducts });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+};
+
+export const getAllFilteredProducts = async (req: Request, res: Response) => {
   const { name, category, size } = req.body;
   try {
     const query: any = {};
@@ -10,8 +19,8 @@ export const getAllProducts = async (req: Request, res: Response) => {
     if (name) {
       query.name = { $regex: new RegExp(name, "i") };
     }
-
     const allProducts = await Product.find({ query }).populate("category");
+    // const allProducts = await Product.find({}).populate("category");
     res.status(200).json({ message: "Succeed", product: allProducts });
   } catch (error) {
     res.status(500).json({ message: "Server error", error });

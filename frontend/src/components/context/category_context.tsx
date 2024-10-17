@@ -1,8 +1,9 @@
 "use client";
-import React, { createContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { ICategory, CategoryContextType, IProduct } from "@/interface";
 import { apiUrl } from "@/utils/util";
 import axios from "axios";
+import { ProductContext } from "./product_context";
 
 type CategoryProviderProps = {
   children: React.ReactNode;
@@ -14,14 +15,19 @@ export const CategoryContext = createContext<CategoryContextType>({
   getFilteredProducts: (id: string | string[]) => {},
   filteredProducts: [],
   setFilteredProducts: (filteredProducts: IProduct[]) => {},
-  selectedCat: [],
-  setSelectedCat: (selectedCat: string[]) => {},
+  selectedCat: "",
+  setSelectedCat: (selectedCat: string | string[]) => {},
+  searchValue: "",
+  setSearchValue: (category: string | null) => {},
 });
 
 export const CategoryProvider = ({ children }: CategoryProviderProps) => {
+  const { setProduct, product } = useContext(ProductContext);
   const [category, setCategory] = useState<ICategory[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
-  const [selectedCat, setSelectedCat] = useState<string[]>([]);
+  const [selectedCat, setSelectedCat] = useState<string | string[]>([]);
+  const [searchValue, setSearchValue] = useState<string | null>(null);
+  const [size, SetSize] = useState<string | null>(null);
 
   const fetchCategoryData = async () => {
     try {
@@ -47,11 +53,31 @@ export const CategoryProvider = ({ children }: CategoryProviderProps) => {
     }
   };
 
+  // const fetchFilteredData = async () => {
+  //   try {
+  //     const res = await axios.post(`${apiUrl}/api/v1/product/filtered`, {
+  //       name: searchValue,
+  //       category: selectedCat,
+  //       size,
+  //     });
+
+  //     if (res.status === 200) {
+  //       const { product } = res.data;
+  //       console.log("PDDDD", res.data);
+  //       setProduct(product);
+  //     }
+  //   } catch (error) {
+  //     console.log("cant fetch product lists", error);
+  //   }
+  // };
+
   useEffect(() => {
     fetchCategoryData();
+    // fetchFilteredData();
   }, []);
 
   console.log("Filtered data", filteredProducts);
+
   return (
     <CategoryContext.Provider
       value={{
@@ -62,8 +88,9 @@ export const CategoryProvider = ({ children }: CategoryProviderProps) => {
         setFilteredProducts,
         selectedCat,
         setSelectedCat,
-      }}
-    >
+        searchValue,
+        setSearchValue,
+      }}>
       {children}
     </CategoryContext.Provider>
   );

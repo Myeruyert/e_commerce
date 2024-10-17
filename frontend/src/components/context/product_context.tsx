@@ -12,6 +12,7 @@ type ProductProviderProps = {
 
 export const ProductContext = createContext<ProductContextType>({
   product: [],
+  setProduct: (product: IProduct[]) => {},
   fetchAllProducts: () => {},
   rating: 0,
   setRating: (rating: number) => {},
@@ -76,7 +77,6 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
       }
     } catch (error) {
       console.log("cant fetch product lists", error);
-      // toast.error("Failed to fetch product data");
     }
   };
 
@@ -120,6 +120,7 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
     <ProductContext.Provider
       value={{
         product,
+        setProduct,
         fetchAllProducts,
         rating,
         setRating,
@@ -128,8 +129,7 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
         newComment,
         oneProduct,
         fetchProductData,
-      }}
-    >
+      }}>
       {children}
     </ProductContext.Provider>
   );

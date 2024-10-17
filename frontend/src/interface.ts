@@ -77,6 +77,7 @@ export interface IOneProduct {
 
 export interface ProductContextType {
   product: IProduct[];
+  setProduct: (product: IProduct[]) => void;
   fetchAllProducts: () => void;
   rating: number;
   setRating: (rating: number) => void;
@@ -100,8 +101,10 @@ export interface CategoryContextType {
   getFilteredProducts: (id: string | string[]) => void;
   filteredProducts: IProduct[];
   setFilteredProducts: (filteredProducts: IProduct[]) => void;
-  selectedCat: string[];
-  setSelectedCat: (selectedCat: string[]) => void;
+  selectedCat: string | string[];
+  setSelectedCat: (selectedCat: string | string[]) => void;
+  searchValue: string | null;
+  setSearchValue: (category: string | null) => void;
 }
 
 export type CardProps = {

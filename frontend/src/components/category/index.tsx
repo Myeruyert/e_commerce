@@ -42,11 +42,9 @@ export const CategoryLabel = () => {
                 )
               }
             />
-
             <Label
               htmlFor="terms"
-              className="text-[#09090B] dark:text-white font-medium"
-            >
+              className="text-[#09090B] dark:text-white font-medium">
               {cat.name}
             </Label>
           </div>
