@@ -97,6 +97,11 @@ export interface ICategory {
 export interface CategoryContextType {
   category: ICategory[];
   fetchCategoryData: () => void;
+  getFilteredProducts: (id: string | string[]) => void;
+  filteredProducts: IProduct[];
+  setFilteredProducts: (filteredProducts: IProduct[]) => void;
+  selectedCat: string[];
+  setSelectedCat: (selectedCat: string[]) => void;
 }
 
 export type CardProps = {

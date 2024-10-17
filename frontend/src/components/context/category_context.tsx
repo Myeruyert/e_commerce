@@ -1,6 +1,6 @@
 "use client";
 import React, { createContext, useEffect, useState } from "react";
-import { ICategory, CategoryContextType } from "@/interface";
+import { ICategory, CategoryContextType, IProduct } from "@/interface";
 import { apiUrl } from "@/utils/util";
 import axios from "axios";
 
@@ -11,10 +11,17 @@ type CategoryProviderProps = {
 export const CategoryContext = createContext<CategoryContextType>({
   category: [],
   fetchCategoryData: () => {},
+  getFilteredProducts: (id: string | string[]) => {},
+  filteredProducts: [],
+  setFilteredProducts: (filteredProducts: IProduct[]) => {},
+  selectedCat: [],
+  setSelectedCat: (selectedCat: string[]) => {},
 });
 
 export const CategoryProvider = ({ children }: CategoryProviderProps) => {
   const [category, setCategory] = useState<ICategory[]>([]);
+  const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
+  const [selectedCat, setSelectedCat] = useState<string[]>([]);
 
   const fetchCategoryData = async () => {
     try {
@@ -28,13 +35,35 @@ export const CategoryProvider = ({ children }: CategoryProviderProps) => {
     }
   };
 
+  const getFilteredProducts = async (id: string | string[]) => {
+    try {
+      const res = await axios.get(`${apiUrl}/api/v1/product/search/${id}`);
+      if (res.status === 200) {
+        setFilteredProducts(res.data.filteredProducts);
+        console.log("FDD", res.data);
+      }
+    } catch (error) {
+      console.log("can't get filtered products", error);
+    }
+  };
+
   useEffect(() => {
     fetchCategoryData();
   }, []);
 
-  // console.log("CAT", category);
+  console.log("Filtered data", filteredProducts);
   return (
-    <CategoryContext.Provider value={{ category, fetchCategoryData }}>
+    <CategoryContext.Provider
+      value={{
+        category,
+        fetchCategoryData,
+        getFilteredProducts,
+        filteredProducts,
+        setFilteredProducts,
+        selectedCat,
+        setSelectedCat,
+      }}
+    >
       {children}
     </CategoryContext.Provider>
   );
