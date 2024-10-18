@@ -83,8 +83,6 @@ export const createProduct = async (req: Request, res: Response) => {
   }
 };
 
-//productId aar find hiigeed, shine commentoo comment iin array luu push hiih
-
 export const addComment = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
@@ -103,9 +101,10 @@ export const addComment = async (req: Request, res: Response) => {
 };
 
 export const getFilteredProducts = async (req: Request, res: Response) => {
+  // ["id", "id2"]
   try {
-    const { category } = req.params;
-    const filteredProducts = await Product.find({ category }).populate(
+    const { category, size } = req.query;
+    const filteredProducts = await Product.find({ category, size }).populate(
       "category"
     );
     res.status(200).json({ message: "Succeed", filteredProducts });

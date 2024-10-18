@@ -12,7 +12,7 @@ const router = Router();
 
 router.route("/").get(getAllProducts);
 router.route("/filtered").post(getAllFilteredProducts);
-router.route("/search/:category").get(getFilteredProducts);
+router.route("/search").get(getFilteredProducts);
 router.route("/:id").get(getProduct);
 router.route("/new").post(createProduct);
 router.route("/comment/:productId").post(addComment);

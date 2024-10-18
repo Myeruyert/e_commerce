@@ -98,13 +98,13 @@ export interface ICategory {
 export interface CategoryContextType {
   category: ICategory[];
   fetchCategoryData: () => void;
-  getFilteredProducts: (id: string | string[]) => void;
+  getFilteredProducts: (id: string[]) => void;
   filteredProducts: IProduct[];
   setFilteredProducts: (filteredProducts: IProduct[]) => void;
-  selectedCat: string | string[];
-  setSelectedCat: (selectedCat: string | string[]) => void;
-  searchValue: string | null;
-  setSearchValue: (category: string | null) => void;
+  selectedCat: string[];
+  setSelectedCat: (selectedCat: string[]) => void;
+  searchValue: string;
+  setSearchValue: (searchValue: string) => void;
 }
 
 export type CardProps = {

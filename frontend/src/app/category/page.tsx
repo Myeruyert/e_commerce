@@ -16,31 +16,29 @@ const CategoryPage = () => {
     filteredProducts,
     selectedCat,
     setSelectedCat,
+    searchValue,
   } = useContext(CategoryContext);
   const [allProds, setAllProds] = useState(false);
+  const sizeList = ["XS", "S", "M", "XL", "XXL", "XXXL"];
 
-  // const handleCheckboxChange = (
-  //   event: ChangeEvent<HTMLInputElement>,
-  //   id: string
-  // ) => {
-  //   const checkedId = event.target.value;
-  //   if (id === checkedId) {
-  //     if (selectedCat.includes(checkedId)) {
-  //       setSelectedCat(selectedCat.filter((cur) => cur !== checkedId));
-  //     } else {
-  //       setSelectedCat([...selectedCat, checkedId]);
-  //       setAllProds(false);
-  //     }
-  //   }
-  // };
-
-  // const handleChangeValue = (value: ChangeEvent<HTMLInputElement>) => {
-  //   setSelectedCat(value);
-  // };
+  const handleCheckboxChange = (
+    event: ChangeEvent<HTMLInputElement>,
+    id: string
+  ) => {
+    const checkedId = event.target.value;
+    if (id === checkedId) {
+      if (selectedCat.includes(checkedId)) {
+        setSelectedCat(selectedCat.filter((cur) => cur !== checkedId));
+      } else {
+        setSelectedCat([...selectedCat, checkedId]);
+        setAllProds(false);
+      }
+    }
+  };
 
   const selectAllCats = () => {
     setAllProds(true);
-    setSelectedCat("");
+    // setSelectedCat("");
   };
 
   useEffect(() => {
@@ -57,15 +55,16 @@ const CategoryPage = () => {
     <div className="mt-16 mb-24 w-3/4 m-auto">
       <div className="flex gap-32">
         <aside className="flex flex-col gap-12">
-          <aside className=" font-bold">
+          <div className=" font-bold">
             <h6 className="mb-4 text-base">Ангилал</h6>
             <div className="flex flex-col gap-3">
               <div className="flex items-center space-x-2">
-                <RadioGroup
+                {/* <RadioGroup
                   defaultValue="1"
                   onValueChange={(value) => {
                     setSelectedCat(value);
-                  }}>
+                  }}
+                >
                   <div className="flex items-center space-x-2">
                     <RadioGroupItem value="1" id="r1" onClick={selectAllCats} />
                     <Label htmlFor="r1">All</Label>
@@ -79,15 +78,16 @@ const CategoryPage = () => {
                       <Label htmlFor="r2">{cat.name}</Label>
                     </div>
                   ))}
-                </RadioGroup>
-                {/* <Checkbox id="terms" value={"1"} onClick={selectAllCats} />
+                </RadioGroup> */}
+                <Checkbox id="terms" value={"1"} onClick={selectAllCats} />
                 <Label
                   htmlFor="terms"
-                  className="text-[#09090B] dark:text-white font-medium">
+                  className="text-[#09090B] dark:text-white font-medium"
+                >
                   All
-                </Label> */}
+                </Label>
               </div>
-              {/* {category?.map((cat) => (
+              {category?.map((cat) => (
                 <div className="flex items-center space-x-2">
                   <Checkbox
                     id="terms"
@@ -101,14 +101,30 @@ const CategoryPage = () => {
                   />
                   <Label
                     htmlFor="terms"
-                    className="text-[#09090B] dark:text-white font-medium">
+                    className="text-[#09090B] dark:text-white font-medium"
+                  >
                     {cat.name}
                   </Label>
                 </div>
-              ))} */}
+              ))}
             </div>
-          </aside>
-          <SizeLabel />
+          </div>
+          <div className="font-bold">
+            <h6 className="mb-4">Хэмжээ</h6>
+            <div className="flex flex-col gap-3">
+              {sizeList?.map((size) => (
+                <div className="flex items-center space-x-2">
+                  <Checkbox id="terms" />
+                  <Label
+                    htmlFor="terms"
+                    className="text-[#09090B] dark:text-white font-medium"
+                  >
+                    {size}
+                  </Label>
+                </div>
+              ))}
+            </div>
+          </div>
         </aside>
         <main className="grid grid-cols-3 gap-8 w-2/3 mx-auto">
           {allProds
