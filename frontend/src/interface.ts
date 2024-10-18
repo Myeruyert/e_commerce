@@ -105,6 +105,8 @@ export interface CategoryContextType {
   setSelectedCat: (selectedCat: string[]) => void;
   searchValue: string;
   setSearchValue: (searchValue: string) => void;
+  selectedSize: string | null;
+  setSelectedSize: (selectedSize: string | null) => void;
 }
 
 export type CardProps = {

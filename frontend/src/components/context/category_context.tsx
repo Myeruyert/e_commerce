@@ -19,6 +19,8 @@ export const CategoryContext = createContext<CategoryContextType>({
   setSelectedCat: (selectedCat: string[]) => {},
   searchValue: "",
   setSearchValue: (category: string) => {},
+  selectedSize: "",
+  setSelectedSize: (selectedSize: string | null) => {},
 });
 
 export const CategoryProvider = ({ children }: CategoryProviderProps) => {
@@ -28,7 +30,7 @@ export const CategoryProvider = ({ children }: CategoryProviderProps) => {
   const [searchProducts, setSearchProducts] = useState<[]>([]);
   const [selectedCat, setSelectedCat] = useState<string[]>([]);
   const [searchValue, setSearchValue] = useState<string>("");
-  const [size, SetSize] = useState<string | null>(null);
+  const [selectedSize, setSelectedSize] = useState<string | null>(null);
 
   // const filterFunc = () => {
   //   const filtered = product.filter((data) =>
@@ -110,8 +112,9 @@ export const CategoryProvider = ({ children }: CategoryProviderProps) => {
         setSelectedCat,
         searchValue,
         setSearchValue,
-      }}
-    >
+        selectedSize,
+        setSelectedSize,
+      }}>
       {children}
     </CategoryContext.Provider>
   );
