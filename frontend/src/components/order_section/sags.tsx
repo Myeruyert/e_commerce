@@ -4,8 +4,9 @@ import { Card } from "../ui/card";
 import SagsCardTable from "../table_cards/sags_card";
 import { Button } from "../ui/button";
 import { CartContext } from "../context/cart_context";
-
+import { useRouter } from "next/navigation";
 const Sags = () => {
+  const router = useRouter();
   const { cartData, getcartData, refetch } = useContext(CartContext);
 
   useEffect(() => {
@@ -34,7 +35,7 @@ const Sags = () => {
           variant={"outline"}
           className="bg-[#2563EB] text-white text-sm self-end"
           size="custom"
-        >
+          onClick={() => router.push("/buy_steps/delivery_info")}>
           Худалдан авах
         </Button>
       </Card>
