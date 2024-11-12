@@ -5,8 +5,7 @@ import SavedProduct from "@/components/saved_product";
 import React, { useContext, useEffect } from "react";
 
 const Wishlists = () => {
-  const { wishListData, getWishListData, deleteList } =
-    useContext(WishListContext);
+  const { wishListData, getWishListData } = useContext(WishListContext);
   const { refetch } = useContext(CartContext);
   useEffect(() => {
     getWishListData();
@@ -16,8 +15,9 @@ const Wishlists = () => {
       <h1 className="text-xl font-bold mb-4">
         Хадгалсан бараа ({wishListData.products.length}){" "}
       </h1>
-      {wishListData.products?.map((data) => (
+      {wishListData.products?.map((data, i) => (
         <SavedProduct
+          key={i}
           name={data.product.name}
           price={data.product.price}
           _id={data.product._id}

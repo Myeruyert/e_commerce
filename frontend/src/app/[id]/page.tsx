@@ -18,8 +18,7 @@ const ProductDetailPage = () => {
     count,
     minus,
     add,
-    addCount,
-    reduceCount,
+
     postCartData,
     productSize,
     setProductSize,
@@ -38,21 +37,6 @@ const ProductDetailPage = () => {
   };
 
   console.log("SIZE", productSize);
-
-  const labels: { [index: string]: string } = {
-    0.5: "Useless",
-    1: "Useless+",
-    1.5: "Poor",
-    2: "Poor+",
-    2.5: "Ok",
-    3: "Ok+",
-    3.5: "Good",
-    4: "Good+",
-    4.5: "Excellent",
-    5: "Excellent+",
-  };
-
-  const value = 3.5;
 
   const avg =
     oneProduct.comment?.reduce((r, c) => r + c.rating, 0) /
@@ -97,15 +81,17 @@ const ProductDetailPage = () => {
           <div className="flex flex-col gap-2 my-4">
             <p className="text-base underline">Хэмжээний загвар</p>
             <div className="flex gap-2">
-              {sizeList?.map((s) => (
+              {sizeList?.map((s, i) => (
                 <Button
+                  key={i}
                   className={`rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-12 h-8 ${
                     productSize.size === s.size && "bg-black text-white"
                   }`}
                   onClick={() => {
                     setProductSize({ ...productSize, size: s.size, id: s.id });
                   }}
-                  value={s.id}>
+                  value={s.id}
+                >
                   {s.size}
                 </Button>
               ))}
@@ -113,13 +99,15 @@ const ProductDetailPage = () => {
             <div className="mt-4">
               <Button
                 className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
-                onClick={minus}>
+                onClick={minus}
+              >
                 -
               </Button>
               <Label className="4xl mx-4">{count}</Label>
               <Button
                 onClick={add}
-                className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8">
+                className="rounded-full bg-transparent border border-black text-black dark:text-white dark:border-white w-8 h-8"
+              >
                 +
               </Button>
             </div>
@@ -147,7 +135,8 @@ const ProductDetailPage = () => {
             <Button
               className="bg-[#2563EB]"
               size="custom"
-              onClick={postCartData}>
+              onClick={postCartData}
+            >
               Сагсанд нэмэх
             </Button>
           </div>
@@ -157,7 +146,8 @@ const ProductDetailPage = () => {
               <Button
                 className="text-sm text-[#2563EB] underline"
                 variant="ghost"
-                onClick={seeAllComments}>
+                onClick={seeAllComments}
+              >
                 бүгдийг харах
               </Button>
             </div>
@@ -180,8 +170,9 @@ const ProductDetailPage = () => {
       <div className="mb-24">
         <h1 className="text-3xl font-bold mb-6">Холбоотой бараа</h1>
         <div className="grid grid-cols-4 gap-8">
-          {product?.map((c) => (
+          {product?.map((c, i) => (
             <ProductCard
+              key={i}
               name={c.name}
               price={c.price}
               _id={c._id}

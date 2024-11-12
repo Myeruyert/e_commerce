@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { WishListContextType, IWishList } from "@/interface";
 import { useParams } from "next/navigation";
 import axios from "axios";
@@ -33,10 +33,10 @@ export const WishListContext = createContext<WishListContextType>({
     ],
     productId: "",
   },
-  setWishListData: (wishListData: IWishList) => {},
+  setWishListData: (_wishListData: IWishList) => {},
   getWishListData: () => {},
-  addToWishList: (id: string) => {},
-  deleteList: (productId: string) => {},
+  addToWishList: (_id: string) => {},
+  deleteList: (_productId: string) => {},
 });
 
 export const WishListProvider = ({ children }: WishListProviderProps) => {
@@ -73,7 +73,7 @@ export const WishListProvider = ({ children }: WishListProviderProps) => {
         },
       });
       if (res.status === 200) {
-        let wishlists = res.data.wishListData;
+        const wishlists = res.data.wishListData;
         console.log("WISHLISTS", wishlists);
         setWishListData(wishlists);
       }

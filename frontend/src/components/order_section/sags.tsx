@@ -1,10 +1,8 @@
 "use client";
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect } from "react";
 import { Card } from "../ui/card";
 import SagsCardTable from "../table_cards/sags_card";
 import { Button } from "../ui/button";
-import axios from "axios";
-import { apiUrl } from "@/utils/util";
 import { CartContext } from "../context/cart_context";
 
 const Sags = () => {
@@ -21,8 +19,8 @@ const Sags = () => {
         <div className="text-xl font-bold">
           1.Сагс ({cartData.products?.length})
         </div>
-        {cartData.products?.map((i) => (
-          <SagsCardTable i={i} />
+        {cartData.products?.map((i, index) => (
+          <SagsCardTable i={i} key={index} />
         ))}
         <div className="flex justify-between mt-4 mb-6">
           <span className="text-lg text-black">Нийт төлөх дүн: </span>

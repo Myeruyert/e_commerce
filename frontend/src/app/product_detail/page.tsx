@@ -10,7 +10,7 @@ import React, { useState, useContext } from "react";
 import Box from "@mui/material/Box";
 import Rating from "@mui/material/Rating";
 import StarIcon from "@mui/icons-material/Star";
-import { UserContext } from "@/components/context/user_context";
+
 import { CartContext } from "@/components/context/cart_context";
 
 const ProductDetailPage = () => {
@@ -20,19 +20,6 @@ const ProductDetailPage = () => {
 
   const seeAllComments = () => {
     setSeeComments(!seeComments);
-  };
-
-  const labels: { [index: string]: string } = {
-    0.5: "Useless",
-    1: "Useless+",
-    1.5: "Poor",
-    2: "Poor+",
-    2.5: "Ok",
-    3: "Ok+",
-    3.5: "Good",
-    4: "Good+",
-    4.5: "Excellent",
-    5: "Excellent+",
   };
 
   const value = 3.5;
@@ -115,12 +102,14 @@ const ProductDetailPage = () => {
       <div className="mb-24">
         <h1 className="text-3xl font-bold mb-6">Холбоотой бараа</h1>
         <div className="grid grid-cols-4 gap-8">
-          {product?.map((c) => (
+          {product?.map((c, i) => (
             <ProductCard
+              key={i}
               name={c.name}
               price={c.price}
               _id={c._id}
               discount={c.discount}
+              images={c.images}
             />
           ))}
         </div>

@@ -1,5 +1,4 @@
 import React from "react";
-import { Phone, Mail } from "lucide-react";
 import { Button } from "../ui/button";
 import { FaFacebook } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";

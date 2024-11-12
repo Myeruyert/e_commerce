@@ -74,8 +74,8 @@ const SagsCardTable = ({ i }: any) => {
                   <SelectContent>
                     <SelectGroup>
                       <SelectLabel>Available Sizes</SelectLabel>
-                      {sizeList?.map((s) => (
-                        <SelectItem value={s.id} onChange={changeSize}>
+                      {sizeList?.map((s, i) => (
+                        <SelectItem value={s.id} onChange={changeSize} key={i}>
                           {s.size}
                         </SelectItem>
                       ))}

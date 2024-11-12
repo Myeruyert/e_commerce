@@ -1,9 +1,8 @@
 "use client";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 import { ICategory, CategoryContextType, IProduct } from "@/interface";
 import { apiUrl } from "@/utils/util";
 import axios from "axios";
-import { ProductContext } from "./product_context";
 
 type CategoryProviderProps = {
   children: React.ReactNode;
@@ -12,22 +11,21 @@ type CategoryProviderProps = {
 export const CategoryContext = createContext<CategoryContextType>({
   category: [],
   fetchCategoryData: () => {},
-  getFilteredProducts: (id: string[]) => {},
+  getFilteredProducts: (_id: string[]) => {},
   filteredProducts: [],
-  setFilteredProducts: (filteredProducts: IProduct[]) => {},
+  setFilteredProducts: (_filteredProducts: IProduct[]) => {},
   selectedCat: [],
-  setSelectedCat: (selectedCat: string[]) => {},
+  setSelectedCat: (_selectedCat: string[]) => {},
   searchValue: "",
-  setSearchValue: (category: string) => {},
+  setSearchValue: (_category: string) => {},
   selectedSize: "",
-  setSelectedSize: (selectedSize: string | null) => {},
+  setSelectedSize: (_selectedSize: string | null) => {},
 });
 
 export const CategoryProvider = ({ children }: CategoryProviderProps) => {
-  const { setProduct, product } = useContext(ProductContext);
   const [category, setCategory] = useState<ICategory[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]);
-  const [searchProducts, setSearchProducts] = useState<[]>([]);
+  // const [searchProducts, setSearchProducts] = useState<[]>([]);
   const [selectedCat, setSelectedCat] = useState<string[]>([]);
   const [searchValue, setSearchValue] = useState<string>("");
   const [selectedSize, setSelectedSize] = useState<string | null>(null);
@@ -47,7 +45,7 @@ export const CategoryProvider = ({ children }: CategoryProviderProps) => {
   //   )
   // );
 
-  console.log("SP", searchProducts);
+  // console.log("SP", searchProducts);
   const fetchCategoryData = async () => {
     try {
       const res = await axios.get(`${apiUrl}/api/v1/categories`);
@@ -114,7 +112,8 @@ export const CategoryProvider = ({ children }: CategoryProviderProps) => {
         setSearchValue,
         selectedSize,
         setSelectedSize,
-      }}>
+      }}
+    >
       {children}
     </CategoryContext.Provider>
   );

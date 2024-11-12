@@ -1,5 +1,5 @@
 "use client";
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { ICart, ISizeLists, CartContextType } from "@/interface";
 import { apiUrl } from "@/utils/util";
 import axios from "axios";
@@ -42,25 +42,25 @@ export const CartContext = createContext<CartContextType>({
       productId: "",
     },
   // ],
-  setCartData: (cartData: ICart) => {},
+  setCartData: (_cartData: ICart) => {},
   postCartData: () => {},
   count: 0,
   setCount: () => {},
   minus: () => {},
   add: () => {},
   getcartData: () => {},
-  deleteProduct: async (productId: string) => {},
+  deleteProduct: async (_productId: string) => {},
   refetch: false,
-  setRefetch: (refetch: boolean) => {},
-  addCount: (id: string) => {},
-  reduceCount: (id: string) => {},
+  setRefetch: (_refetch: boolean) => {},
+  addCount: (_id: string) => {},
+  reduceCount: (_id: string) => {},
   productSize: {
     size: "",
     id: "",
   },
-  setProductSize: (productSize: object) => {},
+  setProductSize: (_productSize: object) => {},
   sizeList: [{ size: "", id: "" }],
-  updateCartData: async (productId: string, newQuantity: number) => {},
+  updateCartData: async (_productId: string, _newQuantity: number) => {},
 });
 
 export const CartProvider = ({ children }: CartProviderProps) => {
@@ -157,7 +157,7 @@ export const CartProvider = ({ children }: CartProviderProps) => {
       if (res.status === 200) {
         // console.log("000000000", res.data.cartData.products);
         // setTableData(res.data.cartData.products);
-        let cart = res.data.cartData;
+        const cart = res.data.cartData;
         console.log("cart", cart);
         cart.products = cart.products.map((product: any) => ({
           ...product,

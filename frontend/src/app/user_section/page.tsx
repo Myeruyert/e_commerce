@@ -2,7 +2,7 @@
 import OrderHistory from "@/components/user_section/order_history";
 import UserInfo from "@/components/user_section/user_info";
 import { Button } from "@/components/ui/button";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 const OrderSection = () => {
   const [step, setStep] = useState(1);

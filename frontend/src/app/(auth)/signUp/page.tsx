@@ -3,7 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import React, { useContext, useState } from "react";
-import { UserContext } from "@/components/context/user_context";
 import { useRouter } from "next/navigation";
 import { apiUrl } from "@/utils/util";
 import { toast } from "react-toastify";
@@ -12,7 +11,6 @@ import { ProfileContext } from "@/components/context/profile_context";
 import Loading from "@/components/recover_pass/loading";
 
 const SignUp = () => {
-  const { user, setUser } = useContext(UserContext);
   const { isLoading, setIsLoading } = useContext(ProfileContext);
   const router = useRouter();
 

@@ -1,6 +1,6 @@
 "use client";
 import React, { createContext, useContext, useEffect, useState } from "react";
-import { IOneProduct, IProduct, ProductContextType } from "@/interface";
+import { IProduct, ProductContextType } from "@/interface";
 import { apiUrl } from "@/utils/util";
 import axios from "axios";
 import { toast } from "react-toastify";
@@ -12,13 +12,13 @@ type ProductProviderProps = {
 
 export const ProductContext = createContext<ProductContextType>({
   product: [],
-  setProduct: (product: IProduct[]) => {},
+  setProduct: (_product: IProduct[]) => {},
   fetchAllProducts: () => {},
   rating: 0,
-  setRating: (rating: number) => {},
+  setRating: (_rating: number) => {},
   comment: "",
-  setComment: (comment: string) => {},
-  newComment: (id: string | string[]) => {},
+  setComment: (_comment: string) => {},
+  newComment: (_id: string | string[]) => {},
   oneProduct: {
     _id: "",
     name: "",
@@ -39,7 +39,7 @@ export const ProductContext = createContext<ProductContextType>({
     ],
   },
   // setOneProduct: (oneProduct: IOneProduct) => {},
-  fetchProductData: (id: string | string[]) => {},
+  fetchProductData: (_id: string | string[]) => {},
 });
 
 export const ProductProvider = ({ children }: ProductProviderProps) => {
@@ -129,7 +129,8 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
         newComment,
         oneProduct,
         fetchProductData,
-      }}>
+      }}
+    >
       {children}
     </ProductContext.Provider>
   );

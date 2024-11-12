@@ -58,8 +58,8 @@ export const Payment = () => {
           <p className="mt-8 mb-5">Төлөх боломжтой банкууд:</p>
         </div>
         <div className="flex gap-6 flex-wrap px-8 ">
-          {bankLogos?.map((data) => (
-            <img src={data.img} alt="" className="w-12 rounded-sm" />
+          {bankLogos?.map((data, i) => (
+            <img src={data.img} key={i} alt="" className="w-12 rounded-sm" />
           ))}
         </div>
         <Button

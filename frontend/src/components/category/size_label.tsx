@@ -9,8 +9,8 @@ export const SizeLabel = () => {
     <div className="font-bold">
       <h6 className="mb-4">Хэмжээ</h6>
       <div className="flex flex-col gap-3">
-        {sizeList?.map((size) => (
-          <div className="flex items-center space-x-2">
+        {sizeList?.map((size, i) => (
+          <div className="flex items-center space-x-2" key={i}>
             <Checkbox id="terms" />
             <Label
               htmlFor="terms"

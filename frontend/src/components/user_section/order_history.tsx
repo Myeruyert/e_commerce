@@ -9,13 +9,6 @@ import {
 } from "@/components/ui/accordion";
 import React from "react";
 import OrderCard from "@/components/order_card";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableRow,
-} from "@/components/ui/table";
-import { ChevronDown } from "lucide-react";
 import { AccordionHeader } from "@radix-ui/react-accordion";
 
 const OrderHistory = () => {

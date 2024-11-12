@@ -5,13 +5,10 @@ import { VscHeart } from "react-icons/vsc";
 import { VscHeartFilled } from "react-icons/vsc";
 import Link from "next/link";
 import { Button } from "../ui/button";
-import { ProductContext } from "../context/product_context";
 import { CardProps } from "@/interface";
 import { WishListContext } from "../context/wishlist_context";
 
 export function ProductCard({ name, price, _id, discount, images }: CardProps) {
-  const { product } = useContext(ProductContext);
-
   const currentPrice = price - Math.floor((price * discount) / 100);
 
   const options = { maximumFractionDigits: 2 };

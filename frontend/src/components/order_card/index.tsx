@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableRow,
-} from "@/components/ui/table";
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 
 const invoices = [
   {
@@ -28,8 +22,8 @@ const OrderCard = () => {
   return (
     <Table>
       <TableBody>
-        {invoices.map((data) => (
-          <TableRow className="flex justify-between">
+        {invoices.map((data, i) => (
+          <TableRow className="flex justify-between" key={i}>
             <TableCell className="font-medium flex gap-2 px-0">
               <img src="/images/girl.png" alt="" className="w-12 rounded-sm" />
               <div className="flex flex-col justify-between p-1">

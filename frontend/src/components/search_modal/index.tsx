@@ -1,8 +1,5 @@
 import React from "react";
-import { format } from "date-fns";
 import { Card } from "../ui/card";
-import { Button } from "../ui/button";
-import { IoMdHeart } from "react-icons/io";
 
 const SearchModalList = () => {
   return (

@@ -1,14 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import Comments from "./comment";
 import { Textarea } from "../ui/textarea";
 import { Card } from "../ui/card";
 import { Button } from "../ui/button";
-import { FaStar } from "react-icons/fa";
-import Box from "@mui/material/Box";
-// import { Rating } from "@mui/material";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
-import Typography from "@mui/material/Typography";
 import { ProductContext } from "../context/product_context";
 import { useParams } from "next/navigation";
 
@@ -20,8 +16,8 @@ const RatingSection = () => {
 
   return (
     <div className="">
-      {oneProduct.comment?.map((com) => (
-        <Comments com={com} />
+      {oneProduct.comment?.map((com, i) => (
+        <Comments com={{ ...com, user: { firstname: com.name } }} key={i} />
       ))}
 
       <div className="mt-6">

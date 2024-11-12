@@ -1,12 +1,10 @@
 "use client";
 import { ProductCard } from "@/components/card/card";
-import { SizeLabel } from "@/components/category/size_label";
 import React, { ChangeEvent, useContext, useEffect, useState } from "react";
 import { ProductContext } from "@/components/context/product_context";
 import { CategoryContext } from "@/components/context/category_context";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 
 const CategoryPage = () => {
   const { product } = useContext(ProductContext);
@@ -16,7 +14,6 @@ const CategoryPage = () => {
     filteredProducts,
     selectedCat,
     setSelectedCat,
-    searchValue,
   } = useContext(CategoryContext);
   const [allProds, setAllProds] = useState(false);
   const sizeList = ["XS", "S", "M", "XL", "XXL", "XXXL"];
@@ -87,8 +84,8 @@ const CategoryPage = () => {
                   All
                 </Label>
               </div>
-              {category?.map((cat) => (
-                <div className="flex items-center space-x-2">
+              {category?.map((cat, i) => (
+                <div className="flex items-center space-x-2" key={i}>
                   <Checkbox
                     id="terms"
                     value={cat._id}
@@ -112,8 +109,8 @@ const CategoryPage = () => {
           <div className="font-bold">
             <h6 className="mb-4">Хэмжээ</h6>
             <div className="flex flex-col gap-3">
-              {sizeList?.map((size) => (
-                <div className="flex items-center space-x-2">
+              {sizeList?.map((size, i) => (
+                <div className="flex items-center space-x-2" key={i}>
                   <Checkbox id="terms" />
                   <Label
                     htmlFor="terms"
@@ -128,8 +125,9 @@ const CategoryPage = () => {
         </aside>
         <main className="grid grid-cols-3 gap-8 w-2/3 mx-auto">
           {allProds
-            ? product?.map((c) => (
+            ? product?.map((c, i) => (
                 <ProductCard
+                  key={i}
                   name={c.name}
                   price={c.price}
                   _id={c._id}
@@ -137,8 +135,9 @@ const CategoryPage = () => {
                   images={c.images}
                 />
               ))
-            : filteredProducts?.map((c) => (
+            : filteredProducts?.map((c, i) => (
                 <ProductCard
+                  key={i}
                   name={c.name}
                   price={c.price}
                   _id={c._id}

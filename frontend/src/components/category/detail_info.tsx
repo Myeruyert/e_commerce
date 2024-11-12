@@ -1,9 +1,9 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Button } from "../ui/button";
 import { FaStar } from "react-icons/fa";
 import { Badge } from "../ui/badge";
 import { Label } from "../ui/label";
-import { UserContext } from "../context/user_context";
+
 import { CartContext } from "../context/cart_context";
 
 const DetailInfo = () => {

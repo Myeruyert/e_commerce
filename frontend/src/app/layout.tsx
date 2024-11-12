@@ -1,6 +1,4 @@
 "use client";
-import type { Metadata } from "next";
-import localFont from "next/font/local";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Footer } from "@/components/footer";
@@ -13,17 +11,18 @@ import { ProductProvider } from "@/components/context/product_context";
 import { CategoryProvider } from "@/components/context/category_context";
 import { CartProvider } from "@/components/context/cart_context";
 import { WishListProvider } from "@/components/context/wishlist_context";
+import { Suspense } from "react";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+// const geistSans = localFont({
+//   src: "./fonts/GeistVF.woff",
+//   variable: "--font-geist-sans",
+//   weight: "100 900",
+// });
+// const geistMono = localFont({
+//   src: "./fonts/GeistMonoVF.woff",
+//   variable: "--font-geist-mono",
+//   weight: "100 900",
+// });
 
 // export const metadata: Metadata = {
 //   title: "Create Next App",
@@ -40,29 +39,31 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <html lang="en" suppressHydrationWarning>
         <head />
         <body>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <UserProvider>
-              <ProfileProvider>
-                <CategoryProvider>
-                  <ProductProvider>
-                    <CartProvider>
-                      <WishListProvider>
-                        <Header />
-                        {children}
-                        <Footer />
-                      </WishListProvider>
-                    </CartProvider>
-                  </ProductProvider>
-                </CategoryProvider>
-              </ProfileProvider>
-            </UserProvider>
-            <ToastContainer />
-          </ThemeProvider>
+          <Suspense>
+            <ThemeProvider
+              attribute="class"
+              defaultTheme="system"
+              enableSystem
+              disableTransitionOnChange
+            >
+              <UserProvider>
+                <ProfileProvider>
+                  <CategoryProvider>
+                    <ProductProvider>
+                      <CartProvider>
+                        <WishListProvider>
+                          <Header />
+                          {children}
+                          <Footer />
+                        </WishListProvider>
+                      </CartProvider>
+                    </ProductProvider>
+                  </CategoryProvider>
+                </ProfileProvider>
+              </UserProvider>
+              <ToastContainer />
+            </ThemeProvider>
+          </Suspense>
         </body>
       </html>
     </>

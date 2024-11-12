@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import { UserContext } from "@/components/context/user_context";
 
 const SignIn = () => {
-  const { user, setUser } = useContext(UserContext);
+  const { setUser } = useContext(UserContext);
   const router = useRouter();
 
   const [userF, setUserF] = useState({

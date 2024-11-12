@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { ProductCard } from "../card/card";
 import { ProductContext } from "../context/product_context";
-import Link from "next/link";
 
 const ProductLists = () => {
   const { product } = useContext(ProductContext);
@@ -9,7 +8,7 @@ const ProductLists = () => {
     <div className="grid grid-cols-4 max-w-[1200px] mx-auto my-5 gap-4">
       {product?.map((c, i) =>
         i === 6 || i === 7 ? (
-          <div className="col-span-2 row-span-2">
+          <div className="col-span-2 row-span-2" key={i}>
             <ProductCard
               name={c.name}
               price={c.price}
@@ -19,7 +18,7 @@ const ProductLists = () => {
             />
           </div>
         ) : (
-          <div className="col-span-1 row-span-1">
+          <div className="col-span-1 row-span-1" key={i}>
             <ProductCard
               name={c.name}
               price={c.price}
