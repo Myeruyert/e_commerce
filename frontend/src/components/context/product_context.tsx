@@ -12,6 +12,7 @@ type ProductProviderProps = {
 
 export const ProductContext = createContext<ProductContextType>({
   product: [],
+
   setProduct: (_product: IProduct[]) => {},
   fetchAllProducts: () => {},
   rating: 0,
@@ -40,9 +41,12 @@ export const ProductContext = createContext<ProductContextType>({
   },
   // setOneProduct: (oneProduct: IOneProduct) => {},
   fetchProductData: (_id: string | string[]) => {},
+  isLoading: true,
+  setIsLoading: (_isLoading: boolean) => {},
 });
 
 export const ProductProvider = ({ children }: ProductProviderProps) => {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
   const [product, setProduct] = useState<IProduct[]>([]);
   const { user } = useContext(UserContext);
   const [rating, setRating] = useState(0);
@@ -69,6 +73,7 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
 
   const fetchAllProducts = async () => {
     try {
+      setIsLoading(true);
       const res = await axios.get(`${apiUrl}/api/v1/product`);
       if (res.status === 200) {
         const { product } = res.data;
@@ -77,12 +82,31 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
       }
     } catch (error) {
       console.log("cant fetch product lists", error);
+    } finally {
+      setIsLoading(false);
     }
   };
+
+  // if (isLoading) {
+  //   return (
+  //     <div className="animate-pulse">
+  //       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 p-4">
+  //         {[...Array(8)].map((_, index) => (
+  //           <div key={index} className="space-y-4">
+  //             <div className="h-48 bg-gray-200 rounded-lg" />
+  //             <div className="h-4 bg-gray-200 rounded w-3/4" />
+  //             <div className="h-4 bg-gray-200 rounded w-1/2" />
+  //           </div>
+  //         ))}
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   const fetchProductData = async (id: string | string[]) => {
     // console.log("id", id);
     try {
+      setIsLoading(true);
       const res = await axios.get(`${apiUrl}/api/v1/product/${id}`);
 
       if (res.status === 200) {
@@ -91,6 +115,8 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
       }
     } catch (error) {
       console.log("cant fetch product lists", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -129,8 +155,9 @@ export const ProductProvider = ({ children }: ProductProviderProps) => {
         newComment,
         oneProduct,
         fetchProductData,
-      }}
-    >
+        isLoading,
+        setIsLoading,
+      }}>
       {children}
     </ProductContext.Provider>
   );

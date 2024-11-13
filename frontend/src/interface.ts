@@ -77,8 +77,11 @@ export interface IOneProduct {
 
 export interface ProductContextType {
   product: IProduct[];
+
   setProduct: (product: IProduct[]) => void;
   fetchAllProducts: () => void;
+  isLoading: boolean;
+  setIsLoading: (isLoading: boolean) => void;
   rating: number;
   setRating: (rating: number) => void;
   comment: string;
